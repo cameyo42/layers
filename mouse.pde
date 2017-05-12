@@ -28,7 +28,7 @@ void mousePressed()
 
     // WEB ERASE PRESSED
     else if ((!keyPressed) && (tool=="Web") && (eraseW) && ((!menu) || (x1 > menuX)))
-    { 
+    {
       for (int p=cobweb.size()-1; p >= 0 ; p--) // erase point from cobweb
       {
         PVector v = cobweb.get(p);
@@ -37,7 +37,7 @@ void mousePressed()
           if ((!aSelection) || (aSelection && v.x>x1sel && v.x<x2sel+1 && v.y>y1sel && v.y<y2sel+1)) // check active selection
           {
             cobweb.remove(p);
-          }  
+          }
         }
       }
     }
@@ -235,7 +235,7 @@ void mousePressed()
       mixer_decay = (int)slMIXERD.v;
       mixer = livelli[activeLyr].pg.get(xs0-brushSize/2,ys0-brushSize/2,brushSize,brushSize);
       if (noGlitch) { prepareGlitch(); } // Start antialias...
-      // create mixer brush 
+      // create mixer brush
       mixer.loadPixels();
       int cx = mixer.width/2;
       int cy = mixer.height/2;
@@ -283,36 +283,6 @@ void mousePressed()
         cloneGap = true;
       }
       if (grab) { grabLayer(); } // grab layer for Undo
-      //livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
-      //livelli[activeLyr].pg.loadPixels();
-      ////if (noGlitch) { prepareGlitch(); } // Start antialias...
-      ////if (aSelection) { livelli[activeLyr].pg.clip(x1sel, y1sel, x2sel-x1sel, y2sel-y1sel); }
-      //int loc = 0;
-      //int locBase = 0;
-      //int lMax = width*height;
-      //for (int x = x2 - brushSize/2; x < x2 + brushSize/2; x++)
-      //{
-      //  for (int y = y2 - brushSize/2; y < y2 + brushSize/2; y++)
-      //  {
-      //    if ((!aSelection) || (aSelection && x>x1sel && x<x2sel+1 && y>y1sel && y<y2sel+1)) // check active selection
-      //    {
-      //      if (dist(x,y,x2,y2) <= brushSize/2)
-      //      {
-      //        loc = x + y*width;
-      //        locBase = (x-gapX) + (y-gapY)*width;
-      //        if (loc > 0 && loc < lMax && locBase >0 && locBase < lMax)
-      //        {
-      //          if (livelli[activeLyr].pg.pixels[locBase] != 0x0)
-      //          {
-      //            {livelli[activeLyr].pg.pixels[loc] = livelli[activeLyr].pg.pixels[locBase];}
-      //          }
-      //        }
-      //      }
-      //    } // selection
-      //  }
-      //}
-      //livelli[activeLyr].pg.updatePixels();
-      //livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
   } // LEFT mouse if
 
@@ -362,7 +332,6 @@ void mousePressed()
       //livelli[activeLyr].pg.updatePixels();
       stampPG.updatePixels();
       stampPG.endDraw();
-      //stampPG.save("stamp.png");
     }
   } // RIGHT mouse if
 
@@ -686,7 +655,7 @@ void mouseDragged()
           if ((!aSelection) || (aSelection && v.x>x1sel && v.x<x2sel+1 && v.y>y1sel && v.y<y2sel+1)) // check active selection
           {
             cobweb.remove(p);
-          }          
+          }
         }
       }
       updateWeb = true;
@@ -698,7 +667,7 @@ void mouseDragged()
       xs1 = mouseX;
       ys1 = mouseY;
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
-      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection      
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       float curDist = dist(xs0,ys0,xs1,ys1);
       int gap = (int) slSTAMP.v;
       if (curDist > gap)
@@ -1218,10 +1187,6 @@ void mouseReleased()
     else { x1sel = x2L; x2sel = x1L; }
     if (y1L < y2L) { y1sel = y1L; y2sel = y2L; }
     else { y1sel = y2L; y2sel = y1L; }
-    //x1sel = x1L;
-    //y1sel = y1L;
-    //x2sel = x2L;
-    //y2sel = y2L;
     // check null selection
     if ((x1sel == x2sel) || (y1sel == y2sel))
     { aSelection = false; }
