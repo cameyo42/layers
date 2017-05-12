@@ -822,6 +822,7 @@ void selectTool(String t)
   btnCLONE.s = false;
   btnWEB.s = false;
   btnSELECT.s = false;
+  btnSTENCIL.s = false;
   //selection = false;
   if (t == "Pencil")       { btnPENCIL.s = true; }
   else if (t == "Liner")   { btnLINER.s = true; }

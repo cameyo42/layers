@@ -167,6 +167,8 @@ void keyPressed()
   if ((key=='b') || (key =='B'))  { selectTool("Web"); }
   // select Select tool
   if (key=='0') { selectTool("Select"); }
+  // select Stencil tool
+  if (key=='9') { selectTool("Stencil"); }
 
   // set grid on/off
   if ((key=='w') || (key=='W'))
