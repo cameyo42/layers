@@ -59,7 +59,7 @@ void keyPressed()
   // Toggle selection
   if (keyCode==114) // F3
   {
-    selection = !selection;
+    aSelection = !aSelection;
   }
   
   // Toggle stencil
@@ -254,14 +254,14 @@ void keyPressed()
   // move active layer UP
   if (keyCode == UP)
   {
-    if (stencil && selection)
+    if (stencil && aSelection)
     {
       if (tool == "Stencil") { ysten--; }
       else if (tool == "Select") { y1sel--; y2sel--; }
       else { y1sel--; y2sel--; }
     }
     else if (stencil) { ysten--; }
-    else if (selection) { y1sel--; y2sel--; }
+    else if (aSelection) { y1sel--; y2sel--; }
     else if ((menu) && (activeLyr != 0))
     {
       swapLayers(activeLyr,activeLyr-1);
@@ -271,14 +271,14 @@ void keyPressed()
   // move active layer DOWN
   if (keyCode == DOWN)
   {
-    if (stencil && selection)
+    if (stencil && aSelection)
     {
       if (tool == "Stencil") { ysten++; }
       else if (tool == "Select") { y1sel++; y2sel++; }
       else { y1sel++; y2sel++; }
     }  
     else if (stencil) { ysten++; }  
-    else if (selection) { y1sel++; y2sel++; }
+    else if (aSelection) { y1sel++; y2sel++; }
     else if ((menu) && (activeLyr != numLayers-1))
     {
       // move current layer down
@@ -290,14 +290,14 @@ void keyPressed()
   // previous palette page
   if (keyCode == LEFT)
   {
-    if (stencil && selection)
+    if (stencil && aSelection)
     {
       if (tool == "Stencil") { xsten--; }
       else if (tool == "Select") { x1sel--; x2sel--; }
       else { x1sel--; x2sel--; }
     }  
     else if (stencil) { xsten--; }
-    else if (selection) { x1sel--; x2sel--; }
+    else if (aSelection) { x1sel--; x2sel--; }
     else if (menu)
     {
       // move current layer up
@@ -307,14 +307,14 @@ void keyPressed()
   // next palette page
   if (keyCode == RIGHT)
   {
-    if (stencil && selection)
+    if (stencil && aSelection)
     {
       if (tool == "Stencil") { xsten++; }
       else if (tool == "Select") { x1sel++; x2sel++; }
       else { x1sel++; x2sel++; }
     }  
     else if (stencil) { xsten++; }  
-    else if (selection) { x1sel++; x2sel++; }
+    else if (aSelection) { x1sel++; x2sel++; }
     else if (menu)
     {
       activePalettePage = constrain(++activePalettePage,0,12);
@@ -326,7 +326,7 @@ void keyPressed()
   {
       // store layer for undo
       storeUNDO();
-      if (selection)
+      if (aSelection)
       {
         x1sel = constrain(x1sel, 0, width-1);
         y1sel = constrain(y1sel, 0, height-1);

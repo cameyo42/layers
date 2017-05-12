@@ -33,7 +33,6 @@ void drawLine(int x1, int y1, int x2, int y2, int s, PGraphics pg)
   int x = x1;
   int y = y1;
   int err = el/2;
-  //if ((!selection) || (selection && x-brushSize/2>x1sel && x+brushSize/2<x2sel+1 && y-brushSize/2>y1sel && y+brushSize/2<y2sel+1)) // check active selection
   {
     pg.ellipse(x, y, s, s);
   }
@@ -51,7 +50,6 @@ void drawLine(int x1, int y1, int x2, int y2, int s, PGraphics pg)
       x += pdx;
       y += pdy;
     }
-    //if ((!selection) || (selection && x-brushSize/2>x1sel && x+brushSize/2<x2sel+1 && y-brushSize/2>y1sel && y+brushSize/2<y2sel+1)) // check active selection
     {
       pg.ellipse(x, y, s, s);
     }
@@ -161,7 +159,7 @@ void drawLinePIXEL(int x1, int y1, int x2, int y2, int s, PGraphics pg)
   {
     for (int yi = y - rr; yi < y + rr; yi++)
     {
-      if ((!selection) || (selection && xi>x1sel && xi<x2sel && yi>y1sel && yi<y2sel)) // check active selection
+      if ((!aSelection) || (aSelection && xi>x1sel && xi<x2sel && yi>y1sel && yi<y2sel)) // check active selection
       {
         int loc = xi+yi*width;
         if ((loc < ll && loc > 0 && xi < width && xi > 0) && ((xi - x) * (xi - x) + (yi - y) * (yi - y) < rr*rr))
@@ -205,7 +203,7 @@ void drawLinePIXEL(int x1, int y1, int x2, int y2, int s, PGraphics pg)
     {
       for (int yi = y - rr; yi < y + rr; yi++)
       {
-        if ((!selection) || (selection && xi>x1sel && xi<x2sel && yi>y1sel && yi<y2sel)) // check active selection
+        if ((!aSelection) || (aSelection && xi>x1sel && xi<x2sel && yi>y1sel && yi<y2sel)) // check active selection
         {
           int loc = xi+yi*width;
           if ((loc < ll && loc > 0 && xi < width && xi > 0) && ((xi - x) * (xi - x) + (yi - y) * (yi - y) < rr*rr))

@@ -213,7 +213,7 @@ boolean updateWeb;
 color webPointCol = color (255,0,0);
 
 //selection
-boolean selection;
+boolean aSelection;
 boolean selectDown;
 int x1sel, y1sel, x2sel, y2sel;
 color fillSelect;
@@ -316,7 +316,7 @@ void setup()
   web.endDraw();
   updateWeb = false;
   // selection
-  selection = false;
+  aSelection = false;
   selectDown = false;
   fillSelect = color(83,114,142,50);
   x1sel = 0;
@@ -711,7 +711,7 @@ void draw()
     if ((!keyPressed) && (!livelli[activeLyr].ll) && ((!menu) || (mouseX > menuX)))
     {
       livelli[activeLyr].pg.beginDraw();
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       myDD.updateDyna();
       myDD.drawDyna();
       livelli[activeLyr].pg.endDraw();
@@ -775,7 +775,7 @@ void draw()
   else if (selectDown) { ghostSelect(); }
 
   // show selection
-  if (selection)
+  if (aSelection)
   {
     fill(fillSelect); //highLight
     stroke(highLight);
@@ -823,7 +823,7 @@ void selectTool(String t)
   btnWEB.s = false;
   btnSELECT.s = false;
   btnSTENCIL.s = false;
-  //selection = false;
+  //aSelection = false;
   if (t == "Pencil")       { btnPENCIL.s = true; }
   else if (t == "Liner")   { btnLINER.s = true; }
   else if (t == "Quad")    { btnQUAD.s = true; }
@@ -837,11 +837,17 @@ void selectTool(String t)
   else if (t == "Mixer")   { btnMIXER.s = true; }
   else if (t == "Clone")   { btnCLONE.s = true; }
   else if (t == "Web")     { btnWEB.s = true; setWebBrush(); }
-  else if (t == "Select")  { btnSELECT.s = true; selection = true;}
+  else if (t == "Select")  { btnSELECT.s = true; checkSelection();}
   else if (t == "Stencil") { btnSTENCIL.s = true; stencil = true;}
   else if (t == "TEST")    { }
 }
 
+void checkSelection()
+{
+  if ((x1sel == x2sel) || (y1sel == y2sel))
+  { aSelection = false; }
+  else { aSelection = true; }
+}
 void setWebBrush()
 {
   brushSize = 1; slSIZE.v = 1;

@@ -58,7 +58,7 @@ void floodFill(PGraphics buffer, int orgX, int orgY, int newColor)
 boolean isToFill(int px, int py, int[] pxl, int pw, int ph, int orgColor, float fillTol)
 {
   float d;
-  if ((selection) && (px<=x1sel || px>=x2sel || py<=y1sel || py>=y2sel)) // check active selection
+  if ((aSelection) && (px<=x1sel || px>=x2sel || py<=y1sel || py>=y2sel)) // check active selection
     return false;
   if (px < 0 || px >= pw || py < 0 || py >= ph)
     return false;

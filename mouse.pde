@@ -34,7 +34,7 @@ void mousePressed()
         PVector v = cobweb.get(p);
         if ((v.x > x2-brushSize/2) && (v.x < x2+brushSize/2) && (v.y > y2-brushSize/2) && (v.y < y2+brushSize/2))
         {
-          if ((!selection) || (selection && v.x>x1sel && v.x<x2sel+1 && v.y>y1sel && v.y<y2sel+1)) // check active selection
+          if ((!aSelection) || (aSelection && v.x>x1sel && v.x<x2sel+1 && v.y>y1sel && v.y<y2sel+1)) // check active selection
           {
             cobweb.remove(p);
           }  
@@ -93,7 +93,7 @@ void mousePressed()
     else if ((!keyPressed) && (tool=="Select") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       selectDown = true;
-      selection = false;
+      aSelection = false;
       x1L = x2;  y1L = y2;
       x2L = x1L;  y2L = y1L;
     }
@@ -107,7 +107,7 @@ void mousePressed()
       if (noGlitch) { prepareGlitch(); } // Start antialias...
       livelli[activeLyr].pg.noStroke();
       livelli[activeLyr].pg.fill(brushCol);
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       drawLine(x1,y1,x2,y2, brushSize, livelli[activeLyr].pg); // draw on active layer
       if (symX) // draw symmetry from X axis
       {
@@ -137,7 +137,7 @@ void mousePressed()
       livelli[activeLyr].pg.noStroke();
       livelli[activeLyr].pg.fill(0,0,0,0);
       livelli[activeLyr].pg.blendMode(REPLACE);
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       drawLine(x1,y1,x2,y2, brushSize, livelli[activeLyr].pg); // draw/erase on active layer
       if (symX) // draw symmetry from X axis
       {
@@ -200,7 +200,7 @@ void mousePressed()
       livelli[activeLyr].pg.noStroke();
       livelli[activeLyr].pg.fill(brushCol);
       if (noGlitch) { prepareGlitch(); } // Start antialias...
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       myIB.clear();
       myIB.clearPolys();
       myIB.addPoint(x0, y0);
@@ -217,7 +217,7 @@ void mousePressed()
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       if (noGlitch) { prepareGlitch(); } // Start antialias...
       if (!userStamp) { mySB.createStampBrush(); }
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       livelli[activeLyr].pg.image(stampPG, xs0-brushSize/2,ys0-brushSize/2);
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
@@ -286,7 +286,7 @@ void mousePressed()
       //livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       //livelli[activeLyr].pg.loadPixels();
       ////if (noGlitch) { prepareGlitch(); } // Start antialias...
-      ////if (selection) { livelli[activeLyr].pg.clip(x1sel, y1sel, x2sel-x1sel, y2sel-y1sel); }
+      ////if (aSelection) { livelli[activeLyr].pg.clip(x1sel, y1sel, x2sel-x1sel, y2sel-y1sel); }
       //int loc = 0;
       //int locBase = 0;
       //int lMax = width*height;
@@ -294,7 +294,7 @@ void mousePressed()
       //{
       //  for (int y = y2 - brushSize/2; y < y2 + brushSize/2; y++)
       //  {
-      //    if ((!selection) || (selection && x>x1sel && x<x2sel+1 && y>y1sel && y<y2sel+1)) // check active selection
+      //    if ((!aSelection) || (aSelection && x>x1sel && x<x2sel+1 && y>y1sel && y<y2sel+1)) // check active selection
       //    {
       //      if (dist(x,y,x2,y2) <= brushSize/2)
       //      {
@@ -531,7 +531,7 @@ void mouseDragged()
     else if ((!keyPressed) && (tool=="Web") && (!eraseW) && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       if (typeW == 0) // simple pencil
       {
         livelli[activeLyr].pg.line(x1, y1, x2,y2);
@@ -683,7 +683,7 @@ void mouseDragged()
         PVector v = cobweb.get(p);
         if ((v.x > x2-brushSize/2) && (v.x < x2+brushSize/2) && (v.y > y2-brushSize/2) && (v.y < y2+brushSize/2))
         {
-          if ((!selection) || (selection && v.x>x1sel && v.x<x2sel+1 && v.y>y1sel && v.y<y2sel+1)) // check active selection
+          if ((!aSelection) || (aSelection && v.x>x1sel && v.x<x2sel+1 && v.y>y1sel && v.y<y2sel+1)) // check active selection
           {
             cobweb.remove(p);
           }          
@@ -698,7 +698,7 @@ void mouseDragged()
       xs1 = mouseX;
       ys1 = mouseY;
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection      
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection      
       float curDist = dist(xs0,ys0,xs1,ys1);
       int gap = (int) slSTAMP.v;
       if (curDist > gap)
@@ -748,7 +748,7 @@ void mouseDragged()
           }
         }
         mixer.updatePixels();
-        if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+        if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
         // draw mixer brush
         livelli[activeLyr].pg.image(mixer, xx-brushSize/2, yy-brushSize/2);
         xs0 = xx;
@@ -766,7 +766,7 @@ void mouseDragged()
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       livelli[activeLyr].pg.noStroke();
       livelli[activeLyr].pg.fill(brushCol);
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       if (myIB.distToLast(x0, y0) > minMove && x0 > 0 && x0 < width && y0 > 0 && y0 <height)
       {
         myIB.addPoint(x0, y0);
@@ -789,7 +789,7 @@ void mouseDragged()
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       livelli[activeLyr].pg.noStroke();
       livelli[activeLyr].pg.fill(brushCol);
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       drawLine(x1,y1,x2,y2, brushSize, livelli[activeLyr].pg);  // draw on active layer
       if (symX) // draw symmetry from X axis
       {
@@ -872,7 +872,7 @@ void mouseDragged()
       livelli[activeLyr].pg.noStroke();
       livelli[activeLyr].pg.fill(0,0,0,0);
       livelli[activeLyr].pg.blendMode(REPLACE);
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       drawLine(x1,y1,x2,y2, brushSize, livelli[activeLyr].pg);
       if (symX) // draw symmetry from X axis
       {
@@ -913,7 +913,7 @@ void mouseDragged()
       {
         for (int y = y2 - brushSize/2; y < y2 + brushSize/2; y++)
         {
-          if ((!selection) || (selection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
+          if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
           {
             if (dist(x,y,x2,y2) <= brushSize/2)
             {
@@ -1040,7 +1040,7 @@ void mouseReleased()
       x2L = gridX * (int)round((float)x2L / gridX);
       y2L = gridY * (int)round((float)y2L / gridY);
     }
-    if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+    if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
     livelli[activeLyr].pg.line(x1L, y1L, x2L, y2L); // draw on active layer
     if (symX) // draw symmetry from X axis
     {
@@ -1093,7 +1093,7 @@ void mouseReleased()
         if (y2L > y1L) { qx1 = x1L - dd; qy1 = y1L; qx2 = x1L; qy2 = y1L + dd; } // lower right
         else { qx1 = x1L - dd; qy1 = y1L - dd; qx2 = x1L ; qy2 = y1L; } // upper right
       }
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       livelli[activeLyr].pg.rect(qx1,qy1, qx2 - qx1, qy2 - qy1); // draw on active layer
       if (symX) // draw symmetry from X axis
       {
@@ -1120,7 +1120,7 @@ void mouseReleased()
         x2L = gridX * (int)round((float)x2L / gridX);
         y2L = gridY * (int)round((float)y2L / gridY);
       }
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       livelli[activeLyr].pg.rect(x1L,y1L,x2L-x1L,y2L-y1L);
       if (symX) // draw symmetry from X axis
       {
@@ -1161,7 +1161,7 @@ void mouseReleased()
         y2L = gridY * (int)round((float)y2L / gridY);
       }
       float dd = dist(x1L,y1L,x2L,y2L)*2;
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       livelli[activeLyr].pg.ellipse(x1L, y1L, dd, dd);
       if (symX) // draw symmetry from X axis
       {
@@ -1181,7 +1181,7 @@ void mouseReleased()
     }
     else // draw ellipse
     {
-      if (selection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
       livelli[activeLyr].pg.ellipse((x1L+x2L)/2, (y1L+y2L)/2, (x1L-x2L), (y1L-y2L));
       if (symX) // draw symmetry from X axis
       {
@@ -1224,8 +1224,8 @@ void mouseReleased()
     //y2sel = y2L;
     // check null selection
     if ((x1sel == x2sel) || (y1sel == y2sel))
-    { selection = false; }
-    else { selection = true; }
+    { aSelection = false; }
+    else { aSelection = true; }
   }
 
   // clone tool
