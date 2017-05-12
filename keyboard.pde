@@ -254,7 +254,13 @@ void keyPressed()
   // move active layer UP
   if (keyCode == UP)
   {
-    if (stencil) { ysten--; }
+    if (stencil && selection)
+    {
+      if (tool == "Stencil") { ysten--; }
+      else if (tool == "Select") { y1sel--; y2sel--; }
+      else { y1sel--; y2sel--; }
+    }
+    else if (stencil) { ysten--; }
     else if (selection) { y1sel--; y2sel--; }
     else if ((menu) && (activeLyr != 0))
     {
@@ -265,7 +271,13 @@ void keyPressed()
   // move active layer DOWN
   if (keyCode == DOWN)
   {
-    if (stencil) { ysten++; }  
+    if (stencil && selection)
+    {
+      if (tool == "Stencil") { ysten++; }
+      else if (tool == "Select") { y1sel++; y2sel++; }
+      else { y1sel++; y2sel++; }
+    }  
+    else if (stencil) { ysten++; }  
     else if (selection) { y1sel++; y2sel++; }
     else if ((menu) && (activeLyr != numLayers-1))
     {
@@ -278,7 +290,13 @@ void keyPressed()
   // previous palette page
   if (keyCode == LEFT)
   {
-    if (stencil) { xsten--; }
+    if (stencil && selection)
+    {
+      if (tool == "Stencil") { xsten--; }
+      else if (tool == "Select") { x1sel--; x2sel--; }
+      else { x1sel--; x2sel--; }
+    }  
+    else if (stencil) { xsten--; }
     else if (selection) { x1sel--; x2sel--; }
     else if (menu)
     {
@@ -289,7 +307,13 @@ void keyPressed()
   // next palette page
   if (keyCode == RIGHT)
   {
-    if (stencil) { xsten++; }  
+    if (stencil && selection)
+    {
+      if (tool == "Stencil") { xsten++; }
+      else if (tool == "Select") { x1sel++; x2sel++; }
+      else { x1sel++; x2sel++; }
+    }  
+    else if (stencil) { xsten++; }  
     else if (selection) { x1sel++; x2sel++; }
     else if (menu)
     {
