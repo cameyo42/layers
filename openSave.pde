@@ -1,3 +1,40 @@
+// OPEN STENCIL
+//*********************************
+void openStencilDialog()
+{
+  noLoop();
+  selectInput("Select a file...", "loadStencil");
+}
+//*********************************
+void loadStencil(File selection)
+{
+  if (selection == null) { println("No file selected."); }
+  else
+  {
+    // get filename with full path: (c:\demo\draw.png)
+    filename=selection.getAbsolutePath();
+    // extract only filename (without ext)
+    name = selection.getName();
+    int pos = name.lastIndexOf(".");
+    if (pos > 0) { name = name.substring(0, pos); }
+    dummyFile = new File(selection.getName());
+    loadingStencil = true; // call openStencil() from draw()
+    //println(filename, name);
+  }
+  keyPressed = false; // needed !!
+  mousePressed = false;
+  loop();
+}
+//*********************************
+void openStencil()
+{
+  loadingStencil = false;
+  stencilIMG = loadImage(filename);
+  ysten = height/2 - stencilIMG.height/2;
+  xsten = width/2 - stencilIMG.width/2;    
+  stencil = true;
+}
+
 //*********************************
 boolean fileExists(String path)
 {

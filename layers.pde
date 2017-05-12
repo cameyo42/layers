@@ -221,6 +221,7 @@ color fillSelect;
 // stencil
 PImage stencilIMG;
 boolean stencil;
+boolean loadingStencil;
 int xsten, ysten;
 
 
@@ -325,6 +326,7 @@ void setup()
   // stencil
   stencil = false;
   stencilIMG = loadImage("stencil.png");
+  loadingStencil = false;
   ysten = height/2 - stencilIMG.height/2;
   xsten = width/2 - stencilIMG.width/2;  
   // undo/redo variables
@@ -716,6 +718,12 @@ void draw()
     }
   }
 
+  // load an image on current layer
+  if (loadingStencil)
+  {
+    openStencil();
+  }
+  
   // load an image on current layer
   if (loadingLayer)
   {

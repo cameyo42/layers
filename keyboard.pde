@@ -31,6 +31,7 @@ void keyPressed()
     //  saveStrings(dataPath("cobweb.web"), outTXT);
     //}
     //createStencil();
+    openStencilDialog();
   }
 
   if (key==',')
@@ -50,9 +51,9 @@ void keyPressed()
     //println(cobweb.size());
     //updateWeb = true;
     //int pick = stencilIMG.get(mouseX,mouseY*stencilIMG.width));
-    int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);    
-    println(mouseX, mouseY, a);
-    stencil = !stencil;
+    //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);    
+    //println(mouseX, mouseY, a);
+    //stencil = !stencil;
   }
 
   // Toggle selection
