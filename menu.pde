@@ -10,7 +10,7 @@ void showMenu()
   stroke(0);
   fill(backCol);
   rect(4, 14, brushSizeMax+10, brushSizeMax+10);
-  if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" || tool == "Vernice" || tool == "Mixer" || tool == "Web")
+  if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" || tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" )
   {
     noStroke();
     fill(brushCol);
@@ -75,6 +75,7 @@ void showMenu()
   btnCIRCLE.show();
   btnERASER.show();
   btnSELECT.show();
+  btnSTENCIL.show();
   btnVERNICE.show();
   btnINK.show();
   btnSTAMP.show();

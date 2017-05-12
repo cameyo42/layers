@@ -30,7 +30,7 @@ void keyPressed()
     //  String[] outTXT = split(lista, "\n");
     //  saveStrings(dataPath("cobweb.web"), outTXT);
     //}
-    createStencil();
+    //createStencil();
   }
 
   if (key==',')
@@ -55,11 +55,17 @@ void keyPressed()
     stencil = !stencil;
   }
 
-  // clear selection
+  // Toggle selection
   if (keyCode==114) // F3
   {
     selection = !selection;
   }
+  
+  // Toggle stencil
+  if (keyCode==115) // F4
+  {
+    stencil = !stencil;
+  }  
 
   // draw palette on active layer from brushCol to oldCol (the colors on rgbhsb tool)
   if ((key=='j') || (key=='J'))
@@ -245,7 +251,8 @@ void keyPressed()
   // move active layer UP
   if (keyCode == UP)
   {
-    if (selection) { y1sel--; y2sel--; }
+    if (stencil) { ysten--; }
+    else if (selection) { y1sel--; y2sel--; }
     else if ((menu) && (activeLyr != 0))
     {
       swapLayers(activeLyr,activeLyr-1);
@@ -255,7 +262,8 @@ void keyPressed()
   // move active layer DOWN
   if (keyCode == DOWN)
   {
-    if (selection) { y1sel++; y2sel++; }
+    if (stencil) { ysten++; }  
+    else if (selection) { y1sel++; y2sel++; }
     else if ((menu) && (activeLyr != numLayers-1))
     {
       // move current layer down
@@ -267,7 +275,8 @@ void keyPressed()
   // previous palette page
   if (keyCode == LEFT)
   {
-    if (selection) { x1sel--; x2sel--; }
+    if (stencil) { xsten--; }
+    else if (selection) { x1sel--; x2sel--; }
     else if (menu)
     {
       // move current layer up
@@ -277,7 +286,8 @@ void keyPressed()
   // next palette page
   if (keyCode == RIGHT)
   {
-    if (selection) { x1sel++; x2sel++; }
+    if (stencil) { xsten++; }  
+    else if (selection) { x1sel++; x2sel++; }
     else if (menu)
     {
       activePalettePage = constrain(++activePalettePage,0,12);

@@ -126,7 +126,7 @@ void showCursor(int x, int y, boolean zoom, float zoomFactor)
       ellipse(mouseX,mouseY, brushSize+10, brushSize+10);
     }
   }
-  else if (tool == "Vernice") // VERNICE cursor
+  else if (tool == "Vernice" || tool == "Stencil") // VERNICE cursor
   {
     if (zoom)
     {

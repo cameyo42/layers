@@ -34,9 +34,9 @@ DynaButton btnPRE01, btnPRE02, btnPRE03, btnPRE04, btnPRE05, btnPRE06, btnPRE07,
 // Stamp Brush
 StampBrushes mySB;
 // Test
-//import java.util.HashSet;
-//import java.util.Set;
-//Set<String> pts = new HashSet<String>();
+import java.util.HashSet;
+import java.util.Set;
+Set<String> pts = new HashSet<String>();
 
 // tools icon images
 PImage gui_IMG;
@@ -45,6 +45,7 @@ PImage pencilON_IMG, pencilOFF_IMG, eraserON_IMG, eraserOFF_IMG, fillerON_IMG, f
 PImage undoON_IMG, undoOFF_IMG, redoON_IMG, redoOFF_IMG, lockON_IMG, lockOFF_IMG;
 PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampOFF_IMG, dynaON_IMG, dynaOFF_IMG;
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
+PImage stencilON_IMG, stencilOFF_IMG;
 PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
@@ -172,7 +173,7 @@ int[] redoLyr;
 
 // GUI elements (buttons, slider, spinners, ...)
 ButtonIMG btnPENCIL, btnLINER, btnQUAD, btnCIRCLE, btnERASER, btnLOCK;
-ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT;
+ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT, btnSTENCIL;
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
 ButtonColor btcBACKCOL;
@@ -221,9 +222,7 @@ color fillSelect;
 PImage stencilIMG;
 boolean stencil;
 int xsten, ysten;
-import java.util.HashSet;
-import java.util.Set;
-Set<String> pts = new HashSet<String>();
+
 
 //*********************************
 //*********************************
@@ -235,7 +234,6 @@ void setup()
   size(1300,750);
   smooth();
   noCursor();
-  println("layers 2017");
   frameRate(100);
   OS = platformNames[platform];
   if (OS == "windows")
@@ -324,12 +322,11 @@ void setup()
   y1sel = 0;
   x2sel = 0;
   y2sel = 0;
-  
   // stencil
-  stencil = true;
+  stencil = false;
   stencilIMG = loadImage("stencil.png");
-  //createStencil();
-  
+  ysten = height/2 - stencilIMG.height/2;
+  xsten = width/2 - stencilIMG.width/2;  
   // undo/redo variables
   grab = true;
   numUndo = 10;
@@ -403,6 +400,8 @@ void setup()
   stampBRUSHES_IMG = gui_IMG.get(775, 213, 177, 17);
   selectON_IMG = gui_IMG.get(1240, 136, 34, 34);
   selectOFF_IMG = gui_IMG.get(1274, 136, 34, 34);
+  stencilON_IMG = gui_IMG.get(1240, 170, 34, 34);
+  stencilOFF_IMG = gui_IMG.get(1274, 170, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -454,6 +453,7 @@ void setup()
   cbWEBP = new Checkbox(192, 444, 14, 14, "Points", false, black, darkGray, highLight, gray, textMenuCol, "cb_WEBP");
   btnERASER = new ButtonIMG(270, 108, eraserON_IMG, eraserOFF_IMG, false, "", textMenuCol, "btn_ERASER");
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
+  btnSTENCIL = new ButtonIMG(41, 328, stencilON_IMG, stencilOFF_IMG, false, "", textMenuCol, "btn_STENCIL");
   btnUNDO = new ButtonIMG(230, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
   btnREDO = new ButtonIMG(271, 698, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
   cbSYMX = new Checkbox(6, 92, 14, 14, "X mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMX");
@@ -584,23 +584,24 @@ void sl_ALFA()
   //brushCol = color(red(brushCol),green(brushCol),blue(brushCol),alfa);
   brushCol = color((brushCol >> 16) & 0xFF, (brushCol >> 8)  & 0xFF, brushCol & 0xFF, alfa);
 }
-void btn_PENCIL() { selectTool("Pencil"); }
-void btn_LINER()  { selectTool("Liner"); }
-void btn_QUAD()   { selectTool("Quad"); }
-void btn_LOCK()   { quadLock = !quadLock; circleLock = !circleLock; btnLOCK.s = !btnLOCK.s;}
-void btn_ERASER() { selectTool("Eraser"); }
-void btn_SELECT() { selectTool("Select"); }
-void btn_CIRCLE() { selectTool("Circle"); }
-void btn_VERNICE(){ selectTool("Vernice"); }
-void btn_INK()    { selectTool("Ink"); }
-void btn_STAMP()  { selectTool("Stamp"); }
-void btn_DYNA()   { selectTool("Dyna"); }
-void btn_FILLER() { selectTool("Filler"); }
-void btn_MIXER()  { selectTool("Mixer"); }
-void btn_CLONE()  { selectTool("Clone"); }
-void btn_WEB()    { selectTool("Web"); }
-void btn_UNDO()   { undo(); }
-void btn_REDO()   { redo(); }
+void btn_PENCIL()   { selectTool("Pencil"); }
+void btn_LINER()    { selectTool("Liner"); }
+void btn_QUAD()     { selectTool("Quad"); }
+void btn_LOCK()     { quadLock = !quadLock; circleLock = !circleLock; btnLOCK.s = !btnLOCK.s;}
+void btn_ERASER()   { selectTool("Eraser"); }
+void btn_CIRCLE()   { selectTool("Circle"); }
+void btn_VERNICE()  { selectTool("Vernice"); }
+void btn_INK()      { selectTool("Ink"); }
+void btn_STAMP()    { selectTool("Stamp"); }
+void btn_DYNA()     { selectTool("Dyna"); }
+void btn_FILLER()   { selectTool("Filler"); }
+void btn_MIXER()    { selectTool("Mixer"); }
+void btn_CLONE()    { selectTool("Clone"); }
+void btn_WEB()      { selectTool("Web"); }
+void btn_SELECT()   { selectTool("Select"); }
+void btn_STENCIL()  { selectTool("Stencil"); }
+void btn_UNDO()     { undo(); }
+void btn_REDO()     { redo(); }
 // CLONE slider method
 void cb_CLONE() { }
 // STAMP slider method
@@ -777,8 +778,6 @@ void draw()
   if (stencil)
   {
     //imageMode(CENTER);
-    ysten = height/2 - stencilIMG.height/2;
-    xsten = width/2 - stencilIMG.width/2;
     image(stencilIMG, xsten, ysten);
     //imageMode(CORNER);
   }  
@@ -830,6 +829,7 @@ void selectTool(String t)
   else if (t == "Clone")   { btnCLONE.s = true; }
   else if (t == "Web")     { btnWEB.s = true; setWebBrush(); }
   else if (t == "Select")  { btnSELECT.s = true; selection = true;}
+  else if (t == "Stencil") { btnSTENCIL.s = true; stencil = true;}
   else if (t == "TEST")    { }
 }
 

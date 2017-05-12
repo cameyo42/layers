@@ -156,6 +156,7 @@ void drawLinePIXEL(int x1, int y1, int x2, int y2, int s, PGraphics pg)
   // fill ellipse with points
   int ll = width*height;
   int rr = s/2;
+  stencilIMG.loadPixels();
   for (int xi = x - rr; xi < x + rr; xi++)
   {
     for (int yi = y - rr; yi < y + rr; yi++)
@@ -167,12 +168,14 @@ void drawLinePIXEL(int x1, int y1, int x2, int y2, int s, PGraphics pg)
         {
           //pg.pixels[loc] = brushCol;
 
-          if ( (stencil) && (xi > xsten) && (xi < xsten+stencilIMG.width) && (yi > ysten) && (yi < ysten+stencilIMG.height) )
+          if ( (stencil) && (xi >= xsten) && (xi < xsten+stencilIMG.width) && (yi >= ysten) && (yi < ysten+stencilIMG.height) )
           {
-            String pt = String.valueOf(loc);
-            if (pts.contains(pt))
+            //String pt = String.valueOf(loc);
+            //if (pts.contains(pt))
+            if (((stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width] >> 24) & 0xff ) == 0) //transparent )
             {
               pg.pixels[loc] = brushCol;
+              //println((xi-xsten),(yi-ysten),stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width]);
               //println("contain");
             }
             //else {println("not contain"); }
@@ -208,10 +211,11 @@ void drawLinePIXEL(int x1, int y1, int x2, int y2, int s, PGraphics pg)
           if ((loc < ll && loc > 0 && xi < width && xi > 0) && ((xi - x) * (xi - x) + (yi - y) * (yi - y) < rr*rr))
           {
             //pg.pixels[loc] = brushCol;
-            if ( (stencil) && (xi > xsten) && (xi < xsten+stencilIMG.width) && (yi > ysten) && (yi < ysten+stencilIMG.height) )
+            if ( (stencil) && (xi >= xsten) && (xi < xsten+stencilIMG.width) && (yi >= ysten) && (yi < ysten+stencilIMG.height) )
             {
-              String pt = String.valueOf(loc);
-              if (pts.contains(pt))
+              //String pt = String.valueOf(loc);
+              //if (pts.contains(pt))
+              if (((stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width] >> 24) & 0xff ) == 0) //transparent )              
               {
                 pg.pixels[loc] = brushCol;
                 //println("contain");

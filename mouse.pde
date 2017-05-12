@@ -158,7 +158,7 @@ void mousePressed()
     }
 
     // VERNICE PRESSED
-    else if ((!keyPressed) && (tool=="Vernice") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    else if ((!keyPressed) && (tool=="Vernice" || tool == "Stencil") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       startAction = true;
       int x0 = mouseX;
@@ -406,6 +406,7 @@ void mousePressed()
     btnCIRCLE.onClick();
     btnERASER.onClick();
     btnSELECT.onClick();
+    btnSTENCIL.onClick();
     btnVERNICE.onClick();
     btnINK.onClick();
     btnSTAMP.onClick();
@@ -837,7 +838,7 @@ void mouseDragged()
     }
 
     // VERNICE DRAGGED
-    if ((!keyPressed) && (tool=="Vernice") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    if ((!keyPressed) && (tool=="Vernice" || tool == "Stencil") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       int x0 = mouseX;
       int y0 = mouseY;

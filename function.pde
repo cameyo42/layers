@@ -498,7 +498,7 @@ void createStencil()
 { 
   println("createStencil");
   pts.clear();
-  println(stencilIMG.width,stencilIMG.height);
+  println(stencilIMG.width,stencilIMG.height,pts.size());
   stencilIMG.loadPixels();
   
   livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
@@ -508,7 +508,7 @@ void createStencil()
   {
     for (int y = 0; y < stencilIMG.height; y++)
     {
-      println(x,y,x+xsten,y+ysten,stencilIMG.pixels[x+y*stencilIMG.width]);
+      //println(x,y,x+xsten,y+ysten,stencilIMG.pixels[x+y*stencilIMG.width]);
       //if (stencilIMG.pixels[x+y*stencilIMG.width] == 0x0)
       if (stencilIMG.pixels[x+y*stencilIMG.width] == 0) //transparent 
       {
@@ -517,6 +517,7 @@ void createStencil()
         int loc = xx + yy*width;
         String newPt = String.valueOf(loc);
         pts.add(newPt);
+              println(x,y,x+xsten,y+ysten,stencilIMG.pixels[x+y*stencilIMG.width]);
         //livelli[activeLyr].pg.pixels[loc] = color(0);
         //livelli[activeLyr].pg.ellipse(xx,yy,5,5);
         //println(x,y,xx,yy,loc);
@@ -528,5 +529,5 @@ void createStencil()
   
   livelli[activeLyr].pg.updatePixels();          
   livelli[activeLyr].pg.endDraw(); // open active layer PGraphics
-  
+  println(pts.size());
 }
