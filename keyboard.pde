@@ -16,7 +16,7 @@ void keyPressed()
     //println("pointsW = ", pointsW);
     //println("eraseW = ", eraseW);
     //println("tool = ",tool);
-    
+
     //String lista="", riga="";
     //// get data from griglia matrix
     //if (cobweb.size() > 0)
@@ -31,7 +31,7 @@ void keyPressed()
     //  saveStrings(dataPath("cobweb.web"), outTXT);
     //}
     //createStencil();
-    openStencilDialog();
+    createStencilFromSelection();
   }
 
   if (key==',')
@@ -51,7 +51,7 @@ void keyPressed()
     //println(cobweb.size());
     //updateWeb = true;
     //int pick = stencilIMG.get(mouseX,mouseY*stencilIMG.width));
-    //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);    
+    //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);
     //println(mouseX, mouseY, a);
     //stencil = !stencil;
   }
@@ -59,14 +59,19 @@ void keyPressed()
   // Toggle selection
   if (keyCode==114) // F3
   {
-    aSelection = !aSelection;
+    //aSelection = !aSelection;
+    //cbSELECT.s = aSelection;
+    if ((x1sel == x2sel) || (y1sel == y2sel)) { aSelection = false; }
+    else { aSelection = !aSelection; }
+    cbSELECT.s = aSelection;
   }
-  
+
   // Toggle stencil
   if (keyCode==115) // F4
   {
     stencil = !stencil;
-  }  
+    cbSTENCIL.s = stencil;
+  }
 
   // draw palette on active layer from brushCol to oldCol (the colors on rgbhsb tool)
   if ((key=='j') || (key=='J'))
@@ -276,8 +281,8 @@ void keyPressed()
       if (tool == "Stencil") { ysten++; }
       else if (tool == "Select") { y1sel++; y2sel++; }
       else { y1sel++; y2sel++; }
-    }  
-    else if (stencil) { ysten++; }  
+    }
+    else if (stencil) { ysten++; }
     else if (aSelection) { y1sel++; y2sel++; }
     else if ((menu) && (activeLyr != numLayers-1))
     {
@@ -295,7 +300,7 @@ void keyPressed()
       if (tool == "Stencil") { xsten--; }
       else if (tool == "Select") { x1sel--; x2sel--; }
       else { x1sel--; x2sel--; }
-    }  
+    }
     else if (stencil) { xsten--; }
     else if (aSelection) { x1sel--; x2sel--; }
     else if (menu)
@@ -312,8 +317,8 @@ void keyPressed()
       if (tool == "Stencil") { xsten++; }
       else if (tool == "Select") { x1sel++; x2sel++; }
       else { x1sel++; x2sel++; }
-    }  
-    else if (stencil) { xsten++; }  
+    }
+    else if (stencil) { xsten++; }
     else if (aSelection) { x1sel++; x2sel++; }
     else if (menu)
     {

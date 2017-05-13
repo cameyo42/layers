@@ -1,5 +1,5 @@
 // Layers: a sketch for painting
-// version 0.5
+// version 0.6
 // written with processing 3.x
 // by cameyo 2017
 // WTFPL license (see the WTFPL.txt file)
@@ -46,7 +46,7 @@ PImage undoON_IMG, undoOFF_IMG, redoON_IMG, redoOFF_IMG, lockON_IMG, lockOFF_IMG
 PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampOFF_IMG, dynaON_IMG, dynaOFF_IMG;
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
 PImage stencilON_IMG, stencilOFF_IMG;
-PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG;
+PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
 PImage stampBRUSHES_IMG;
@@ -176,9 +176,11 @@ ButtonIMG btnPENCIL, btnLINER, btnQUAD, btnCIRCLE, btnERASER, btnLOCK;
 ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT, btnSTENCIL;
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
+Button btSTENLOAD, btSTENCREA, btSTENCENTER;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
 Checkbox cbSYMX, cbSYMY, cbGLITCH, cbGRID, cbSNAP, cbCLONE, cbWEBE, cbWEBP;
+Checkbox cbSELECT, cbSTENCIL, cbFILLERASE;
 SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
 
 // mixer brush
@@ -328,7 +330,7 @@ void setup()
   stencilIMG = loadImage("stencil.png");
   loadingStencil = false;
   ysten = height/2 - stencilIMG.height/2;
-  xsten = width/2 - stencilIMG.width/2;  
+  xsten = width/2 - stencilIMG.width/2;
   // undo/redo variables
   grab = true;
   numUndo = 10;
@@ -402,6 +404,9 @@ void setup()
   stampBRUSHES_IMG = gui_IMG.get(775, 213, 177, 17);
   selectON_IMG = gui_IMG.get(1240, 136, 34, 34);
   selectOFF_IMG = gui_IMG.get(1274, 136, 34, 34);
+  creaStencil_IMG = gui_IMG.get(1308, 150, 20, 20);
+  loadStencil_IMG = gui_IMG.get(1308, 170, 20, 20);
+  centerStencil_IMG = gui_IMG.get(1308, 190, 20, 20);
   stencilON_IMG = gui_IMG.get(1240, 170, 34, 34);
   stencilOFF_IMG = gui_IMG.get(1274, 170, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
@@ -442,6 +447,7 @@ void setup()
   btnDYNA = new ButtonIMG(5, 292, dynaON_IMG, dynaOFF_IMG, false, "", textMenuCol, "btn_DYNA");
   btnFILLER = new ButtonIMG(41, 292, fillerON_IMG, fillerOFF_IMG, false, "", textMenuCol, "btn_FILLER");
   slFILLER = new Slider(10, 388, 280, 388, 5, "threshold", 0, 100, 0, black, highLight, black, textMenuCol, "sl_FILLER");
+  cbFILLERASE = new Checkbox(6, 420, 14, 14, "erase", false, black, darkGray, highLight, gray, textMenuCol, "cb_FILLERASE");
   btnCLONE = new ButtonIMG(77, 292, cloneON_IMG, cloneOFF_IMG, false, "", textMenuCol, "btn_CLONE");
   cbCLONE = new Checkbox(6, 380, 14, 14, "Aligned", false, black, darkGray, highLight, gray, textMenuCol, "cb_CLONE");
   btnWEB = new ButtonIMG(113, 292, webON_IMG, webOFF_IMG, false, "", textMenuCol, "btn_WEB");
@@ -455,7 +461,12 @@ void setup()
   cbWEBP = new Checkbox(192, 444, 14, 14, "Points", false, black, darkGray, highLight, gray, textMenuCol, "cb_WEBP");
   btnERASER = new ButtonIMG(270, 108, eraserON_IMG, eraserOFF_IMG, false, "", textMenuCol, "btn_ERASER");
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
+  cbSELECT = new Checkbox(6, 380, 14, 14, "Show", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
   btnSTENCIL = new ButtonIMG(41, 328, stencilON_IMG, stencilOFF_IMG, false, "", textMenuCol, "btn_STENCIL");
+  cbSTENCIL = new Checkbox(6, 380, 14, 14, "Show", false, black, darkGray, highLight, gray, textMenuCol, "cb_STENCIL");
+  btSTENLOAD = new Button(70, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
+  btSTENCREA = new Button(110, 380, creaStencil_IMG, "create", textMenuCol, "bt_STENCREA");
+  btSTENCENTER = new Button(150, 380, centerStencil_IMG, "center", textMenuCol, "bt_STENCENTER");
   btnUNDO = new ButtonIMG(230, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
   btnREDO = new ButtonIMG(271, 698, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
   cbSYMX = new Checkbox(6, 92, 14, 14, "X mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMX");
@@ -551,7 +562,7 @@ void setup()
 
   // set UNDO/REDO
   resetUNDO_REDO();
-}
+} // end setup()
 
 // GUI elements methods
 // palette method
@@ -604,6 +615,28 @@ void btn_SELECT()   { selectTool("Select"); }
 void btn_STENCIL()  { selectTool("Stencil"); }
 void btn_UNDO()     { undo(); }
 void btn_REDO()     { redo(); }
+// SELECT checkbox
+void cb_SELECT()
+{
+  //aSelection = !aSelection;
+  //cbSELECT.s = aSelection;
+  if ((x1sel == x2sel) || (y1sel == y2sel)) { aSelection = false; }
+  else { aSelection = !aSelection; }
+  cbSELECT.s = aSelection;
+}
+// STENCIL options method
+void cb_STENCIL()
+{
+  stencil = !stencil;
+  cbSTENCIL.s = stencil;
+}
+void bt_STENCREA() { createStencilFromSelection(); }
+void bt_STENLOAD() { openStencilDialog(); }
+void bt_STENCENTER()
+{
+  ysten = height/2 - stencilIMG.height/2;
+  xsten = width/2 - stencilIMG.width/2;
+}
 // CLONE slider method
 void cb_CLONE() { }
 // STAMP slider method
@@ -612,8 +645,9 @@ void sl_STAMP2() { }
 // MIXER slider method
 void sl_MIXERA() { }
 void sl_MIXERD() { }
-// FILLER slider method
+// FILLER method
 void sl_FILLER() { }
+void cb_FILLERASE() { }
 // WEB method
 void sl_WEBA() { }
 void sl_WEBD() { }
@@ -723,7 +757,7 @@ void draw()
   {
     openStencil();
   }
-  
+
   // load an image on current layer
   if (loadingLayer)
   {
@@ -781,18 +815,18 @@ void draw()
     stroke(highLight);
     rect(x1sel,y1sel,x2sel-x1sel,y2sel-y1sel);
   }
-  
+
   //show stencil
   if (stencil)
   {
     //imageMode(CENTER);
     image(stencilIMG, xsten, ysten);
     //imageMode(CORNER);
-  }  
+  }
 
   // show HSB color selector
   if (toolHSB)  { myHSB.show(); }
-  
+
   // show menu
   if (menu) { showMenu(); }
 
@@ -801,7 +835,7 @@ void draw()
 
   // show information on window title bar
   showInfo();
-}
+}  // end draw()
 
 //*********************************
 void selectTool(String t)
@@ -838,7 +872,7 @@ void selectTool(String t)
   else if (t == "Clone")   { btnCLONE.s = true; }
   else if (t == "Web")     { btnWEB.s = true; setWebBrush(); }
   else if (t == "Select")  { btnSELECT.s = true; checkSelection();}
-  else if (t == "Stencil") { btnSTENCIL.s = true; stencil = true;}
+  else if (t == "Stencil") { btnSTENCIL.s = true; stencil = true; cbSTENCIL.s = stencil;}
   else if (t == "TEST")    { }
 }
 
@@ -847,7 +881,9 @@ void checkSelection()
   if ((x1sel == x2sel) || (y1sel == y2sel))
   { aSelection = false; }
   else { aSelection = true; }
+  cbSELECT.s = aSelection;
 }
+
 void setWebBrush()
 {
   brushSize = 1; slSIZE.v = 1;
@@ -861,6 +897,7 @@ void showInfo()
 {
   String info;
   info = nfs(mouseX,4) + "," + nfs(mouseY,4) + " | " + tool + " | size: " + str(brushSize) + " | layer: " + str(activeLyr+1);
+  info = info + " | sel: " + aSelection;
   info = info + " | " + width + "x" + height;
   info = info + " (" + nf(int(frameRate),0) + ")";
 // set window title

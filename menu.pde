@@ -112,6 +112,7 @@ void showMenu()
   if (tool == "Filler")   // show Filler Options
   {
     slFILLER.show();
+    cbFILLERASE.show();
   }
   // show Dyna Options
   else if (tool == "Dyna")
@@ -159,5 +160,18 @@ void showMenu()
   else if (tool == "Clone")
   {
     cbCLONE.show();
+  }
+  // Show Select Options
+  else if (tool == "Select")
+  {
+    cbSELECT.show();
+  }
+  // Show Stencil Options
+  else if (tool == "Stencil")
+  {
+    cbSTENCIL.show();
+    btSTENLOAD.show();
+    btSTENCENTER.show();
+    btSTENCREA.show();
   }
 }

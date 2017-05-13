@@ -27,7 +27,8 @@ void floodFill(PGraphics buffer, int orgX, int orgY, int newColor)
   //println("Fill: proceed...");
   Point p = new Point(orgX, orgY);
   // calculate max color tolerance
-  fillTolMax = colorDist(orgColor,newColor)-1;
+  fillTolMax = colorDist(orgColor,newColor)-0.1;
+  //fillTolMax = colorDist(orgColor,newColor);
   fillTolerance = map(slFILLER.v,0,100,0,fillTolMax);
   //println(fillTolMax,slFILLER.v,fillTolerance);
   q.add(p);
@@ -43,6 +44,54 @@ void floodFill(PGraphics buffer, int orgX, int orgY, int newColor)
       for (int x = west + 1; x < east; x++)
       {
         pxl[x + p.y * pw] = newColor;
+        //pxl[x + p.y * pw] = 0x0;
+        if (isToFill(x, p.y - 1, pxl, pw, ph, orgColor, fillTolerance))
+          q.add(new Point(x, p.y - 1));
+        if (isToFill(x, p.y + 1, pxl, pw, ph, orgColor, fillTolerance))
+          q.add(new Point(x, p.y + 1));
+      }
+    }
+  }
+  buffer.updatePixels();
+  buffer.endDraw();
+}
+
+// eraseFill: floodFill algorithm used to erase
+void eraseFill(PGraphics buffer, int orgX, int orgY, int newColor)
+{
+  newColor = 0x0;
+  float fillTolerance = 0.0;
+  int pw = buffer.width;
+  int ph = buffer.height;
+  buffer.beginDraw();
+  buffer.loadPixels();
+  int [] pxl = buffer.pixels;
+  int orgColor = pxl[orgX + orgY * pw];
+  // Do not fill if same colors and stop
+  if ((newColor == orgColor))
+    return;
+  // Proceed with flood fill
+  //println("Fill: proceed...");
+  Point p = new Point(orgX, orgY);
+  // calculate max color tolerance
+  fillTolMax = colorDist(orgColor,newColor)-1;
+  //fillTolMax = colorDist(orgColor,newColor);
+  fillTolerance = map(slFILLER.v,0,100,0,fillTolMax);
+  //println(fillTolMax,slFILLER.v,fillTolerance);
+  q.add(p);
+  int west, east;
+  while (!q.isEmpty ())
+  {
+    p = q.removeFirst();
+    if (isToFill(p.x, p.y, pxl, pw, ph, orgColor, fillTolerance))
+    {
+      west = east = p.x;
+      while (isToFill(--west, p.y, pxl, pw, ph, orgColor, fillTolerance));
+      while (isToFill(++east, p.y, pxl, pw, ph, orgColor, fillTolerance));
+      for (int x = west + 1; x < east; x++)
+      {
+        pxl[x + p.y * pw] = newColor;
+        //pxl[x + p.y * pw] = 0x0;
         if (isToFill(x, p.y - 1, pxl, pw, ph, orgColor, fillTolerance))
           q.add(new Point(x, p.y - 1));
         if (isToFill(x, p.y + 1, pxl, pw, ph, orgColor, fillTolerance))
@@ -66,6 +115,7 @@ boolean isToFill(int px, int py, int[] pxl, int pw, int ph, int orgColor, float 
     return false;
   // same colors ?
   if (pxl[px + py * pw] == orgColor) { return true; }
+
   // similar colors ?
   d = colorDist(pxl[px + py * pw], orgColor);
   if (d < fillTol)

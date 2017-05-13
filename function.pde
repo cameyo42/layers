@@ -468,6 +468,7 @@ void calcSymXY(float px1, float py1, float px2, float py2)
   s2y = int(round(2*centerY-py2));
 }
 
+//*********************************
 // draw web point
 void drawWebPoint()
 {
@@ -489,28 +490,25 @@ void drawWebPoint()
       }
       web.updatePixels();
       web.endDraw();
-    }  
+    }
     image(web,0,0);
   }
 }
 
-void createStencil()
-{ 
-  println("createStencil");
+//*********************************
+void createSetofPoints()
+{
   pts.clear();
-  println(stencilIMG.width,stencilIMG.height,pts.size());
   stencilIMG.loadPixels();
-  
   livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
-  livelli[activeLyr].pg.loadPixels();        
-  
+  livelli[activeLyr].pg.loadPixels();
   for (int x = 0; x < stencilIMG.width; x++)
   {
     for (int y = 0; y < stencilIMG.height; y++)
     {
       //println(x,y,x+xsten,y+ysten,stencilIMG.pixels[x+y*stencilIMG.width]);
       //if (stencilIMG.pixels[x+y*stencilIMG.width] == 0x0)
-      if (stencilIMG.pixels[x+y*stencilIMG.width] == 0) //transparent 
+      if (stencilIMG.pixels[x+y*stencilIMG.width] == 0) //transparent
       {
         int xx = x + xsten;
         int yy = y + ysten;
@@ -518,16 +516,37 @@ void createStencil()
         String newPt = String.valueOf(loc);
         pts.add(newPt);
               println(x,y,x+xsten,y+ysten,stencilIMG.pixels[x+y*stencilIMG.width]);
-        //livelli[activeLyr].pg.pixels[loc] = color(0);
-        //livelli[activeLyr].pg.ellipse(xx,yy,5,5);
-        //println(x,y,xx,yy,loc);
-
-      }  
+      }
     }
-
   }
-  
-  livelli[activeLyr].pg.updatePixels();          
+  livelli[activeLyr].pg.updatePixels();
   livelli[activeLyr].pg.endDraw(); // open active layer PGraphics
-  println(pts.size());
+}
+
+//*********************************
+void createStencilFromSelection()
+{
+  if (aSelection)
+  {
+    stencilIMG = null;
+    stencilIMG = createImage(x2sel - x1sel, y2sel - y1sel, ARGB);
+    stencilIMG.loadPixels();
+    livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+    livelli[activeLyr].pg.loadPixels();
+    int loc = 0;
+    for (int x = 0; x < (x2sel - x1sel); x++)
+    {
+      for (int y = 0; y < (y2sel-y1sel); y++)
+      {
+        loc = ((x + x1sel+1) + (y + y1sel+1)*width);
+        stencilIMG.pixels[x+y*stencilIMG.width] = livelli[activeLyr].pg.pixels[loc];
+      }
+    }
+    stencilIMG.updatePixels();
+    livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    //center stencil
+    ysten = height/2 - stencilIMG.height/2;
+    xsten = width/2 - stencilIMG.width/2;
+  }
+  else { println("ERROR: no selection"); }
 }

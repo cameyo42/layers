@@ -31,7 +31,7 @@ void openStencil()
   loadingStencil = false;
   stencilIMG = loadImage(filename);
   ysten = height/2 - stencilIMG.height/2;
-  xsten = width/2 - stencilIMG.width/2;    
+  xsten = width/2 - stencilIMG.width/2;
   stencil = true;
 }
 

@@ -258,16 +258,31 @@ void mousePressed()
     // FILLER PRESSED
     else if ((!keyPressed) && (tool=="Filler") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
-      // do not fill if same colors
-      if (brushCol != livelli[activeLyr].pg.get(mouseX,mouseY))
+      if (!cbFILLERASE.s) // fill area
       {
-        startAction = true;
-        if (grab) { grabLayer(); }  // grab layer for Undo
-        // Flood fill area of active layer with current color
-        floodFill(livelli[activeLyr].pg, mouseX, mouseY, brushCol);
-        mousePressed = false;
+        // do not fill if same colors
+        if (brushCol != livelli[activeLyr].pg.get(mouseX,mouseY))
+        {
+          startAction = true;
+          if (grab) { grabLayer(); }  // grab layer for Undo
+          // Flood fill area of active layer with current color
+          floodFill(livelli[activeLyr].pg, mouseX, mouseY, brushCol);
+          mousePressed = false;
+        }
+        else { println("no fill: SAME COLORS"); }
       }
-      else { println("no fill: SAME COLORS"); }
+      else // erase area
+      {
+          if (((livelli[activeLyr].pg.get(mouseX,mouseY) >> 24) & 0xff ) != 0) // not transparent
+          {
+            startAction = true;
+            if (grab) { grabLayer(); }  // grab layer for Undo
+            // Flood fill area of active layer with current color
+            floodFill(livelli[activeLyr].pg, mouseX, mouseY, 0x0);
+            mousePressed = false;
+          }
+          else { println("no erase: ALREADY ERASED"); }
+      }
     }
 
     // CLONE PRESSED (LEFT BUTTON)
@@ -411,6 +426,7 @@ void mousePressed()
     if (tool == "Filler")
     {
       slFILLER.onClick();
+      cbFILLERASE.onClick();
     }
     // check Clone options
     else if (tool == "Clone")
@@ -458,6 +474,19 @@ void mousePressed()
       btnPRE06.onClick();
       btnPRE07.onClick();
       btnPRE08.onClick();
+    }
+    // check Select options
+    else if (tool == "Select")
+    {
+      cbSELECT.onClick();
+    }
+    // check Stencil options
+    else if (tool == "Stencil")
+    {
+      cbSTENCIL.onClick();
+      btSTENLOAD.onClick();
+      btSTENCENTER.onClick();
+      btSTENCREA.onClick();
     }
     // check background button
     btcBACKCOL.onClick();
@@ -1187,10 +1216,17 @@ void mouseReleased()
     else { x1sel = x2L; x2sel = x1L; }
     if (y1L < y2L) { y1sel = y1L; y2sel = y2L; }
     else { y1sel = y2L; y2sel = y1L; }
+    // check oustide coords
+    x1sel = constrain(x1sel,0,width-1);
+    x2sel = constrain(x2sel,0,width-1);
+    y1sel = constrain(y1sel,0,height-1);
+    y2sel = constrain(y2sel,0,height-1);
     // check null selection
     if ((x1sel == x2sel) || (y1sel == y2sel))
     { aSelection = false; }
     else { aSelection = true; }
+    // update SELECT checkbox
+    cbSELECT.s = aSelection;
   }
 
   // clone tool

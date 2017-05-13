@@ -170,7 +170,7 @@ void drawLinePIXEL(int x1, int y1, int x2, int y2, int s, PGraphics pg)
           {
             //String pt = String.valueOf(loc);
             //if (pts.contains(pt))
-            if (((stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width] >> 24) & 0xff ) == 0) //transparent )
+            if (((stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width] >> 24) & 0xff ) == 0) //transparent
             {
               pg.pixels[loc] = brushCol;
               //println((xi-xsten),(yi-ysten),stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width]);
@@ -213,7 +213,7 @@ void drawLinePIXEL(int x1, int y1, int x2, int y2, int s, PGraphics pg)
             {
               //String pt = String.valueOf(loc);
               //if (pts.contains(pt))
-              if (((stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width] >> 24) & 0xff ) == 0) //transparent )              
+              if (((stencilIMG.pixels[(xi-xsten)+(yi-ysten)*stencilIMG.width] >> 24) & 0xff ) == 0) // transparent
               {
                 pg.pixels[loc] = brushCol;
                 //println("contain");
