@@ -461,12 +461,12 @@ void setup()
   cbWEBP = new Checkbox(192, 444, 14, 14, "Points", false, black, darkGray, highLight, gray, textMenuCol, "cb_WEBP");
   btnERASER = new ButtonIMG(270, 108, eraserON_IMG, eraserOFF_IMG, false, "", textMenuCol, "btn_ERASER");
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
-  cbSELECT = new Checkbox(6, 380, 14, 14, "Show", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
+  cbSELECT = new Checkbox(6, 380, 14, 14, "active (F3)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
   btnSTENCIL = new ButtonIMG(41, 328, stencilON_IMG, stencilOFF_IMG, false, "", textMenuCol, "btn_STENCIL");
-  cbSTENCIL = new Checkbox(6, 380, 14, 14, "Show", false, black, darkGray, highLight, gray, textMenuCol, "cb_STENCIL");
-  btSTENLOAD = new Button(70, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
-  btSTENCREA = new Button(110, 380, creaStencil_IMG, "create", textMenuCol, "bt_STENCREA");
-  btSTENCENTER = new Button(150, 380, centerStencil_IMG, "center", textMenuCol, "bt_STENCENTER");
+  cbSTENCIL = new Checkbox(6, 380, 14, 14, "active (F4)", false, black, darkGray, highLight, gray, textMenuCol, "cb_STENCIL");
+  btSTENLOAD = new Button(95, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
+  btSTENCREA = new Button(135, 380, creaStencil_IMG, "create", textMenuCol, "bt_STENCREA");
+  btSTENCENTER = new Button(175, 380, centerStencil_IMG, "center", textMenuCol, "bt_STENCENTER");
   btnUNDO = new ButtonIMG(230, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
   btnREDO = new ButtonIMG(271, 698, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
   cbSYMX = new Checkbox(6, 92, 14, 14, "X mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMX");
