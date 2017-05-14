@@ -550,3 +550,31 @@ void createStencilFromSelection()
   }
   else { println("ERROR: no selection"); }
 }
+
+//*********************************
+// Invert colored <--> transparent pixels
+void invertStencil()
+{
+  stencilIMG.loadPixels();
+  int loc = 0;
+  for (int x = 0; x < stencilIMG.width; x++)
+  {
+    for (int y = 0; y < stencilIMG.height; y++)
+    {
+      loc = (x + y*stencilIMG.width);
+      if (((stencilIMG.pixels[loc] >> 24) & 0xff ) == 0) // transparent
+      {
+        stencilIMG.pixels[loc] = brushCol;
+      }
+      else
+      {
+        stencilIMG.pixels[loc] = 0x0;
+      }
+    }
+  }
+  stencilIMG.updatePixels();
+  //center stencil
+  ysten = height/2 - stencilIMG.height/2;
+
+  xsten = width/2 - stencilIMG.width/2;
+}

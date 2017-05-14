@@ -173,5 +173,6 @@ void showMenu()
     btSTENLOAD.show();
     btSTENCENTER.show();
     btSTENCREA.show();
+    btSTENINVERT.show();
   }
 }

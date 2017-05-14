@@ -46,7 +46,7 @@ PImage undoON_IMG, undoOFF_IMG, redoON_IMG, redoOFF_IMG, lockON_IMG, lockOFF_IMG
 PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampOFF_IMG, dynaON_IMG, dynaOFF_IMG;
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
 PImage stencilON_IMG, stencilOFF_IMG;
-PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG;
+PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
 PImage stampBRUSHES_IMG;
@@ -176,7 +176,7 @@ ButtonIMG btnPENCIL, btnLINER, btnQUAD, btnCIRCLE, btnERASER, btnLOCK;
 ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT, btnSTENCIL;
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
-Button btSTENLOAD, btSTENCREA, btSTENCENTER;
+Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
 Checkbox cbSYMX, cbSYMY, cbGLITCH, cbGRID, cbSNAP, cbCLONE, cbWEBE, cbWEBP;
@@ -407,6 +407,7 @@ void setup()
   creaStencil_IMG = gui_IMG.get(1308, 150, 20, 20);
   loadStencil_IMG = gui_IMG.get(1308, 170, 20, 20);
   centerStencil_IMG = gui_IMG.get(1308, 190, 20, 20);
+  invertStencil_IMG = gui_IMG.get(1308, 210, 20, 20);
   stencilON_IMG = gui_IMG.get(1240, 170, 34, 34);
   stencilOFF_IMG = gui_IMG.get(1274, 170, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
@@ -449,16 +450,15 @@ void setup()
   slFILLER = new Slider(10, 388, 280, 388, 5, "threshold", 0, 100, 0, black, highLight, black, textMenuCol, "sl_FILLER");
   cbFILLERASE = new Checkbox(6, 420, 14, 14, "erase", false, black, darkGray, highLight, gray, textMenuCol, "cb_FILLERASE");
   btnCLONE = new ButtonIMG(77, 292, cloneON_IMG, cloneOFF_IMG, false, "", textMenuCol, "btn_CLONE");
-  cbCLONE = new Checkbox(6, 380, 14, 14, "Aligned", false, black, darkGray, highLight, gray, textMenuCol, "cb_CLONE");
+  cbCLONE = new Checkbox(6, 380, 14, 14, "aligned", false, black, darkGray, highLight, gray, textMenuCol, "cb_CLONE");
   btnWEB = new ButtonIMG(113, 292, webON_IMG, webOFF_IMG, false, "", textMenuCol, "btn_WEB");
   slWEBA = new Slider(10, 422, 265, 422, 5, "attraction", 0, 200, 60, black, highLight, black, textMenuCol, "sl_WEBA");
   slWEBD = new Slider(10, 388, 210, 388, 5, "density", 0, 100, 40, black, highLight, black, textMenuCol, "sl_WEBD");
-  btWEB = new Button(278, 374, freeze_IMG, "Clear", textMenuCol, "bt_WEB");
-  //btWEB = new Button(255, 410, freeze_IMG, "freeze", textMenuCol, "bt_WEB");
+  btWEB = new Button(278, 374, freeze_IMG, "clear", textMenuCol, "bt_WEB");
   sbWEBJ = new SpinBound(35, 444, 50, 14, "jitter", 0, 1, 0, 50, black, gray, textMenuCol, "sb_WEBJ");
   sbWEBT = new SpinBound(126, 444, 50, 14, "type", 1, 1, 0, 4, black, gray, textMenuCol, "sb_WEBT");
-  cbWEBE = new Checkbox(254, 444, 14, 14, "Erase", false, black, darkGray, highLight, gray, textMenuCol, "cb_WEBE");
-  cbWEBP = new Checkbox(192, 444, 14, 14, "Points", false, black, darkGray, highLight, gray, textMenuCol, "cb_WEBP");
+  cbWEBE = new Checkbox(254, 444, 14, 14, "erase", false, black, darkGray, highLight, gray, textMenuCol, "cb_WEBE");
+  cbWEBP = new Checkbox(192, 444, 14, 14, "points", false, black, darkGray, highLight, gray, textMenuCol, "cb_WEBP");
   btnERASER = new ButtonIMG(270, 108, eraserON_IMG, eraserOFF_IMG, false, "", textMenuCol, "btn_ERASER");
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
   cbSELECT = new Checkbox(6, 380, 14, 14, "active (F3)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
@@ -467,6 +467,7 @@ void setup()
   btSTENLOAD = new Button(95, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
   btSTENCREA = new Button(135, 380, creaStencil_IMG, "create", textMenuCol, "bt_STENCREA");
   btSTENCENTER = new Button(175, 380, centerStencil_IMG, "center", textMenuCol, "bt_STENCENTER");
+  btSTENINVERT = new Button(215, 380, invertStencil_IMG, "invert", textMenuCol, "bt_STENINVERT");
   btnUNDO = new ButtonIMG(230, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
   btnREDO = new ButtonIMG(271, 698, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
   cbSYMX = new Checkbox(6, 92, 14, 14, "X mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMX");
@@ -630,9 +631,10 @@ void cb_STENCIL()
   stencil = !stencil;
   cbSTENCIL.s = stencil;
 }
-void bt_STENCREA() { createStencilFromSelection(); }
-void bt_STENLOAD() { openStencilDialog(); }
-void bt_STENCENTER()
+void bt_STENCREA()   { createStencilFromSelection(); }
+void bt_STENLOAD()   { openStencilDialog(); }
+void bt_STENINVERT() { invertStencil(); }
+void bt_STENCENTER() 
 {
   ysten = height/2 - stencilIMG.height/2;
   xsten = width/2 - stencilIMG.width/2;

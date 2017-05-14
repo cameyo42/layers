@@ -301,7 +301,7 @@ void mousePressed()
     }
   } // LEFT mouse if
 
-  if (mouseButton == RIGHT)
+  else if (mouseButton == RIGHT)
   {
     // CLONE PRESSED (RIGHT BUTTON)
     if ((!keyPressed) && (tool=="Clone") && (!livelli[activeLyr].ll) && !myHSB.isOver() && ((!menu) || (x1 > menuX)))
@@ -487,6 +487,7 @@ void mousePressed()
       btSTENLOAD.onClick();
       btSTENCENTER.onClick();
       btSTENCREA.onClick();
+      btSTENINVERT.onClick();
     }
     // check background button
     btcBACKCOL.onClick();

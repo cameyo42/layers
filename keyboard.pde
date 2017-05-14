@@ -5,6 +5,7 @@ void keyPressed()
   // test key
   if (key==';')
   {
+    invertStencil();
     //color c = livelli[activeLyr].pg.get(mouseX,mouseY);
     //println(c);
     //println(red(c),green(c),blue(c),alpha(c));
