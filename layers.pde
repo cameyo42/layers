@@ -808,20 +808,18 @@ void draw()
   // SELECT: show rect selection
   else if (selectDown) { ghostSelect(); }
 
+  //show stencil
+  if (stencil)
+  {
+    image(stencilIMG, xsten, ysten);
+  }
+  
   // show selection
   if (aSelection)
   {
     fill(fillSelect); //highLight
     stroke(highLight);
     rect(x1sel,y1sel,x2sel-x1sel,y2sel-y1sel);
-  }
-
-  //show stencil
-  if (stencil)
-  {
-    //imageMode(CENTER);
-    image(stencilIMG, xsten, ysten);
-    //imageMode(CORNER);
   }
 
   // show HSB color selector
