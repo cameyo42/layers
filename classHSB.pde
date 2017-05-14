@@ -68,10 +68,8 @@ class HSBcontrol
   {
     if (isOver())
     {
-      println(mouseButton); println("keyPressed = " + keyPressed);
-      if ((keyPressed && keyCode==SHIFT && mousePressed && mouseButton==LEFT) || (mousePressed && mouseButton==RIGHT && !keyPressed))
+      if ((keyPressed && keyCode==SHIFT && mousePressed && mouseButton==LEFT) || (!keyPressed && mousePressed && mouseButton==RIGHT))
       {
-        println(mouseButton);
         if (mouseY > y+ww-1) { updateHSB("H"); } //click on hues
         else { updateHSB("SB"); } // click on saturation/brightness
         method(m);

@@ -5,9 +5,9 @@
 // WTFPL license (see the WTFPL.txt file)
 // Thanks to:
 // Anonymous, Bird, Chrisir, GoToLoop,
-// jeremydouglass, kfrajer, koogs, Lord_of_the_Galaxy,
+// jas0501, jeremydouglass, kfrajer, koogs, Lord_of_the_Galaxy,
 // neilcsmith_net, PhilLo, prince_polka,
-// quark, TfGuy44, ...
+// quark, Shiffman, TfGuy44, ...
 
 // Import libraries
 // PDF output

@@ -2,61 +2,6 @@
 //*********************************
 void keyPressed()
 {
-  // test key
-  if (key==';')
-  {
-    invertStencil();
-    //color c = livelli[activeLyr].pg.get(mouseX,mouseY);
-    //println(c);
-    //println(red(c),green(c),blue(c),alpha(c));
-    //println(brushCol);
-    //println(red(brushCol),green(brushCol),blue(brushCol),alpha(brushCol));
-    //println(pts.size());
-    //println(dataPath("LAYERS.PDF"));
-    //println(cobweb.size());
-    //println("pointsW = ", pointsW);
-    //println("eraseW = ", eraseW);
-    //println("tool = ",tool);
-
-    //String lista="", riga="";
-    //// get data from griglia matrix
-    //if (cobweb.size() > 0)
-    //{
-    //  for (int p=0; p < cobweb.size(); p++)
-    //  {
-    //    PVector v = cobweb.get(p);
-    //    riga = str((int)v.x) + "," + str((int)v.y) + "\n";
-    //    lista=lista+riga;
-    //  }
-    //  String[] outTXT = split(lista, "\n");
-    //  saveStrings(dataPath("cobweb.web"), outTXT);
-    //}
-    //createStencil();
-    //createStencilFromSelection();
-  }
-
-  if (key==',')
-  {
-    //String lista[] = loadStrings(dataPath("cobweb.web"));
-    //cobweb.clear();
-    //int numPoints = lista.length - 1;
-    //println(numPoints);
-    //for (int i=0; i < numPoints; i++)
-    //{
-    //  String[] punto = split(lista[i], ",");
-    //  int x = int(punto[0]);
-    //  int y = int(punto[1]);
-    //  PVector v = new PVector(x, y, 0);
-    //  cobweb.add(0, v);
-    //}
-    //println(cobweb.size());
-    //updateWeb = true;
-    //int pick = stencilIMG.get(mouseX,mouseY*stencilIMG.width));
-    //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);
-    //println(mouseX, mouseY, a);
-    //stencil = !stencil;
-  }
-
   // Toggle selection
   if (keyCode==114) // F3
   {
@@ -420,6 +365,61 @@ void keyPressed()
     cbSNAP.s = !cbSNAP.s;
   }
 
+  // test key
+  if (key==';')
+  {
+    //invertStencil();
+    //color c = livelli[activeLyr].pg.get(mouseX,mouseY);
+    //println(c);
+    //println(red(c),green(c),blue(c),alpha(c));
+    //println(brushCol);
+    //println(red(brushCol),green(brushCol),blue(brushCol),alpha(brushCol));
+    //println(pts.size());
+    //println(dataPath("LAYERS.PDF"));
+    //println(cobweb.size());
+    //println("pointsW = ", pointsW);
+    //println("eraseW = ", eraseW);
+    //println("tool = ",tool);
+
+    //String lista="", riga="";
+    //// get data from griglia matrix
+    //if (cobweb.size() > 0)
+    //{
+    //  for (int p=0; p < cobweb.size(); p++)
+    //  {
+    //    PVector v = cobweb.get(p);
+    //    riga = str((int)v.x) + "," + str((int)v.y) + "\n";
+    //    lista=lista+riga;
+    //  }
+    //  String[] outTXT = split(lista, "\n");
+    //  saveStrings(dataPath("cobweb.web"), outTXT);
+    //}
+    //createStencil();
+    //createStencilFromSelection();
+  }
+
+  if (key==',')
+  {
+    //String lista[] = loadStrings(dataPath("cobweb.web"));
+    //cobweb.clear();
+    //int numPoints = lista.length - 1;
+    //println(numPoints);
+    //for (int i=0; i < numPoints; i++)
+    //{
+    //  String[] punto = split(lista[i], ",");
+    //  int x = int(punto[0]);
+    //  int y = int(punto[1]);
+    //  PVector v = new PVector(x, y, 0);
+    //  cobweb.add(0, v);
+    //}
+    //println(cobweb.size());
+    //updateWeb = true;
+    //int pick = stencilIMG.get(mouseX,mouseY*stencilIMG.width));
+    //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);
+    //println(mouseX, mouseY, a);
+    //stencil = !stencil;
+  }
+  
 }
 
 //*********************************
