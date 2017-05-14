@@ -31,7 +31,7 @@ void keyPressed()
     //  saveStrings(dataPath("cobweb.web"), outTXT);
     //}
     //createStencil();
-    createStencilFromSelection();
+    //createStencilFromSelection();
   }
 
   if (key==',')
