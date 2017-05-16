@@ -512,7 +512,7 @@ void mouseDragged()
   if (mouseButton == LEFT)
   {
     // CHANGE BRUSH SIZE
-    if (keyPressed && keyCode == CONTROL) // use ALT for mac OSX
+    if (keyPressed && (keyCode==CONTROL || keyCode==ALT)) // use ALT for mac OSX
     {
       if ((!menu || (menu && mouseX > menuX)) && (pmouseX < mouseX))
       {

@@ -547,6 +547,9 @@ void createStencilFromSelection()
     //center stencil
     ysten = height/2 - stencilIMG.height/2;
     xsten = width/2 - stencilIMG.width/2;
+    // activate stencil
+    stencil = true;
+    cbSTENCIL.s = stencil;    
   }
   else { println("ERROR: no selection"); }
 }
@@ -575,6 +578,5 @@ void invertStencil()
   stencilIMG.updatePixels();
   //center stencil
   ysten = height/2 - stencilIMG.height/2;
-
   xsten = width/2 - stencilIMG.width/2;
 }
