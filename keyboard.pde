@@ -279,15 +279,20 @@ void keyPressed()
       storeUNDO();
       if (aSelection)
       {
-        x1sel = constrain(x1sel, 0, width-1);
-        y1sel = constrain(y1sel, 0, height-1);
-        x2sel = constrain(x2sel, 0, width-1);
-        y2sel = constrain(y2sel, 0, height-1);
+        //x1sel = constrain(x1sel, 0, width-1);
+        //y1sel = constrain(y1sel, 0, height-1);
+        //x2sel = constrain(x2sel, 0, width-1);
+        //y2sel = constrain(y2sel, 0, height-1);
         // delete pixels inside selection
-        int xmin = (x1sel > x2sel) ? x2sel : x1sel;
-        int xmax = (x2sel > x1sel) ? x2sel : x1sel;
-        int ymin = (y1sel > y2sel) ? y2sel : y1sel;
-        int ymax = (y2sel > y1sel) ? y2sel : y1sel;
+        //int xmin = (x1sel > x2sel) ? x2sel : x1sel;
+        //int xmax = (x2sel > x1sel) ? x2sel : x1sel;
+        //int ymin = (y1sel > y2sel) ? y2sel : y1sel;
+        //int ymax = (y2sel > y1sel) ? y2sel : y1sel;
+        
+        int xmin = x1sel+1;
+        int xmax = x2sel-1;
+        int ymin = y1sel+1;
+        int ymax = y2sel-1;
         int loc = 0;
         livelli[activeLyr].pg.beginDraw();
         livelli[activeLyr].pg.loadPixels();

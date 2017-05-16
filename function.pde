@@ -529,7 +529,7 @@ void createStencilFromSelection()
   if (aSelection)
   {
     stencilIMG = null;
-    stencilIMG = createImage(x2sel - x1sel, y2sel - y1sel, ARGB);
+    stencilIMG = createImage(x2sel - x1sel - 1, y2sel - y1sel -1 , ARGB);
     stencilIMG.loadPixels();
     livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
     livelli[activeLyr].pg.loadPixels();
@@ -589,7 +589,7 @@ void copyPixels()
   {
     println("copia");
     pixelCopyIMG = null;
-    pixelCopyIMG = createImage(x2sel - x1sel, y2sel - y1sel, ARGB);
+    pixelCopyIMG = createImage(x2sel - x1sel - 1, y2sel - y1sel - 1, ARGB);
     pixelCopyIMG.loadPixels();
     livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
     livelli[activeLyr].pg.loadPixels();
