@@ -219,6 +219,9 @@ boolean aSelection;
 boolean selectDown;
 int x1sel, y1sel, x2sel, y2sel;
 color fillSelect;
+// copy & paste
+boolean pixelCopy, pixelPaste;
+PImage pixelCopyIMG;
 
 // stencil
 PImage stencilIMG;
@@ -325,6 +328,9 @@ void setup()
   y1sel = 0;
   x2sel = 0;
   y2sel = 0;
+  // copy & paste
+  pixelCopy = false;
+  pixelPaste = false;
   // stencil
   stencil = false;
   stencilIMG = loadImage("stencil.png");

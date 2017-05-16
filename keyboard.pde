@@ -396,6 +396,7 @@ void keyPressed()
     //}
     //createStencil();
     //createStencilFromSelection();
+    pastePixels();
   }
 
   if (key==',')
@@ -418,6 +419,7 @@ void keyPressed()
     //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);
     //println(mouseX, mouseY, a);
     //stencil = !stencil;
+    copyPixels();
   }
   
 }

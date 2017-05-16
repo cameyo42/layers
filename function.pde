@@ -534,9 +534,9 @@ void createStencilFromSelection()
     livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
     livelli[activeLyr].pg.loadPixels();
     int loc = 0;
-    for (int x = 0; x < (x2sel - x1sel); x++)
+    for (int x = 0; x < (x2sel - x1sel)-1; x++)
     {
-      for (int y = 0; y < (y2sel-y1sel); y++)
+      for (int y = 0; y < (y2sel-y1sel)-1; y++)
       {
         loc = ((x + x1sel+1) + (y + y1sel+1)*width);
         stencilIMG.pixels[x+y*stencilIMG.width] = livelli[activeLyr].pg.pixels[loc];
@@ -579,4 +579,71 @@ void invertStencil()
   //center stencil
   ysten = height/2 - stencilIMG.height/2;
   xsten = width/2 - stencilIMG.width/2;
+}
+
+//*********************************
+// copy a pixels selection
+void copyPixels()
+{
+  if (aSelection)
+  {
+    println("copia");
+    pixelCopyIMG = null;
+    pixelCopyIMG = createImage(x2sel - x1sel, y2sel - y1sel, ARGB);
+    pixelCopyIMG.loadPixels();
+    livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+    livelli[activeLyr].pg.loadPixels();
+    int loc = 0;
+    for (int x = 0; x < (x2sel - x1sel)-1; x++)
+    {
+      for (int y = 0; y < (y2sel-y1sel)-1; y++)
+      {
+        loc = ((x + x1sel+1) + (y + y1sel+1)*width);
+        pixelCopyIMG.pixels[x+y*pixelCopyIMG.width] = livelli[activeLyr].pg.pixels[loc];
+      }
+    }
+    pixelCopyIMG.updatePixels();
+    livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    // activate PASTE 
+    pixelPaste = true;
+    //pixelCopyIMG.save("copia.png");
+  }
+  else { println("ERROR: no selection"); }
+}
+
+//*********************************
+// paste a pixels selection
+void pastePixels()
+{
+  if (pixelPaste)
+  {
+    int pasteX = mouseX;
+    int pasteY = mouseY;
+    println("paste");
+    // store layer for undo
+    storeUNDO();  
+    // Paste image
+    pixelCopyIMG.loadPixels();
+    livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+    livelli[activeLyr].pg.loadPixels();
+    int loc = 0;
+    int locLyr = 0;
+    for (int x = 0; x < pixelCopyIMG.width; x++)
+    {
+      for (int y = 0; y < pixelCopyIMG.height; y++)
+      {
+        loc = (x + y*pixelCopyIMG.width);
+        locLyr = ((x + pasteX) + (y + pasteY)*width);
+        if (((x+pasteX) > 0) && ((x+pasteX) < width) && ((y+pasteY) > 0) && ((y+pasteY) < height))
+        {
+          livelli[activeLyr].pg.pixels[locLyr] = pixelCopyIMG.pixels[loc];
+        }  
+      }
+    }
+    //pixelCopyIMG.updatePixels();
+    livelli[activeLyr].pg.updatePixels();
+    livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    //pixelCopyIMG.save("copia2.png");
+  }
+  else { println("ERROR: no selection"); }
 }
