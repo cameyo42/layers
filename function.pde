@@ -549,7 +549,7 @@ void createStencilFromSelection()
     xsten = width/2 - stencilIMG.width/2;
     // activate stencil
     stencil = true;
-    cbSTENCIL.s = stencil;    
+    cbSTENCIL.s = stencil;
   }
   else { println("ERROR: no selection"); }
 }
@@ -604,7 +604,7 @@ void copyPixels()
     }
     pixelCopyIMG.updatePixels();
     livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
-    // activate PASTE 
+    // activate PASTE
     pixelPaste = true;
     //pixelCopyIMG.save("copia.png");
   }
@@ -621,7 +621,7 @@ void pastePixels()
     int pasteY = mouseY;
     println("paste");
     // store layer for undo
-    storeUNDO();  
+    storeUNDO();
     // Paste image
     pixelCopyIMG.loadPixels();
     livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
@@ -636,8 +636,11 @@ void pastePixels()
         locLyr = ((x + pasteX) + (y + pasteY)*width);
         if (((x+pasteX) > 0) && ((x+pasteX) < width) && ((y+pasteY) > 0) && ((y+pasteY) < height))
         {
-          livelli[activeLyr].pg.pixels[locLyr] = pixelCopyIMG.pixels[loc];
-        }  
+          if (((pixelCopyIMG.pixels[loc] >> 24) & 0xff ) != 0) // not transparent
+          {
+            livelli[activeLyr].pg.pixels[locLyr] = pixelCopyIMG.pixels[loc];
+          }
+        }
       }
     }
     //pixelCopyIMG.updatePixels();

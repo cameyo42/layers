@@ -18,6 +18,18 @@ void keyPressed()
     stencil = !stencil;
     cbSTENCIL.s = stencil;
   }
+  
+  // Copy pixels
+  if (keyCode==116) // F5
+  {
+    copyPixels();
+  }
+  
+  // Paste pixels
+  if (keyCode==117) // F6
+  {
+    pastePixels();
+  }  
 
   // draw palette on active layer from brushCol to oldCol (the colors on rgbhsb tool)
   if ((key=='j') || (key=='J'))

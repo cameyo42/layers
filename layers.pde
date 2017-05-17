@@ -47,6 +47,7 @@ PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampO
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
 PImage stencilON_IMG, stencilOFF_IMG;
 PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
+PImage copyPixel_IMG, pastePixel_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
 PImage stampBRUSHES_IMG;
@@ -177,6 +178,7 @@ ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, 
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
 Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
+Button btCOPY, btPASTE;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
 Checkbox cbSYMX, cbSYMY, cbGLITCH, cbGRID, cbSNAP, cbCLONE, cbWEBE, cbWEBP;
@@ -410,6 +412,8 @@ void setup()
   stampBRUSHES_IMG = gui_IMG.get(775, 213, 177, 17);
   selectON_IMG = gui_IMG.get(1240, 136, 34, 34);
   selectOFF_IMG = gui_IMG.get(1274, 136, 34, 34);
+  copyPixel_IMG = gui_IMG.get(1308, 110, 20, 20);
+  pastePixel_IMG = gui_IMG.get(1308, 130, 20, 20);
   creaStencil_IMG = gui_IMG.get(1308, 150, 20, 20);
   loadStencil_IMG = gui_IMG.get(1308, 170, 20, 20);
   centerStencil_IMG = gui_IMG.get(1308, 190, 20, 20);
@@ -468,6 +472,8 @@ void setup()
   btnERASER = new ButtonIMG(270, 108, eraserON_IMG, eraserOFF_IMG, false, "", textMenuCol, "btn_ERASER");
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
   cbSELECT = new Checkbox(6, 380, 14, 14, "active (F3)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
+  btCOPY = new Button(95, 380, copyPixel_IMG, "copy", textMenuCol, "bt_SELCOPY");
+  btPASTE = new Button(135, 380, pastePixel_IMG, "paste", textMenuCol, "bt_SELPASTE");  
   btnSTENCIL = new ButtonIMG(41, 328, stencilON_IMG, stencilOFF_IMG, false, "", textMenuCol, "btn_STENCIL");
   cbSTENCIL = new Checkbox(6, 380, 14, 14, "active (F4)", false, black, darkGray, highLight, gray, textMenuCol, "cb_STENCIL");
   btSTENLOAD = new Button(95, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
