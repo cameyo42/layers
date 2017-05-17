@@ -479,6 +479,8 @@ void mousePressed()
     else if (tool == "Select")
     {
       cbSELECT.onClick();
+      btSELCOPY.onClick();
+      btSELPASTE.onClick();
     }
     // check Stencil options
     else if (tool == "Stencil")

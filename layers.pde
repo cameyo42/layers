@@ -178,7 +178,7 @@ ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, 
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
 Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
-Button btCOPY, btPASTE;
+Button btSELCOPY, btSELPASTE;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
 Checkbox cbSYMX, cbSYMY, cbGLITCH, cbGRID, cbSNAP, cbCLONE, cbWEBE, cbWEBP;
@@ -472,8 +472,8 @@ void setup()
   btnERASER = new ButtonIMG(270, 108, eraserON_IMG, eraserOFF_IMG, false, "", textMenuCol, "btn_ERASER");
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
   cbSELECT = new Checkbox(6, 380, 14, 14, "active (F3)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
-  btCOPY = new Button(95, 380, copyPixel_IMG, "copy", textMenuCol, "bt_SELCOPY");
-  btPASTE = new Button(135, 380, pastePixel_IMG, "paste", textMenuCol, "bt_SELPASTE");  
+  btSELCOPY = new Button(95, 380, copyPixel_IMG, "copy", textMenuCol, "bt_SELCOPY");
+  btSELPASTE = new Button(135, 380, pastePixel_IMG, "paste", textMenuCol, "bt_SELPASTE");  
   btnSTENCIL = new ButtonIMG(41, 328, stencilON_IMG, stencilOFF_IMG, false, "", textMenuCol, "btn_STENCIL");
   cbSTENCIL = new Checkbox(6, 380, 14, 14, "active (F4)", false, black, darkGray, highLight, gray, textMenuCol, "cb_STENCIL");
   btSTENLOAD = new Button(95, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
@@ -636,6 +636,15 @@ void cb_SELECT()
   if ((x1sel == x2sel) || (y1sel == y2sel)) { aSelection = false; }
   else { aSelection = !aSelection; }
   cbSELECT.s = aSelection;
+}
+// SELECT button
+void bt_SELCOPY()
+{
+  copyPixels();
+}
+void bt_SELPASTE()
+{
+  pastePixels();
 }
 // STENCIL options method
 void cb_STENCIL()

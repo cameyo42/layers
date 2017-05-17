@@ -165,6 +165,8 @@ void showMenu()
   else if (tool == "Select")
   {
     cbSELECT.show();
+    btSELCOPY.show();
+    btSELPASTE.show();
   }
   // Show Stencil Options
   else if (tool == "Stencil")
