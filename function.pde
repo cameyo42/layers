@@ -587,7 +587,6 @@ void copyPixels()
 {
   if (aSelection)
   {
-    println("copia");
     pixelCopyIMG = null;
     pixelCopyIMG = createImage(x2sel - x1sel - 1, y2sel - y1sel - 1, ARGB);
     pixelCopyIMG.loadPixels();
@@ -619,7 +618,6 @@ void pastePixels()
   {
     int pasteX = mouseX;
     int pasteY = mouseY;
-    println("paste");
     // store layer for undo
     storeUNDO();
     // Paste image
