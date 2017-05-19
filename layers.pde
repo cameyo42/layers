@@ -247,7 +247,7 @@ void setup()
   //size(1800, 1000);
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
-  size(1800,850);
+  size(1300,750);
   //size(1900,900);
   smooth();
   noCursor();
@@ -500,7 +500,7 @@ void setup()
   cbCONFRND = new Checkbox(76, 380, 14, 14, "random color", randomConfettiColor, black, darkGray, highLight, gray, textMenuCol, "cb_CONFRND");
   slCONFVEL = new Slider(10, 416, 210, 416, 5, "base speed", 1, 50, 4, black, highLight, black, textMenuCol, "sl_CONFVEL");
   slCONFDVEL = new Slider(10, 450, 210, 450, 5, "delta speed", 1, 99, 88, black, highLight, black, textMenuCol, "sl_CONFDVEL");
-  btnUNDO = new ButtonIMG(230, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
+  btnUNDO = new ButtonIMG(236, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
   btnREDO = new ButtonIMG(271, 698, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
   cbSYMX = new Checkbox(6, 92, 14, 14, "X mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMX");
   cbSYMY = new Checkbox(6, 110, 14, 14, "Y mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMY");
