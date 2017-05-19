@@ -10,7 +10,8 @@ void showMenu()
   stroke(0);
   fill(backCol);
   rect(4, 14, brushSizeMax+10, brushSizeMax+10);
-  if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" || tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" )
+  if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" || 
+      tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" || tool == "Confetti")
   {
     noStroke();
     fill(brushCol);
@@ -84,6 +85,7 @@ void showMenu()
   btnFILLER.show();
   btnCLONE.show();
   btnWEB.show();
+  btnCONFETTI.show();
   btGRID.show();
   // open & save
   btOPENLYR.show();
@@ -177,4 +179,12 @@ void showMenu()
     btSTENCREA.show();
     btSTENINVERT.show();
   }
+  // Show Confetti Options
+  else if (tool == "Confetti")
+  {
+    cbCONFSCALE.show();
+    cbCONFRND.show();
+    slCONFVEL.show();
+    slCONFDVEL.show();
+  }  
 }

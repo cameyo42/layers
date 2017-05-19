@@ -41,7 +41,21 @@ void mousePressed()
         }
       }
     }
-
+    
+    // CONFETTI PRESSED
+    else if ((!keyPressed) && (tool=="Confetti") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    {
+      startAction = true;
+      if (grab) { grabLayer(); } // grab layer for Undo
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      livelli[activeLyr].pg.noStroke();
+      livelli[activeLyr].pg.fill(brushCol);
+      if (noGlitch) { prepareGlitch(); } // Start antialias...
+      // reset Confetti arrayList
+      confettiThings.clear();
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics      
+    }  
+    
     // DYNA PRESSED
     else if ((!keyPressed) && (tool=="Dyna") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -399,6 +413,7 @@ void mousePressed()
     btnFILLER.onClick();
     btnCLONE.onClick();
     btnWEB.onClick();
+    btnCONFETTI.onClick();
     btGRID.onClick();
     // open & save
     btOPENLYR.onClick();
@@ -491,6 +506,15 @@ void mousePressed()
       btSTENCREA.onClick();
       btSTENINVERT.onClick();
     }
+    // check Confetti Options
+    else if (tool == "Confetti")
+    {
+      cbCONFSCALE.onClick();
+      cbCONFRND.onClick();
+      slCONFVEL.onClick();
+      slCONFDVEL.onClick();
+    }      
+    
     // check background button
     btcBACKCOL.onClick();
   }
@@ -784,6 +808,34 @@ void mouseDragged()
       // The paint of Dyna brush is coded within draw() function
     }
 
+    // CONFETTI DRAGGED    
+    else if ((!keyPressed) && (tool=="Confetti") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))  
+    {
+      spawn();
+      // confetti tool drawing
+      if (confettiThings.size() > 0)
+      {
+        //println("dragged");
+        livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+        livelli[activeLyr].pg.noStroke();
+        livelli[activeLyr].pg.fill(brushCol);
+        if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+        for (int i=0, sz=confettiThings.size(); i<sz; i++) 
+        {
+          ConfettiBase c = (ConfettiBase)confettiThings.get(i);
+          c.move();
+          if (c.alive()) { c.paint(); }
+          else 
+          {
+            confettiThings.remove(c);
+            i--;
+            sz--;
+          }
+        }
+        livelli[activeLyr].pg.endDraw();
+      }
+    }  
+    
     // PENCIL DRAGGED
     else if ((startAction) && (!keyPressed) && (tool=="Pencil") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -954,7 +1006,7 @@ void mouseDragged()
       slFILLER.onDrag();
     }
     // check Dyna slider
-    if (tool == "Dyna")
+    else if (tool == "Dyna")
     {
       dslHOOKE.onDrag();
       dslDAMPING.onDrag();
@@ -964,23 +1016,29 @@ void mouseDragged()
       dslMAXB.onDrag();
     }
     // check Mixer slider
-    if (tool == "Mixer")
+    else if (tool == "Mixer")
     {
       slMIXERA.onDrag();
       slMIXERD.onDrag();
     }
     // check Stamp slider
-    if (tool == "Stamp")
+    else if (tool == "Stamp")
     {
       slSTAMP.onDrag();
       slSTAMP2.onDrag();
     }
     // check Web slider
-    if (tool == "Web")
+    else if (tool == "Web")
     {
       slWEBA.onDrag();
       slWEBD.onDrag();
     }
+    // check Confetti Options
+    else if (tool == "Confetti")
+    {
+      slCONFVEL.onDrag();
+      slCONFDVEL.onDrag();
+    }          
   }
 
   // HSB dragged
@@ -997,6 +1055,32 @@ void mouseReleased()
   //int mx, my;
   //mx = mouseX;
   //my = mouseY;
+  
+  // terminate confetti tool render drawing
+  if (tool == "Confetti")
+  {
+    while(confettiThings.size() > 0)  
+    {
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      livelli[activeLyr].pg.noStroke();
+      livelli[activeLyr].pg.fill(brushCol);
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+      for (int i=0, sz=confettiThings.size(); i<sz; i++) 
+      {
+        ConfettiBase c = (ConfettiBase)confettiThings.get(i);
+        c.move();
+        if (c.alive()) { c.paint(); }
+        else 
+        {
+          confettiThings.remove(c);
+          i--;
+          sz--;
+        }
+      }
+      livelli[activeLyr].pg.endDraw();
+    }
+  }  
+
   if(startAction) // started an action who has modified the active layer --> reset REDO
   {
     startAction = false;
@@ -1005,7 +1089,7 @@ void mouseReleased()
     { redoLyr[i] = -1; }
   }
 
-  // unlock slider (size,alfa,gap,threshold)
+  // unlock slider (size,alfa,gap,threshold,...)
   slSIZE.locked = false;
   slALFA.locked = false;
   slSTAMP.locked = false;
@@ -1015,6 +1099,8 @@ void mouseReleased()
   slMIXERD.locked = false;
   slWEBA.locked = false;
   slWEBD.locked = false;
+  slCONFVEL.locked = false;
+  slCONFDVEL.locked = false;
   // unlock dyna slider
   dslHOOKE.locked = false;
   dslDAMPING.locked = false;

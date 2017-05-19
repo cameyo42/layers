@@ -1,10 +1,10 @@
 // Layers: a sketch for painting
-// version 0.6
+// version 0.7
 // written with processing 3.x
 // by cameyo 2017
 // WTFPL license (see the WTFPL.txt file)
 // Thanks to:
-// Anonymous, Bird, Chrisir, GoToLoop,
+// Anonymous, Bird, Bollinger Chrisir, GoToLoop,
 // jas0501, jeremydouglass, kfrajer, koogs, Lord_of_the_Galaxy,
 // neilcsmith_net, PhilLo, prince_polka,
 // quark, Shiffman, TfGuy44, ...
@@ -33,7 +33,8 @@ DynaSlider dslHOOKE, dslDAMPING, dslDUCTUS, dslMASS, dslMINB, dslMAXB;
 DynaButton btnPRE01, btnPRE02, btnPRE03, btnPRE04, btnPRE05, btnPRE06, btnPRE07, btnPRE08;
 // Stamp Brush
 StampBrushes mySB;
-// Test
+
+// Test Brush
 import java.util.HashSet;
 import java.util.Set;
 Set<String> pts = new HashSet<String>();
@@ -45,9 +46,9 @@ PImage pencilON_IMG, pencilOFF_IMG, eraserON_IMG, eraserOFF_IMG, fillerON_IMG, f
 PImage undoON_IMG, undoOFF_IMG, redoON_IMG, redoOFF_IMG, lockON_IMG, lockOFF_IMG;
 PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampOFF_IMG, dynaON_IMG, dynaOFF_IMG;
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
-PImage stencilON_IMG, stencilOFF_IMG;
-PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
+PImage stencilON_IMG, stencilOFF_IMG, confettiON_IMG, confettiOFF_IMG;
 PImage copyPixel_IMG, pastePixel_IMG;
+PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
 PImage stampBRUSHES_IMG;
@@ -174,7 +175,7 @@ int[] redoLyr;
 
 // GUI elements (buttons, slider, spinners, ...)
 ButtonIMG btnPENCIL, btnLINER, btnQUAD, btnCIRCLE, btnERASER, btnLOCK;
-ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT, btnSTENCIL;
+ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT, btnSTENCIL, btnCONFETTI;
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
 Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
@@ -183,6 +184,8 @@ ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
 Checkbox cbSYMX, cbSYMY, cbGLITCH, cbGRID, cbSNAP, cbCLONE, cbWEBE, cbWEBP;
 Checkbox cbSELECT, cbSTENCIL, cbFILLERASE;
+Checkbox cbCONFSCALE, cbCONFRND;
+Slider slCONFVEL, slCONFDVEL;
 SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
 
 // mixer brush
@@ -216,7 +219,7 @@ boolean updateWeb;
 // web point color
 color webPointCol = color (255,0,0);
 
-//selection
+// selection
 boolean aSelection;
 boolean selectDown;
 int x1sel, y1sel, x2sel, y2sel;
@@ -231,6 +234,11 @@ boolean stencil;
 boolean loadingStencil;
 int xsten, ysten;
 
+// confetti
+ArrayList confettiThings;
+//MultiPalette pal;
+boolean scaleConfetti;
+boolean randomConfettiColor;
 
 //*********************************
 //*********************************
@@ -239,7 +247,8 @@ void setup()
   //size(1800, 1000);
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
-  size(1300,750);
+  size(1800,850);
+  //size(1900,900);
   smooth();
   noCursor();
   frameRate(100);
@@ -339,6 +348,10 @@ void setup()
   loadingStencil = false;
   ysten = height/2 - stencilIMG.height/2;
   xsten = width/2 - stencilIMG.width/2;
+  //confetti
+  confettiThings = new ArrayList();
+  scaleConfetti = true;
+  randomConfettiColor = false;
   // undo/redo variables
   grab = true;
   numUndo = 10;
@@ -420,6 +433,8 @@ void setup()
   invertStencil_IMG = gui_IMG.get(1308, 210, 20, 20);
   stencilON_IMG = gui_IMG.get(1240, 170, 34, 34);
   stencilOFF_IMG = gui_IMG.get(1274, 170, 34, 34);
+  confettiOFF_IMG = gui_IMG.get(1274, 204, 34, 34);
+  confettiON_IMG = gui_IMG.get(1240, 204, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -473,13 +488,18 @@ void setup()
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
   cbSELECT = new Checkbox(6, 380, 14, 14, "active (F3)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
   btSELCOPY = new Button(105, 380, copyPixel_IMG, "copy (F5)", textMenuCol, "bt_SELCOPY");
-  btSELPASTE = new Button(165, 380, pastePixel_IMG, "paste (F6)", textMenuCol, "bt_SELPASTE");  
+  btSELPASTE = new Button(165, 380, pastePixel_IMG, "paste (F6)", textMenuCol, "bt_SELPASTE");
   btnSTENCIL = new ButtonIMG(41, 328, stencilON_IMG, stencilOFF_IMG, false, "", textMenuCol, "btn_STENCIL");
   cbSTENCIL = new Checkbox(6, 380, 14, 14, "active (F4)", false, black, darkGray, highLight, gray, textMenuCol, "cb_STENCIL");
   btSTENLOAD = new Button(95, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
   btSTENCREA = new Button(135, 380, creaStencil_IMG, "create", textMenuCol, "bt_STENCREA");
   btSTENCENTER = new Button(175, 380, centerStencil_IMG, "center", textMenuCol, "bt_STENCENTER");
   btSTENINVERT = new Button(215, 380, invertStencil_IMG, "invert", textMenuCol, "bt_STENINVERT");
+  btnCONFETTI = new ButtonIMG(77, 328, confettiON_IMG, confettiOFF_IMG, false, "", textMenuCol, "btn_CONFETTI");
+  cbCONFSCALE = new Checkbox(6, 380, 14, 14, "scale", scaleConfetti, black, darkGray, highLight, gray, textMenuCol, "cb_CONFSCALE");
+  cbCONFRND = new Checkbox(76, 380, 14, 14, "random color", randomConfettiColor, black, darkGray, highLight, gray, textMenuCol, "cb_CONFRND");
+  slCONFVEL = new Slider(10, 416, 210, 416, 5, "base speed", 1, 50, 4, black, highLight, black, textMenuCol, "sl_CONFVEL");
+  slCONFDVEL = new Slider(10, 450, 210, 450, 5, "delta speed", 1, 99, 88, black, highLight, black, textMenuCol, "sl_CONFDVEL");
   btnUNDO = new ButtonIMG(230, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
   btnREDO = new ButtonIMG(271, 698, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
   cbSYMX = new Checkbox(6, 92, 14, 14, "X mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMX");
@@ -626,6 +646,7 @@ void btn_CLONE()    { selectTool("Clone"); }
 void btn_WEB()      { selectTool("Web"); }
 void btn_SELECT()   { selectTool("Select"); }
 void btn_STENCIL()  { selectTool("Stencil"); }
+void btn_CONFETTI() { selectTool("Confetti"); }
 void btn_UNDO()     { undo(); }
 void btn_REDO()     { redo(); }
 // SELECT checkbox
@@ -655,11 +676,16 @@ void cb_STENCIL()
 void bt_STENCREA()   { createStencilFromSelection(); }
 void bt_STENLOAD()   { openStencilDialog(); }
 void bt_STENINVERT() { invertStencil(); }
-void bt_STENCENTER() 
+void bt_STENCENTER()
 {
   ysten = height/2 - stencilIMG.height/2;
   xsten = width/2 - stencilIMG.width/2;
 }
+// CONFETTI options method
+void cb_CONFSCALE() { };
+void cb_CONFRND() { };
+void sl_CONFVEL() { };
+void sl_CONFDVEL() { };
 // CLONE slider method
 void cb_CLONE() { }
 // STAMP slider method
@@ -836,7 +862,7 @@ void draw()
   {
     image(stencilIMG, xsten, ysten);
   }
-  
+
   // show selection
   if (aSelection)
   {
@@ -878,22 +904,24 @@ void selectTool(String t)
   btnWEB.s = false;
   btnSELECT.s = false;
   btnSTENCIL.s = false;
+  btnCONFETTI.s = false;
   //aSelection = false;
-  if (t == "Pencil")       { btnPENCIL.s = true; }
-  else if (t == "Liner")   { btnLINER.s = true; }
-  else if (t == "Quad")    { btnQUAD.s = true; }
-  else if (t == "Circle")  { btnCIRCLE.s = true; }
-  else if (t == "Eraser")  { btnERASER.s = true; }
-  else if (t == "Vernice") { btnVERNICE.s = true; }
-  else if (t == "Ink")     { btnINK.s = true; }
-  else if (t == "Stamp")   { btnSTAMP.s = true; }
-  else if (t == "Filler")  { btnFILLER.s = true; }
-  else if (t == "Dyna")    { btnDYNA.s = true; }
-  else if (t == "Mixer")   { btnMIXER.s = true; }
-  else if (t == "Clone")   { btnCLONE.s = true; }
-  else if (t == "Web")     { btnWEB.s = true; setWebBrush(); }
-  else if (t == "Select")  { btnSELECT.s = true; checkSelection();}
-  else if (t == "Stencil") { btnSTENCIL.s = true; stencil = true; cbSTENCIL.s = stencil;}
+  if (t == "Pencil")        { btnPENCIL.s = true; }
+  else if (t == "Liner")    { btnLINER.s = true; }
+  else if (t == "Quad")     { btnQUAD.s = true; }
+  else if (t == "Circle")   { btnCIRCLE.s = true; }
+  else if (t == "Eraser")   { btnERASER.s = true; }
+  else if (t == "Vernice")  { btnVERNICE.s = true; }
+  else if (t == "Ink")      { btnINK.s = true; }
+  else if (t == "Stamp")    { btnSTAMP.s = true; }
+  else if (t == "Filler")   { btnFILLER.s = true; }
+  else if (t == "Dyna")     { btnDYNA.s = true; }
+  else if (t == "Mixer")    { btnMIXER.s = true; }
+  else if (t == "Clone")    { btnCLONE.s = true; }
+  else if (t == "Web")      { btnWEB.s = true; setWebBrush(); }
+  else if (t == "Select")   { btnSELECT.s = true; checkSelection();}
+  else if (t == "Stencil")  { btnSTENCIL.s = true; stencil = true; cbSTENCIL.s = stencil;}
+  else if (t == "Confetti") { btnCONFETTI.s = true;}
   else if (t == "TEST")    { }
 }
 

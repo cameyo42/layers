@@ -36,7 +36,7 @@ void showCursor(int x, int y, boolean zoom, float zoomFactor)
     line(mouseX,mouseY+8,mouseX,mouseY+16);
     line(mouseX-8,mouseY,mouseX-16,mouseY);
   }
-  else if (tool == "Pencil" || tool == "Ink" || tool == "Mixer") // PENCIL, INK, MIXER cursor
+  else if (tool == "Pencil" || tool == "Ink" || tool == "Mixer" || tool == "Confetti") // PENCIL, INK, MIXER cursor
   {
     if (zoom)
     {

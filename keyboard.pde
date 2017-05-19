@@ -132,7 +132,9 @@ void keyPressed()
   if (key=='0') { selectTool("Select"); }
   // select Stencil tool
   if (key=='9') { selectTool("Stencil"); }
-
+  // select Stencil tool
+  if (key==';') { selectTool("Confetti"); }
+  
   // set grid on/off
   if ((key=='w') || (key=='W'))
   {
@@ -383,39 +385,6 @@ void keyPressed()
   }
 
   // test key
-  if (key==';')
-  {
-    //invertStencil();
-    //color c = livelli[activeLyr].pg.get(mouseX,mouseY);
-    //println(c);
-    //println(red(c),green(c),blue(c),alpha(c));
-    //println(brushCol);
-    //println(red(brushCol),green(brushCol),blue(brushCol),alpha(brushCol));
-    //println(pts.size());
-    //println(dataPath("LAYERS.PDF"));
-    //println(cobweb.size());
-    //println("pointsW = ", pointsW);
-    //println("eraseW = ", eraseW);
-    //println("tool = ",tool);
-
-    //String lista="", riga="";
-    //// get data from griglia matrix
-    //if (cobweb.size() > 0)
-    //{
-    //  for (int p=0; p < cobweb.size(); p++)
-    //  {
-    //    PVector v = cobweb.get(p);
-    //    riga = str((int)v.x) + "," + str((int)v.y) + "\n";
-    //    lista=lista+riga;
-    //  }
-    //  String[] outTXT = split(lista, "\n");
-    //  saveStrings(dataPath("cobweb.web"), outTXT);
-    //}
-    //createStencil();
-    //createStencilFromSelection();
-    pastePixels();
-  }
-
   if (key==',')
   {
     //String lista[] = loadStrings(dataPath("cobweb.web"));
@@ -436,7 +405,7 @@ void keyPressed()
     //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);
     //println(mouseX, mouseY, a);
     //stencil = !stencil;
-    copyPixels();
+    //copyPixels();    
   }
   
 }
