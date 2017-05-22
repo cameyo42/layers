@@ -185,7 +185,7 @@ void drawGrid()
   livelli[activeLyr].pg.beginDraw();
   int spaceX = int(sbGRIDX.v);
   int spaceY = int(sbGRIDY.v);
-  livelli[activeLyr].pg.stroke(black);
+  livelli[activeLyr].pg.stroke(brushCol);
   livelli[activeLyr].pg.strokeWeight(1);
   for(int x = 0; x < width; x=x+spaceX)
   {
@@ -585,7 +585,7 @@ void invertStencil()
 // copy a pixels selection
 void copyPixels()
 {
-  if (aSelection)
+  if (aSelection) //copy selection
   {
     pixelCopyIMG = null;
     pixelCopyIMG = createImage(x2sel - x1sel - 1, y2sel - y1sel - 1, ARGB);
@@ -604,10 +604,33 @@ void copyPixels()
     pixelCopyIMG.updatePixels();
     livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     // activate PASTE
+    layerPaste = false;
     pixelPaste = true;
     //pixelCopyIMG.save("copia.png");
   }
-  else { println("ERROR: no selection"); }
+  else // copy layer
+  { 
+    pixelCopyIMG = null;
+    pixelCopyIMG = createImage(width, height, ARGB);
+    pixelCopyIMG.loadPixels();
+    livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+    livelli[activeLyr].pg.loadPixels();
+    int loc = 0;
+    for (int x = 0; x < width; x++)
+    {
+      for (int y = 0; y < height; y++)
+      {
+        loc = (x + y*width);
+        pixelCopyIMG.pixels[loc] = livelli[activeLyr].pg.pixels[loc];
+      }
+    }
+    pixelCopyIMG.updatePixels();
+    livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    // activate PASTE
+    pixelPaste = true;
+    layerPaste = true;
+    //pixelCopyIMG.save("copia.png");  
+  }
 }
 
 //*********************************
@@ -618,6 +641,11 @@ void pastePixels()
   {
     int pasteX = mouseX;
     int pasteY = mouseY;
+    if (layerPaste) 
+    {
+      pasteX = 0;
+      pasteY = 0;
+    }  
     // store layer for undo
     storeUNDO();
     // Paste image

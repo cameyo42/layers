@@ -226,6 +226,7 @@ int x1sel, y1sel, x2sel, y2sel;
 color fillSelect;
 // copy & paste
 boolean pixelCopy, pixelPaste;
+boolean layerPaste;
 PImage pixelCopyIMG;
 
 // stencil
@@ -342,6 +343,7 @@ void setup()
   // copy & paste
   pixelCopy = false;
   pixelPaste = false;
+  layerPaste = false;
   // stencil
   stencil = false;
   stencilIMG = loadImage("stencil.png");
