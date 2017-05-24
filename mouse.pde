@@ -41,7 +41,7 @@ void mousePressed()
         }
       }
     }
-    
+
     // CONFETTI PRESSED
     else if ((!keyPressed) && (tool=="Confetti") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -53,9 +53,9 @@ void mousePressed()
       if (noGlitch) { prepareGlitch(); } // Start antialias...
       // reset Confetti arrayList
       confettiThings.clear();
-      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics      
-    }  
-    
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }
+
     // DYNA PRESSED
     else if ((!keyPressed) && (tool=="Dyna") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -138,6 +138,126 @@ void mousePressed()
         calcSymXY(x1,y1,x2,y2);
         drawLine(s1x, s1y, s2x, s2y, brushSize, livelli[activeLyr].pg);
       }
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }
+
+    // SHAPE PRESSED
+    else if ((!keyPressed) && (tool=="Shape") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    {
+      startAction = true;
+      if (grab) { grabLayer(); } // grab layer for Undo
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      if (noGlitch) { prepareGlitch(); } // Start antialias...
+      livelli[activeLyr].pg.stroke(brushCol);
+      livelli[activeLyr].pg.noFill();
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+
+      color shColor;
+      int numItems = (int) slSHitems.v + (int) (round(random(-slSHitemsD.v, +slSHitemsD.v)));
+      livelli[activeLyr].pg.rectMode(CENTER);
+      livelli[activeLyr].pg.shapeMode(CENTER);
+      for (int i = 0; i<numItems; i++)
+      {
+        int posX = x2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
+        int posY = y2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
+        int bSizeH = brushSize + (int) (round(random(-slSHsizeD.v, +slSHsizeD.v)));
+        int bSizeV = brushSize + (int) (round(random(-slSHsizeD.v, +slSHsizeD.v)));
+        int bAlfa = alfa + (int) (round(random(-slSHalfaD.v, +slSHalfaD.v)));
+        if (cbSHcolorRND.s)
+        {
+          shColor = randomColor();
+          shColor = color((shColor >> 16) & 0xFF, (shColor >> 8)  & 0xFF, shColor & 0xFF, bAlfa);
+        }
+        else
+        {
+          shColor = color((brushCol >> 16) & 0xFF, (brushCol >> 8)  & 0xFF, brushCol & 0xFF, bAlfa);
+        }
+        livelli[activeLyr].pg.stroke(shColor);
+        // draw on active layer
+        switch((int)sbSHtype.v)
+        {
+          case 1: // rectangle
+            livelli[activeLyr].pg.rect(posX, posY, bSizeH, bSizeV);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeV);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeV);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeV);
+            }
+            break;
+          case 2: // square
+            livelli[activeLyr].pg.rect(posX, posY, bSizeH, bSizeH);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeH);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeH);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeH);
+            }
+            break;
+          case 3: // ellipse
+            livelli[activeLyr].pg.ellipse(posX, posY, bSizeH, bSizeV);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeH, bSizeV);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeH, bSizeV);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeH, bSizeV);
+            }
+            break;
+          case 4: // circle
+            livelli[activeLyr].pg.ellipse(posX, posY, bSizeV, bSizeV);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeV, bSizeV);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeV, bSizeV);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeV, bSizeV);
+            }
+            break;
+          case 5: // user svg
+            int dimX = (int) aShape.width*brushSize/brushSizeMax;
+            int dimY = (int) aShape.height*brushSize/brushSizeMax;
+            livelli[activeLyr].pg.shape(aShape, posX, posY, dimX, dimY);
+            break;
+        } //end switch
+      }
+
+      livelli[activeLyr].pg.rectMode(CORNER);
+      livelli[activeLyr].pg.shapeMode(CORNER);
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
@@ -414,6 +534,7 @@ void mousePressed()
     btnCLONE.onClick();
     btnWEB.onClick();
     btnCONFETTI.onClick();
+    btnSHAPE.onClick();
     btGRID.onClick();
     // open & save
     btOPENLYR.onClick();
@@ -513,8 +634,19 @@ void mousePressed()
       cbCONFRND.onClick();
       slCONFVEL.onClick();
       slCONFDVEL.onClick();
-    }      
-    
+    }
+    // check Shape Options
+    else if (tool == "Shape")
+    {
+      slSHitems.onClick();
+      slSHitemsD.onClick();
+      slSHsizeD.onClick();
+      slSHalfaD.onClick();
+      slSHposD.onClick();
+      cbSHcolorRND.onClick();
+      sbSHtype.onClick();
+    }
+
     // check background button
     btcBACKCOL.onClick();
   }
@@ -808,8 +940,8 @@ void mouseDragged()
       // The paint of Dyna brush is coded within draw() function
     }
 
-    // CONFETTI DRAGGED    
-    else if ((!keyPressed) && (tool=="Confetti") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))  
+    // CONFETTI DRAGGED
+    else if ((!keyPressed) && (tool=="Confetti") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       spawn();
       // confetti tool drawing
@@ -820,12 +952,12 @@ void mouseDragged()
         livelli[activeLyr].pg.noStroke();
         livelli[activeLyr].pg.fill(brushCol);
         if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
-        for (int i=0, sz=confettiThings.size(); i<sz; i++) 
+        for (int i=0, sz=confettiThings.size(); i<sz; i++)
         {
           ConfettiBase c = (ConfettiBase)confettiThings.get(i);
           c.move();
           if (c.alive()) { c.paint(); }
-          else 
+          else
           {
             confettiThings.remove(c);
             i--;
@@ -834,8 +966,8 @@ void mouseDragged()
         }
         livelli[activeLyr].pg.endDraw();
       }
-    }  
-    
+    }
+
     // PENCIL DRAGGED
     else if ((startAction) && (!keyPressed) && (tool=="Pencil") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -859,6 +991,123 @@ void mouseDragged()
         calcSymXY(x1,y1,x2,y2);
         drawLine(s1x, s1y, s2x, s2y, brushSize, livelli[activeLyr].pg);
       }
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }
+
+    // SHAPE DRAGGED
+    else if ((startAction) && (!keyPressed) && (tool=="Shape") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    {
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      livelli[activeLyr].pg.stroke(brushCol);
+      livelli[activeLyr].pg.noFill();
+      if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
+
+      color shColor;
+      int numItems = (int) slSHitems.v + (int) (round(random(-slSHitemsD.v, +slSHitemsD.v)));
+      livelli[activeLyr].pg.rectMode(CENTER);
+      livelli[activeLyr].pg.shapeMode(CENTER);
+      for (int i = 0; i<numItems; i++)
+      {
+        int posX = x2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
+        int posY = y2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
+        int bSizeH = brushSize + (int) (round(random(-slSHsizeD.v, +slSHsizeD.v)));
+        int bSizeV = brushSize + (int) (round(random(-slSHsizeD.v, +slSHsizeD.v)));
+        int bAlfa = alfa + (int) (round(random(-slSHalfaD.v, +slSHalfaD.v)));
+        if (cbSHcolorRND.s)
+        {
+          shColor = randomColor();
+          shColor = color((shColor >> 16) & 0xFF, (shColor >> 8)  & 0xFF, shColor & 0xFF, bAlfa);
+        }
+        else
+        {
+          shColor = color((brushCol >> 16) & 0xFF, (brushCol >> 8)  & 0xFF, brushCol & 0xFF, bAlfa);
+        }
+        livelli[activeLyr].pg.stroke(shColor);
+        // draw on active layer
+        switch((int)sbSHtype.v)
+        {
+          case 1: // rectangle
+            livelli[activeLyr].pg.rect(posX, posY, bSizeH, bSizeV);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeV);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeV);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeV);
+            }
+            break;
+          case 2: // square
+            livelli[activeLyr].pg.rect(posX, posY, bSizeH, bSizeH);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeH);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeH);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.rect(s1x, s1y, bSizeH, bSizeH);
+            }
+            break;
+          case 3: // ellipse
+            livelli[activeLyr].pg.ellipse(posX, posY, bSizeH, bSizeV);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeH, bSizeV);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeH, bSizeV);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeH, bSizeV);
+            }
+            break;
+          case 4: // circle
+            livelli[activeLyr].pg.ellipse(posX, posY, bSizeV, bSizeV);
+            if (symX)
+            {
+              calcSymX(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeV, bSizeV);
+            }
+            if (symY) // draw symmetry from Y axis
+            {
+              calcSymY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeV, bSizeV);
+            }
+            if(symX && symY) // draw symmetry from center point (opposite)
+            {
+              calcSymXY(posX, posY, posX, posY);
+              livelli[activeLyr].pg.ellipse(s1x, s1y, bSizeV, bSizeV);
+            }
+            break;
+          case 5: // user svg
+            int dimX = (int) aShape.width*brushSize/brushSizeMax;
+            int dimY = (int) aShape.height*brushSize/brushSizeMax;
+            livelli[activeLyr].pg.shape(aShape, posX, posY, dimX, dimY);
+            break;
+        } //end switch
+      }
+
+      livelli[activeLyr].pg.rectMode(CORNER);
+      livelli[activeLyr].pg.shapeMode(CORNER);
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
@@ -1038,7 +1287,16 @@ void mouseDragged()
     {
       slCONFVEL.onDrag();
       slCONFDVEL.onDrag();
-    }          
+    }
+    // check Shape Options
+    else if (tool == "Shape")
+    {
+      slSHitems.onDrag();
+      slSHitemsD.onDrag();
+      slSHsizeD.onDrag();
+      slSHalfaD.onDrag();
+      slSHposD.onDrag();
+    }
   }
 
   // HSB dragged
@@ -1055,22 +1313,22 @@ void mouseReleased()
   //int mx, my;
   //mx = mouseX;
   //my = mouseY;
-  
+
   // terminate confetti tool render drawing
   if (tool == "Confetti")
   {
-    while(confettiThings.size() > 0)  
+    while(confettiThings.size() > 0)
     {
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       livelli[activeLyr].pg.noStroke();
       livelli[activeLyr].pg.fill(brushCol);
       if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
-      for (int i=0, sz=confettiThings.size(); i<sz; i++) 
+      for (int i=0, sz=confettiThings.size(); i<sz; i++)
       {
         ConfettiBase c = (ConfettiBase)confettiThings.get(i);
         c.move();
         if (c.alive()) { c.paint(); }
-        else 
+        else
         {
           confettiThings.remove(c);
           i--;
@@ -1079,7 +1337,7 @@ void mouseReleased()
       }
       livelli[activeLyr].pg.endDraw();
     }
-  }  
+  }
 
   if(startAction) // started an action who has modified the active layer --> reset REDO
   {
@@ -1108,6 +1366,12 @@ void mouseReleased()
   dslMASS.locked = false;
   dslMINB.locked = false;
   dslMAXB.locked = false;
+  // unlock SHape slider
+  slSHitems.locked = false;
+  slSHitemsD.locked = false;
+  slSHsizeD.locked = false;
+  slSHalfaD.locked = false;
+  slSHposD.locked = false;
 
   // check if drawing with Liner
   if ((lineDown) && (tool=="Liner"))

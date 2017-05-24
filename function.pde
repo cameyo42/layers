@@ -609,7 +609,7 @@ void copyPixels()
     //pixelCopyIMG.save("copia.png");
   }
   else // copy layer
-  { 
+  {
     pixelCopyIMG = null;
     pixelCopyIMG = createImage(width, height, ARGB);
     pixelCopyIMG.loadPixels();
@@ -629,7 +629,7 @@ void copyPixels()
     // activate PASTE
     pixelPaste = true;
     layerPaste = true;
-    //pixelCopyIMG.save("copia.png");  
+    //pixelCopyIMG.save("copia.png");
   }
 }
 
@@ -639,13 +639,13 @@ void pastePixels()
 {
   if (pixelPaste)
   {
-    int pasteX = mouseX;
-    int pasteY = mouseY;
-    if (layerPaste) 
+    int pasteX = mouseX - (x2sel-x1sel)/2;
+    int pasteY = mouseY - (y2sel-y1sel)/2;
+    if (layerPaste)
     {
       pasteX = 0;
       pasteY = 0;
-    }  
+    }
     // store layer for undo
     storeUNDO();
     // Paste image
@@ -675,4 +675,10 @@ void pastePixels()
     //pixelCopyIMG.save("copia2.png");
   }
   else { println("ERROR: no selection"); }
+}
+
+// random color
+color randomColor()
+{
+  return ((color) random(#000000));
 }

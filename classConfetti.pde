@@ -4,7 +4,7 @@
 
 // parameters: velocity and velocity variation
 
-class ConfettiBase 
+class ConfettiBase
 {
   float x, y;
   float ox, oy;
@@ -13,20 +13,14 @@ class ConfettiBase
   float t;
   float wid,hei;
   color c;
-  ConfettiBase(float _x, float _y) 
+  ConfettiBase(float _x, float _y)
   {
     x = _x;
     y = _y;
     t = 0.0;
-    //wid = random(1.0,20.0);
-    //hei = random(1.0,20.0); // original
     wid = random(1.0,brushSize);
-    hei = random(1.0,brushSize);    
-    //c = (randomConfettiColor) ? pal.get() : color(0);
-    //c = (randomConfettiColor) ? pal.get() : brushCol;
+    hei = random(1.0,brushSize);
     c = (cbCONFRND.s) ? randomColor() : brushCol;
-    //vel = random(1.0,4.0); // original
-    //vel = random(1.0,50.0);
     vel = random(1.0,slCONFVEL.v);
     dvel = random(0.001,0.01);
     ddvel = random(0.0001,0.001);
@@ -34,10 +28,10 @@ class ConfettiBase
     dang = random(-0.01,0.01);
     ddang = random(-0.001,0.001);
   }
-  
+
   boolean alive() { return (t < 1.0); }
-  
-  void move() 
+
+  void move()
   {
     ox = x;
     oy = y;
@@ -50,11 +44,11 @@ class ConfettiBase
     y += vel * sin(ang);
     t += 0.01;
   }
-  
-  void paint() 
+
+  void paint()
   {
-    //livelli[activeLyr].pg.stroke((c >> 16) & 0xFF, (c >> 8)  & 0xFF, c & 0xFF, 255f-t*255f);  
-    livelli[activeLyr].pg.stroke((c >> 16) & 0xFF, (c >> 8)  & 0xFF, c & 0xFF, alfa-t*alfa);  
+    //livelli[activeLyr].pg.stroke((c >> 16) & 0xFF, (c >> 8)  & 0xFF, c & 0xFF, 255f-t*255f);
+    livelli[activeLyr].pg.stroke((c >> 16) & 0xFF, (c >> 8)  & 0xFF, c & 0xFF, alfa-t*alfa);
     //livelli[activeLyr].pg.fill(255, 255-t*255f);
     livelli[activeLyr].pg.fill(255, alfa-t*alfa);
     livelli[activeLyr].pg.pushMatrix();
@@ -70,10 +64,10 @@ class ConfettiBase
 }
 
 
-class ConfettiRectangle extends ConfettiBase 
+class ConfettiRectangle extends ConfettiBase
 {
-  ConfettiRectangle(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiRectangle(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(-wid,-hei);
@@ -85,10 +79,10 @@ class ConfettiRectangle extends ConfettiBase
   }
 }
 
-class ConfettiTriangle extends ConfettiBase 
+class ConfettiTriangle extends ConfettiBase
 {
-  ConfettiTriangle(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiTriangle(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(-wid/2,-hei);
@@ -100,8 +94,8 @@ class ConfettiTriangle extends ConfettiBase
 }
 
 class ConfettiParallelogram extends ConfettiBase {
-  ConfettiParallelogram(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiParallelogram(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(-wid,-hei);
@@ -113,10 +107,10 @@ class ConfettiParallelogram extends ConfettiBase {
   }
 }
 
-class ConfettiPentagon extends ConfettiBase 
+class ConfettiPentagon extends ConfettiBase
 {
-  ConfettiPentagon(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiPentagon(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(-wid/2,-hei/2);
@@ -129,10 +123,10 @@ class ConfettiPentagon extends ConfettiBase
   }
 }
 
-class ConfettiHexagon extends ConfettiBase 
+class ConfettiHexagon extends ConfettiBase
 {
-  ConfettiHexagon(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiHexagon(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(-wid,0);
@@ -146,10 +140,10 @@ class ConfettiHexagon extends ConfettiBase
   }
 }
 
-class ConfettiStar extends ConfettiBase 
+class ConfettiStar extends ConfettiBase
 {
-  ConfettiStar(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiStar(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(-wid/2,0);
@@ -167,10 +161,10 @@ class ConfettiStar extends ConfettiBase
   }
 }
 
-class ConfettiBoomerang extends ConfettiBase 
+class ConfettiBoomerang extends ConfettiBase
 {
-  ConfettiBoomerang(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiBoomerang(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(0,hei/2);
@@ -184,10 +178,10 @@ class ConfettiBoomerang extends ConfettiBase
   }
 }
 
-class ConfettiShuriken extends ConfettiBase 
+class ConfettiShuriken extends ConfettiBase
 {
-  ConfettiShuriken(float _x, float _y) { super(_x,_y); } 
-  void shape() 
+  ConfettiShuriken(float _x, float _y) { super(_x,_y); }
+  void shape()
   {
     livelli[activeLyr].pg.beginShape(POLYGON);
     livelli[activeLyr].pg.vertex(-wid*3/2,0);
@@ -203,11 +197,11 @@ class ConfettiShuriken extends ConfettiBase
   }
 }
 
-void spawn() 
+void spawn()
 {
   int which = (int)(random(8));
   //which = 0;
-  switch(which) 
+  switch(which)
   {
     case 0 : confettiThings.add( new ConfettiRectangle(mouseX,mouseY) ); break;
     case 1 : confettiThings.add( new ConfettiTriangle(mouseX,mouseY) );  break;
@@ -217,10 +211,5 @@ void spawn()
     case 5 : confettiThings.add( new ConfettiStar(mouseX,mouseY) ); break;
     case 6 : confettiThings.add( new ConfettiBoomerang(mouseX,mouseY) ); break;
     case 7 : confettiThings.add( new ConfettiShuriken(mouseX,mouseY) ); break;
-  } 
-}
-
-color randomColor()
-{
-  return ((color) random(#000000));
+  }
 }

@@ -10,7 +10,7 @@ void showMenu()
   stroke(0);
   fill(backCol);
   rect(4, 14, brushSizeMax+10, brushSizeMax+10);
-  if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" || 
+  if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" ||
       tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" || tool == "Confetti")
   {
     noStroke();
@@ -86,6 +86,7 @@ void showMenu()
   btnCLONE.show();
   btnWEB.show();
   btnCONFETTI.show();
+  btnSHAPE.show();
   btGRID.show();
   // open & save
   btOPENLYR.show();
@@ -186,5 +187,16 @@ void showMenu()
     cbCONFRND.show();
     slCONFVEL.show();
     slCONFDVEL.show();
-  }  
+  }
+  // Show Shape Options
+  else if (tool == "Shape") //SHAPE
+  {
+    slSHitems.show();
+    slSHitemsD.show();
+    slSHsizeD.show();
+    slSHalfaD.show();
+    slSHposD.show();
+    cbSHcolorRND.show();
+    sbSHtype.show();
+  }
 }

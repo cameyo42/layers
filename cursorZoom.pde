@@ -145,7 +145,7 @@ void showCursor(int x, int y, boolean zoom, float zoomFactor)
       line(mouseX-brushSize/2-4,mouseY,mouseX-brushSize,mouseY);
     }
   }
-  else if (tool == "Liner" || tool == "Select") // LINER, SELECT cursor
+  else if (tool == "Liner" || tool == "Select" || tool == "Shape") // LINER, SELECT cursor
   {
     stroke(pointerCol);
     if (zoom)

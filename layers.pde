@@ -46,7 +46,7 @@ PImage pencilON_IMG, pencilOFF_IMG, eraserON_IMG, eraserOFF_IMG, fillerON_IMG, f
 PImage undoON_IMG, undoOFF_IMG, redoON_IMG, redoOFF_IMG, lockON_IMG, lockOFF_IMG;
 PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampOFF_IMG, dynaON_IMG, dynaOFF_IMG;
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
-PImage stencilON_IMG, stencilOFF_IMG, confettiON_IMG, confettiOFF_IMG;
+PImage stencilON_IMG, stencilOFF_IMG, confettiON_IMG, confettiOFF_IMG, shapeON_IMG, shapeOFF_IMG;
 PImage copyPixel_IMG, pastePixel_IMG;
 PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
@@ -175,13 +175,16 @@ int[] redoLyr;
 
 // GUI elements (buttons, slider, spinners, ...)
 ButtonIMG btnPENCIL, btnLINER, btnQUAD, btnCIRCLE, btnERASER, btnLOCK;
-ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT, btnSTENCIL, btnCONFETTI;
+ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, btnWEB, btnSELECT, btnSTENCIL, btnCONFETTI, btnSHAPE;
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
 Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
 Button btSELCOPY, btSELPASTE;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
+Slider slSHitems, slSHitemsD, slSHalfaD, slSHsizeD, slSHposD;
+Checkbox cbSHcolorRND;
+SpinBound sbSHtype;
 Checkbox cbSYMX, cbSYMY, cbGLITCH, cbGRID, cbSNAP, cbCLONE, cbWEBE, cbWEBP;
 Checkbox cbSELECT, cbSTENCIL, cbFILLERASE;
 Checkbox cbCONFSCALE, cbCONFRND;
@@ -241,6 +244,11 @@ ArrayList confettiThings;
 boolean scaleConfetti;
 boolean randomConfettiColor;
 
+// shape
+int shItems, shPosD;
+int shSizeD, shAlfaD, shItemsD;
+PShape aShape;
+
 //*********************************
 //*********************************
 void setup()
@@ -248,8 +256,9 @@ void setup()
   //size(1800, 1000);
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
-  size(1300,750);
+  //size(1300,750);
   //size(1900,900);
+  size(1280,800);
   smooth();
   noCursor();
   frameRate(100);
@@ -350,10 +359,17 @@ void setup()
   loadingStencil = false;
   ysten = height/2 - stencilIMG.height/2;
   xsten = width/2 - stencilIMG.width/2;
-  //confetti
+  // confetti
   confettiThings = new ArrayList();
   scaleConfetti = true;
   randomConfettiColor = false;
+  // shape
+  aShape = loadShape("shape.svg");
+  shItems = 1;
+  shItemsD = 0;
+  shPosD = 10;
+  shSizeD = 10;
+  shAlfaD = 50;
   // undo/redo variables
   grab = true;
   numUndo = 10;
@@ -437,6 +453,8 @@ void setup()
   stencilOFF_IMG = gui_IMG.get(1274, 170, 34, 34);
   confettiOFF_IMG = gui_IMG.get(1274, 204, 34, 34);
   confettiON_IMG = gui_IMG.get(1240, 204, 34, 34);
+  shapeOFF_IMG = gui_IMG.get(1274, 238, 34, 34);
+  shapeON_IMG = gui_IMG.get(1240, 238, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -534,6 +552,15 @@ void setup()
   btnPRE06 = new DynaButton(84, 368, pre06ON_IMG, pre06OFF_IMG, false, "btn_PRE06");
   btnPRE07 = new DynaButton(100, 368, pre07ON_IMG, pre07OFF_IMG, false, "btn_PRE07");
   btnPRE08 = new DynaButton(116, 368, pre08ON_IMG, pre08OFF_IMG, false, "btn_PRE08");
+  // Shape button and Sliders
+  btnSHAPE = new ButtonIMG(113, 328, shapeON_IMG, shapeOFF_IMG, false, "", textMenuCol, "btn_SHAPE");
+  slSHitems = new Slider(10, 394, 130, 394, 4, "items", 1, 10, shItems, black, highLight, black, textMenuCol, "sl_SHitems");
+  slSHitemsD = new Slider(170, 394, 290, 394, 4, "delta items", 0, 10, shItemsD, black, highLight, black, textMenuCol, "sl_SHitemsD");
+  slSHsizeD = new Slider(10, 425, 130, 425, 4, "delta size", 0, 64, shSizeD, black, highLight, black, textMenuCol, "sl_SHsizeD");
+  slSHalfaD = new Slider(170, 425, 290, 425, 4, "delta alpha", 0, 128, shAlfaD, black, highLight, black, textMenuCol, "sl_SHalfaD");
+  slSHposD = new Slider(10, 456, 210, 456, 4, "jitter", 0, 200, shPosD, black, highLight, black, textMenuCol, "sl_SHposD");
+  cbSHcolorRND = new Checkbox(6, 368, 14, 14, "RND color", false, black, darkGray, highLight, gray, textMenuCol, "cb_SHcolorRND");
+  sbSHtype = new SpinBound(252, 444, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -649,6 +676,7 @@ void btn_WEB()      { selectTool("Web"); }
 void btn_SELECT()   { selectTool("Select"); }
 void btn_STENCIL()  { selectTool("Stencil"); }
 void btn_CONFETTI() { selectTool("Confetti"); }
+void btn_SHAPE()    { selectTool("Shape"); }
 void btn_UNDO()     { undo(); }
 void btn_REDO()     { redo(); }
 // SELECT checkbox
@@ -688,6 +716,14 @@ void cb_CONFSCALE() { };
 void cb_CONFRND() { };
 void sl_CONFVEL() { };
 void sl_CONFDVEL() { };
+// SHAPE options method
+void sl_SHitems() { };
+void sl_SHitemsD() { };
+void sl_SHsizeD() { };
+void sl_SHalfaD() { };
+void sl_SHposD() { };
+void cb_SHcolorRND() { };
+void sb_SHtype() { };
 // CLONE slider method
 void cb_CLONE() { }
 // STAMP slider method
@@ -907,6 +943,7 @@ void selectTool(String t)
   btnSELECT.s = false;
   btnSTENCIL.s = false;
   btnCONFETTI.s = false;
+  btnSHAPE.s = false;
   //aSelection = false;
   if (t == "Pencil")        { btnPENCIL.s = true; }
   else if (t == "Liner")    { btnLINER.s = true; }
@@ -924,7 +961,8 @@ void selectTool(String t)
   else if (t == "Select")   { btnSELECT.s = true; checkSelection();}
   else if (t == "Stencil")  { btnSTENCIL.s = true; stencil = true; cbSTENCIL.s = stencil;}
   else if (t == "Confetti") { btnCONFETTI.s = true;}
-  else if (t == "TEST")    { }
+  else if (t == "Shape")    { btnSHAPE.s = true;}
+  else if (t == "TEST")     { }
 }
 
 void checkSelection()
