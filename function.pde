@@ -515,7 +515,7 @@ void createSetofPoints()
         int loc = xx + yy*width;
         String newPt = String.valueOf(loc);
         pts.add(newPt);
-              println(x,y,x+xsten,y+ysten,stencilIMG.pixels[x+y*stencilIMG.width]);
+        //println(x,y,x+xsten,y+ysten,stencilIMG.pixels[x+y*stencilIMG.width]);
       }
     }
   }
@@ -606,7 +606,6 @@ void copyPixels()
     // activate PASTE
     layerPaste = false;
     pixelPaste = true;
-    //pixelCopyIMG.save("copia.png");
   }
   else // copy layer
   {
@@ -629,7 +628,6 @@ void copyPixels()
     // activate PASTE
     pixelPaste = true;
     layerPaste = true;
-    //pixelCopyIMG.save("copia.png");
   }
 }
 
@@ -672,7 +670,6 @@ void pastePixels()
     //pixelCopyIMG.updatePixels();
     livelli[activeLyr].pg.updatePixels();
     livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
-    //pixelCopyIMG.save("copia2.png");
   }
   else { println("ERROR: no selection"); }
 }
