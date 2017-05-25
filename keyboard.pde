@@ -415,7 +415,7 @@ void keyPressed()
   }
 
   // shape key
-  if (key=='|')
+  if (key=='?')
   {
     //String lista[] = loadStrings(dataPath("cobweb.web"));
     //cobweb.clear();
@@ -436,8 +436,13 @@ void keyPressed()
     //println(mouseX, mouseY, a);
     //stencil = !stencil;
     //copyPixels();
+    aShape.disableStyle();
   }
-
+  
+  if (key=='=')
+  {  
+    aShape.enableStyle();
+  }
 }
 
 //*********************************

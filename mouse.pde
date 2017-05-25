@@ -251,7 +251,7 @@ void mousePressed()
           case 5: // user svg
             int dimX = (int) aShape.width*brushSize/brushSizeMax;
             int dimY = (int) aShape.height*brushSize/brushSizeMax;
-            aShape.disableStyle();
+            //aShape.disableStyle();
             livelli[activeLyr].pg.shape(aShape, posX, posY, dimX, dimY);
             break;
         } //end switch
