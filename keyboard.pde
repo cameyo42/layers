@@ -2,12 +2,22 @@
 //*********************************
 void keyPressed()
 {
+  // draw selection contour
+  if (keyCode==118) // F7
+  {
+    selectionContour();
+  }
 
+  // toggle erase outside selection
+  if (keyCode==119) // F8
+  {
+    cbSELOUT.s = !cbSELOUT.s;
+  }
 
   if (keyCode==120) // F9
   {
 
-  }  
+  }
   // Toggle selection
   if (keyCode==114) // F3
   {
@@ -24,18 +34,18 @@ void keyPressed()
     stencil = !stencil;
     cbSTENCIL.s = stencil;
   }
-  
+
   // Copy pixels
   if (keyCode==116) // F5
   {
     copyPixels();
   }
-  
+
   // Paste pixels
   if (keyCode==117) // F6
   {
     pastePixels();
-  }  
+  }
 
   // draw palette on active layer from brushCol to oldCol (the colors on rgbhsb tool)
   if ((key=='j') || (key=='J'))
@@ -140,7 +150,9 @@ void keyPressed()
   if (key=='9') { selectTool("Stencil"); }
   // select Stencil tool
   if (key==';') { selectTool("Confetti"); }
-  
+  // select Shape tool
+  if (key==',') { selectTool("Shape"); }
+
   // set grid on/off
   if ((key=='w') || (key=='W'))
   {
@@ -299,39 +311,51 @@ void keyPressed()
       storeUNDO();
       if (aSelection)
       {
-        //x1sel = constrain(x1sel, 0, width-1);
-        //y1sel = constrain(y1sel, 0, height-1);
-        //x2sel = constrain(x2sel, 0, width-1);
-        //y2sel = constrain(y2sel, 0, height-1);
-        // delete pixels inside selection
-        //int xmin = (x1sel > x2sel) ? x2sel : x1sel;
-        //int xmax = (x2sel > x1sel) ? x2sel : x1sel;
-        //int ymin = (y1sel > y2sel) ? y2sel : y1sel;
-        //int ymax = (y2sel > y1sel) ? y2sel : y1sel;
-        
-        int xmin = x1sel+1;
-        int xmax = x2sel-1;
-        int ymin = y1sel+1;
-        int ymax = y2sel-1;
-        int loc = 0;
-        livelli[activeLyr].pg.beginDraw();
-        livelli[activeLyr].pg.loadPixels();
-        for (int x = xmin; x <= xmax; x++)
+        if (!cbSELOUT.s) // erase inside selection
         {
-          for (int y = ymin; y <= ymax; y++)
-          {
-            loc = x + y*width;
-            livelli[activeLyr].pg.pixels[loc] = 0X0;
-          }
-        }
-        livelli[activeLyr].pg.updatePixels();
-        livelli[activeLyr].pg.endDraw();
+           int xmin = x1sel+1;
+           int xmax = x2sel-1;
+           int ymin = y1sel+1;
+           int ymax = y2sel-1;
+           int loc = 0;
+           livelli[activeLyr].pg.beginDraw();
+           livelli[activeLyr].pg.loadPixels();
+           for (int x = xmin; x <= xmax; x++)
+           {
+             for (int y = ymin; y <= ymax; y++)
+             {
+               loc = x + y*width;
+               livelli[activeLyr].pg.pixels[loc] = 0X0;
+             }
+           }
+           livelli[activeLyr].pg.updatePixels();
+           livelli[activeLyr].pg.endDraw();
+         }
+         else // erase outside selection
+         {
+           println("erase outside");
+           int loc = 0;
+           livelli[activeLyr].pg.beginDraw();
+           livelli[activeLyr].pg.loadPixels();
+           for (int x = 0; x < width; x++)
+           {
+             for (int y = 0; y < height; y++)
+             {
+               loc = x + y*width;
+               if ((x < x1sel) || (x > x2sel) || (y < y1sel) || (y > y2sel))
+               {
+                livelli[activeLyr].pg.pixels[loc] = 0X0;
+               } 
+             }
+           }
+           livelli[activeLyr].pg.updatePixels();
+           livelli[activeLyr].pg.endDraw();         
+         }
       }
       else // delete entire canvas of active layer
       {
         livelli[activeLyr].delete();
       }
-
       // update swatch of current layer
       livelli[activeLyr].updateLayerSwatch();
   }
@@ -390,8 +414,8 @@ void keyPressed()
     cbSNAP.s = !cbSNAP.s;
   }
 
-  // test key
-  if (key==',')
+  // shape key
+  if (key=='|')
   {
     //String lista[] = loadStrings(dataPath("cobweb.web"));
     //cobweb.clear();
@@ -411,9 +435,9 @@ void keyPressed()
     //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);
     //println(mouseX, mouseY, a);
     //stencil = !stencil;
-    //copyPixels();    
+    //copyPixels();
   }
-  
+
 }
 
 //*********************************

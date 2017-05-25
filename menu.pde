@@ -170,6 +170,8 @@ void showMenu()
     cbSELECT.show();
     btSELCOPY.show();
     btSELPASTE.show();
+    btSELDRAW.show();
+    cbSELOUT.show();
   }
   // Show Stencil Options
   else if (tool == "Stencil")
