@@ -2,6 +2,21 @@
 //*********************************
 void keyPressed()
 {
+
+  // reset parameters
+  if (keyCode==123) // F12
+  {
+    aSelection = false;
+    stencil = false;
+    brushSize = 10; slSIZE.v = 10;
+    alfa = 255; slALFA.v = 255;
+    noGlitch = false; cbGLITCH.s = false;
+    brushCol = color(darkGray);
+    selectTool("Ink");
+    mousePressed = false;
+    keyPressed= false;
+  }
+   
   // draw selection contour
   if (keyCode==118) // F7
   {

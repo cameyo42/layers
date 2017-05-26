@@ -153,10 +153,10 @@ void mousePressed()
       if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
 
       color shColor;
-      int numItems = (int) slSHitems.v + (int) (round(random(-slSHitemsD.v, +slSHitemsD.v)));
+      int numItems = (int) slSHitems.v;
       livelli[activeLyr].pg.rectMode(CENTER);
       livelli[activeLyr].pg.shapeMode(CENTER);
-      for (int i = 0; i<numItems; i++)
+      for (int i = 0; i < numItems; i++)
       {
         int posX = x2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
         int posY = y2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
@@ -249,9 +249,8 @@ void mousePressed()
             }
             break;
           case 5: // user svg
-            int dimX = (int) aShape.width*brushSize/brushSizeMax;
-            int dimY = (int) aShape.height*brushSize/brushSizeMax;
-            //aShape.disableStyle();
+            int dimX = (int) aShape.width*bSizeH/brushSizeMax;
+            int dimY = (int) aShape.height*bSizeH/brushSizeMax;
             livelli[activeLyr].pg.shape(aShape, posX, posY, dimX, dimY);
             break;
         } //end switch
@@ -642,11 +641,11 @@ void mousePressed()
     else if (tool == "Shape")
     {
       slSHitems.onClick();
-      slSHitemsD.onClick();
       slSHsizeD.onClick();
       slSHalfaD.onClick();
       slSHposD.onClick();
       cbSHcolorRND.onClick();
+      cbSHstyle.onClick();
       sbSHtype.onClick();
     }
 
@@ -832,6 +831,7 @@ void mouseDragged()
           }
         }
       }
+      //livelli[activeLyr].pg.strokeWeight(1);      
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
@@ -1006,10 +1006,10 @@ void mouseDragged()
       if (aSelection) { livelli[activeLyr].pg.clip(x1sel+1, y1sel+1, x2sel-x1sel-1, y2sel-y1sel-1); } // check selection
 
       color shColor;
-      int numItems = (int) slSHitems.v + (int) (round(random(-slSHitemsD.v, +slSHitemsD.v)));
+      int numItems = (int) slSHitems.v;
       livelli[activeLyr].pg.rectMode(CENTER);
       livelli[activeLyr].pg.shapeMode(CENTER);
-      for (int i = 0; i<numItems; i++)
+      for (int i = 0; i < numItems; i++)
       {
         int posX = x2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
         int posY = y2 + (int) (round(random(-slSHposD.v, +slSHposD.v)));
@@ -1295,7 +1295,6 @@ void mouseDragged()
     else if (tool == "Shape")
     {
       slSHitems.onDrag();
-      slSHitemsD.onDrag();
       slSHsizeD.onDrag();
       slSHalfaD.onDrag();
       slSHposD.onDrag();
@@ -1371,7 +1370,6 @@ void mouseReleased()
   dslMAXB.locked = false;
   // unlock SHape slider
   slSHitems.locked = false;
-  slSHitemsD.locked = false;
   slSHsizeD.locked = false;
   slSHalfaD.locked = false;
   slSHposD.locked = false;

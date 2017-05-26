@@ -182,8 +182,8 @@ Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
 Button btSELCOPY, btSELPASTE, btSELDRAW;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
-Slider slSHitems, slSHitemsD, slSHalfaD, slSHsizeD, slSHposD;
-Checkbox cbSHcolorRND;
+Slider slSHitems, slSHalfaD, slSHsizeD, slSHposD;
+Checkbox cbSHcolorRND, cbSHstyle;
 SpinBound sbSHtype;
 Checkbox cbSYMX, cbSYMY, cbGLITCH, cbGRID, cbSNAP, cbCLONE, cbWEBE, cbWEBP;
 Checkbox cbSELECT, cbSTENCIL, cbFILLERASE;
@@ -248,7 +248,7 @@ boolean randomConfettiColor;
 
 // shape
 int shItems, shPosD;
-int shSizeD, shAlfaD, shItemsD;
+int shSizeD, shAlfaD;
 PShape aShape;
 
 //*********************************
@@ -369,10 +369,10 @@ void setup()
   // shape
   aShape = loadShape("shape.svg");
   shItems = 1;
-  shItemsD = 0;
   shPosD = 10;
   shSizeD = 10;
   shAlfaD = 50;
+  aShape.enableStyle();
   // undo/redo variables
   grab = true;
   numUndo = 10;
@@ -561,12 +561,12 @@ void setup()
   // Shape button and Sliders
   btnSHAPE = new ButtonIMG(113, 328, shapeON_IMG, shapeOFF_IMG, false, "", textMenuCol, "btn_SHAPE");
   slSHitems = new Slider(10, 394, 130, 394, 4, "items", 1, 10, shItems, black, highLight, black, textMenuCol, "sl_SHitems");
-  slSHitemsD = new Slider(170, 394, 290, 394, 4, "delta items", 0, 10, shItemsD, black, highLight, black, textMenuCol, "sl_SHitemsD");
   slSHsizeD = new Slider(10, 425, 130, 425, 4, "delta size", 0, 64, shSizeD, black, highLight, black, textMenuCol, "sl_SHsizeD");
   slSHalfaD = new Slider(170, 425, 290, 425, 4, "delta alpha", 0, 128, shAlfaD, black, highLight, black, textMenuCol, "sl_SHalfaD");
   slSHposD = new Slider(10, 456, 210, 456, 4, "jitter", 0, 200, shPosD, black, highLight, black, textMenuCol, "sl_SHposD");
   cbSHcolorRND = new Checkbox(6, 368, 14, 14, "RND color", false, black, darkGray, highLight, gray, textMenuCol, "cb_SHcolorRND");
-  sbSHtype = new SpinBound(252, 444, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
+  cbSHstyle = new Checkbox(144,380, 14, 14, "style SVG", true, black, darkGray, highLight, gray, textMenuCol, "cb_SHstyle");
+  sbSHtype = new SpinBound(254, 380, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -731,11 +731,15 @@ void sl_CONFVEL() { };
 void sl_CONFDVEL() { };
 // SHAPE options method
 void sl_SHitems() { };
-void sl_SHitemsD() { };
 void sl_SHsizeD() { };
 void sl_SHalfaD() { };
 void sl_SHposD() { };
 void cb_SHcolorRND() { };
+void cb_SHstyle() 
+{ 
+  if (cbSHstyle.s) { aShape.enableStyle(); } // SVG style
+  else { aShape.disableStyle(); } // processing style
+};
 void sb_SHtype() { };
 // CLONE slider method
 void cb_CLONE() { }

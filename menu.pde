@@ -194,11 +194,11 @@ void showMenu()
   else if (tool == "Shape") //SHAPE
   {
     slSHitems.show();
-    slSHitemsD.show();
     slSHsizeD.show();
     slSHalfaD.show();
     slSHposD.show();
     cbSHcolorRND.show();
+    cbSHstyle.show();
     sbSHtype.show();
   }
 }
