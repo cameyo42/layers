@@ -4,6 +4,7 @@ void keyPressed()
 {
 
   // reset parameters
+  // sometimes you don't know why the program don't work as expected...
   if (keyCode==123) // F12
   {
     aSelection = false;
@@ -12,11 +13,12 @@ void keyPressed()
     alfa = 255; slALFA.v = 255;
     noGlitch = false; cbGLITCH.s = false;
     brushCol = color(darkGray);
+    livelli[activeLyr].lv = true;
     selectTool("Ink");
     mousePressed = false;
     keyPressed= false;
   }
-   
+
   // draw selection contour
   if (keyCode==118) // F7
   {
@@ -359,11 +361,11 @@ void keyPressed()
                if ((x < x1sel) || (x > x2sel) || (y < y1sel) || (y > y2sel))
                {
                 livelli[activeLyr].pg.pixels[loc] = 0X0;
-               } 
+               }
              }
            }
            livelli[activeLyr].pg.updatePixels();
-           livelli[activeLyr].pg.endDraw();         
+           livelli[activeLyr].pg.endDraw();
          }
       }
       else // delete entire canvas of active layer
@@ -429,9 +431,9 @@ void keyPressed()
   }
 
   if (key=='=')
-  {  
+  {
   }
-  
+
 }
 
 //*********************************

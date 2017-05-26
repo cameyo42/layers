@@ -568,7 +568,7 @@ void setup()
   slSHalfaD = new Slider(170, 425, 290, 425, 4, "delta alpha", 0, 128, shAlfaD, black, highLight, black, textMenuCol, "sl_SHalfaD");
   slSHposD = new Slider(10, 456, 210, 456, 4, "jitter", 0, 200, shPosD, black, highLight, black, textMenuCol, "sl_SHposD");
   cbSHcolorRND = new Checkbox(6, 368, 14, 14, "RND color", false, black, darkGray, highLight, gray, textMenuCol, "cb_SHcolorRND");
-  btSHSVG = new Button(170 , 376, shapeSVG_IMG, "load SVG", textMenuCol, "bt_SHSVG");
+  btSHSVG = new Button(170, 376, shapeSVG_IMG, "load SVG", textMenuCol, "bt_SHSVG");
   cbSHstyle = new Checkbox(230, 380, 14, 14, "style SVG", true, black, darkGray, highLight, gray, textMenuCol, "cb_SHstyle");
   sbSHtype = new SpinBound(254, 445, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
 
@@ -739,8 +739,8 @@ void sl_SHsizeD() { };
 void sl_SHalfaD() { };
 void sl_SHposD() { };
 void cb_SHcolorRND() { };
-void cb_SHstyle() 
-{ 
+void cb_SHstyle()
+{
   if (cbSHstyle.s) { aShape.enableStyle(); } // SVG style
   else { aShape.disableStyle(); } // processing style
 };
@@ -865,8 +865,8 @@ void draw()
   if (loadingShape)
   {
     openShape();
-  }  
-  
+  }
+
   // load a stencil image
   if (loadingStencil)
   {

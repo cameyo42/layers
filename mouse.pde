@@ -832,7 +832,7 @@ void mouseDragged()
           }
         }
       }
-      //livelli[activeLyr].pg.strokeWeight(1);      
+      //livelli[activeLyr].pg.strokeWeight(1);
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 

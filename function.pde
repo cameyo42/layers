@@ -677,17 +677,17 @@ void pastePixels()
 // draw selection contour
 void selectionContour()
 {
-  if (aSelection) 
+  if (aSelection)
   {
-    // store layer for undo  
+    // store layer for undo
     storeUNDO();
     livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
     livelli[activeLyr].pg.stroke(brushCol);
     livelli[activeLyr].pg.noFill();
     livelli[activeLyr].pg.rect(x1sel,y1sel,(x2sel-x1sel),(y2sel-y1sel));
     livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
-  }  
-}    
+  }
+}
 
 // random color
 color randomColor()

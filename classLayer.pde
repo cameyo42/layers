@@ -93,19 +93,6 @@ class Layer
     pg.endDraw();
   }
 
-
-  //void show() // show layer on canvas
-  //{
-  //  if (lv)
-  //  {
-  //    // set layer transparency
-  //    if (lt != 255.0)
-  //    { tint(255, lt); }
-  //    else { noTint(); }
-  //    image(pg, lx, ly);
-  //  }
-  //}
-
   void show() // show layer on canvas
   {
     if (lv)
