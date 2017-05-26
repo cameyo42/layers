@@ -647,6 +647,7 @@ void mousePressed()
       cbSHcolorRND.onClick();
       cbSHstyle.onClick();
       sbSHtype.onClick();
+      btSHSVG.onClick();
     }
 
     // check background button

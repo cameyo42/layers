@@ -200,5 +200,6 @@ void showMenu()
     cbSHcolorRND.show();
     cbSHstyle.show();
     sbSHtype.show();
+    btSHSVG.show();
   }
 }

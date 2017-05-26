@@ -47,7 +47,7 @@ PImage undoON_IMG, undoOFF_IMG, redoON_IMG, redoOFF_IMG, lockON_IMG, lockOFF_IMG
 PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampOFF_IMG, dynaON_IMG, dynaOFF_IMG;
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
 PImage stencilON_IMG, stencilOFF_IMG, confettiON_IMG, confettiOFF_IMG, shapeON_IMG, shapeOFF_IMG;
-PImage copyPixel_IMG, pastePixel_IMG, drawSelPixel_IMG;
+PImage copyPixel_IMG, pastePixel_IMG, drawSelPixel_IMG, shapeSVG_IMG;
 PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
@@ -179,7 +179,7 @@ ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, 
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
 Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
-Button btSELCOPY, btSELPASTE, btSELDRAW;
+Button btSELCOPY, btSELPASTE, btSELDRAW, btSHSVG;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
 Slider slSHitems, slSHalfaD, slSHsizeD, slSHposD;
@@ -250,6 +250,7 @@ boolean randomConfettiColor;
 int shItems, shPosD;
 int shSizeD, shAlfaD;
 PShape aShape;
+boolean loadingShape;
 
 //*********************************
 //*********************************
@@ -258,9 +259,9 @@ void setup()
   //size(1800, 1000);
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
-  //size(1300,750);
+  size(1300,750);
   //size(1900,900);
-  size(1280,800);
+  //size(1280,800);
   smooth();
   noCursor();
   frameRate(100);
@@ -373,6 +374,7 @@ void setup()
   shSizeD = 10;
   shAlfaD = 50;
   aShape.enableStyle();
+  loadingShape = false;
   // undo/redo variables
   grab = true;
   numUndo = 10;
@@ -459,6 +461,7 @@ void setup()
   confettiON_IMG = gui_IMG.get(1240, 204, 34, 34);
   shapeOFF_IMG = gui_IMG.get(1274, 238, 34, 34);
   shapeON_IMG = gui_IMG.get(1240, 238, 34, 34);
+  shapeSVG_IMG = gui_IMG.get(1308, 230, 20, 20);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -567,6 +570,7 @@ void setup()
   cbSHcolorRND = new Checkbox(6, 368, 14, 14, "RND color", false, black, darkGray, highLight, gray, textMenuCol, "cb_SHcolorRND");
   cbSHstyle = new Checkbox(144,380, 14, 14, "style SVG", true, black, darkGray, highLight, gray, textMenuCol, "cb_SHstyle");
   sbSHtype = new SpinBound(254, 380, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
+  btSHSVG = new Button(250, 440, shapeSVG_IMG, "SVG", textMenuCol, "bt_SHSVG");
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -740,6 +744,7 @@ void cb_SHstyle()
   if (cbSHstyle.s) { aShape.enableStyle(); } // SVG style
   else { aShape.disableStyle(); } // processing style
 };
+void bt_SHSVG() { openShapeDialog(); }
 void sb_SHtype() { };
 // CLONE slider method
 void cb_CLONE() { }
@@ -856,7 +861,13 @@ void draw()
     }
   }
 
-  // load an image on current layer
+  // load an SVG vector file
+  if (loadingShape)
+  {
+    openShape();
+  }  
+  
+  // load a stencil image
   if (loadingStencil)
   {
     openStencil();

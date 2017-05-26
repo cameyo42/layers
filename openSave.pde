@@ -1,3 +1,43 @@
+// OPEN SHAPE
+//*********************************
+void openShapeDialog()
+{
+  noLoop();
+  selectInput("Select a file SVG...", "loadShape");
+}
+
+//*********************************
+void loadShape(File selection)
+{
+  if (selection == null) { println("No file selected."); }
+  else
+  {
+    // get filename with full path: (c:\demo\draw.png)
+    filename=selection.getAbsolutePath();
+    // extract only filename (without ext)
+    name = selection.getName();
+    int pos = name.lastIndexOf(".");
+    if (pos > 0) { name = name.substring(0, pos); }
+    dummyFile = new File(selection.getName());
+    loadingShape = true; // call openShape() from draw()
+    //println(filename, name);
+  }
+  keyPressed = false; // needed !!
+  mousePressed = false;
+  loop();
+}
+
+//*********************************
+void openShape()
+{
+  loadingShape = false;
+  aShape = loadShape(filename);
+  sbSHtype.v = 5;
+  cbSHstyle.s = true;
+  aShape.enableStyle(); // use SVG style
+}
+
+
 // OPEN STENCIL
 //*********************************
 void openStencilDialog()
@@ -25,6 +65,7 @@ void loadStencil(File selection)
   mousePressed = false;
   loop();
 }
+
 //*********************************
 void openStencil()
 {
