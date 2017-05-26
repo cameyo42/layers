@@ -11,7 +11,8 @@ void showMenu()
   fill(backCol);
   rect(4, 14, brushSizeMax+10, brushSizeMax+10);
   if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" ||
-      tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" || tool == "Confetti")
+      tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" || tool == "Clone" ||
+      tool == "Confetti" || tool == "Shape")
   {
     noStroke();
     fill(brushCol);

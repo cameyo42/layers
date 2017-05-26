@@ -348,7 +348,6 @@ void keyPressed()
          }
          else // erase outside selection
          {
-           println("erase outside");
            int loc = 0;
            livelli[activeLyr].pg.beginDraw();
            livelli[activeLyr].pg.loadPixels();
@@ -429,35 +428,10 @@ void keyPressed()
     cbSNAP.s = !cbSNAP.s;
   }
 
-  // shape key
-  if (key=='?')
-  {
-    //String lista[] = loadStrings(dataPath("cobweb.web"));
-    //cobweb.clear();
-    //int numPoints = lista.length - 1;
-    //println(numPoints);
-    //for (int i=0; i < numPoints; i++)
-    //{
-    //  String[] punto = split(lista[i], ",");
-    //  int x = int(punto[0]);
-    //  int y = int(punto[1]);
-    //  PVector v = new PVector(x, y, 0);
-    //  cobweb.add(0, v);
-    //}
-    //println(cobweb.size());
-    //updateWeb = true;
-    //int pick = stencilIMG.get(mouseX,mouseY*stencilIMG.width));
-    //int a = stencilIMG.get(mouseX-xsten,mouseY-ysten);
-    //println(mouseX, mouseY, a);
-    //stencil = !stencil;
-    //copyPixels();
-    aShape.disableStyle();
-  }
-  
   if (key=='=')
   {  
-    aShape.enableStyle();
   }
+  
 }
 
 //*********************************

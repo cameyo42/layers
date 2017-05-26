@@ -1,5 +1,5 @@
-// OPEN SHAPE
 //*********************************
+// OPEN SHAPE
 void openShapeDialog()
 {
   noLoop();
@@ -37,9 +37,8 @@ void openShape()
   aShape.enableStyle(); // use SVG style
 }
 
-
-// OPEN STENCIL
 //*********************************
+// OPEN STENCIL
 void openStencilDialog()
 {
   noLoop();
@@ -77,16 +76,7 @@ void openStencil()
 }
 
 //*********************************
-boolean fileExists(String path)
-{
-  File file=new File(path);
-  boolean exists = file.exists();
-  if (exists) { return true; }
-  else { return false; }
-}
-
 // OPEN LAYER
-//*********************************
 void openLayerDialog()
 {
   noLoop();
@@ -129,8 +119,8 @@ void openLayer()
   livelli[activeLyr].updateLayerSwatch();  // update layer swatch
 }
 
-// OPEN DRAW
 //*********************************
+// OPEN DRAW
 void selectFolderOpenDialog()
 {
   noLoop();
@@ -222,8 +212,8 @@ void openDrawFromFolder()
   }
 }
 
-// SAVE DRAW
 //*********************************
+// SAVE DRAW
 void selectFolderSaveDialog()
 {
   noLoop();
@@ -347,4 +337,13 @@ void savePDF()
   outPDF.image(outLYR,0,0);
   outPDF.dispose();
   outPDF.endDraw(); // automatically save PDF
+}
+
+//*********************************
+boolean fileExists(String path)
+{
+  File file=new File(path);
+  boolean exists = file.exists();
+  if (exists) { return true; }
+  else { return false; }
 }
