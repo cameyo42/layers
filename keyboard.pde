@@ -14,6 +14,7 @@ void keyPressed()
     noGlitch = false; cbGLITCH.s = false;
     brushCol = color(darkGray);
     livelli[activeLyr].lv = true;
+    livelli[activeLyr].lt = 255;
     selectTool("Ink");
     mousePressed = false;
     keyPressed= false;
@@ -436,9 +437,9 @@ void keyPressed()
     cbSNAP.s = !cbSNAP.s;
   }
 
+  // test key
   if (key=='=')
-  {
-  }
+  {}
 
 }
 
