@@ -169,10 +169,11 @@ void showMenu()
   else if (tool == "Select")
   {
     cbSELECT.show();
+    cbSELOUT.show();
     btSELCOPY.show();
     btSELPASTE.show();
     btSELDRAW.show();
-    cbSELOUT.show();
+    btSELSAVE.show();
   }
   // Show Stencil Options
   else if (tool == "Stencil")

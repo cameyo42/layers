@@ -247,7 +247,7 @@ void folderSaveSelected(File selection)
 //*********************************
 void saveDrawOnFolder()
 {
-  cursor(WAIT);
+  //cursor(WAIT);
   String layersStr = "";
   PGraphics outLYR = createGraphics(width, height);
   outLYR.beginDraw();
@@ -337,6 +337,65 @@ void savePDF()
   outPDF.image(outLYR,0,0);
   outPDF.dispose();
   outPDF.endDraw(); // automatically save PDF
+}
+
+// SAVE SELECTION
+void selectionSaveDialog()
+{
+  noLoop();
+  selectOutput("Select a file...", "selectionSave");
+}
+
+void selectionSave(File selection)
+{
+  if (selection == null) { println("No file selected."); }
+  else
+  {
+    cursor(WAIT);
+    if (aSelection) //copy selection
+    {
+      pixelCopyIMG = null;
+      pixelCopyIMG = createImage(x2sel - x1sel - 1, y2sel - y1sel - 1, ARGB);
+      pixelCopyIMG.loadPixels();
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      livelli[activeLyr].pg.loadPixels();
+      int loc = 0;
+      for (int x = 0; x < (x2sel - x1sel)-1; x++)
+      {
+        for (int y = 0; y < (y2sel-y1sel)-1; y++)
+        {
+          loc = ((x + x1sel+1) + (y + y1sel+1)*width);
+          pixelCopyIMG.pixels[x+y*pixelCopyIMG.width] = livelli[activeLyr].pg.pixels[loc];
+        }
+      }
+      pixelCopyIMG.updatePixels();
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }
+    else // copy layer
+    {
+      pixelCopyIMG = null;
+      pixelCopyIMG = createImage(width, height, ARGB);
+      pixelCopyIMG.loadPixels();
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      livelli[activeLyr].pg.loadPixels();
+      int loc = 0;
+      for (int x = 0; x < width; x++)
+      {
+        for (int y = 0; y < height; y++)
+        {
+          loc = (x + y*width);
+          pixelCopyIMG.pixels[loc] = livelli[activeLyr].pg.pixels[loc];
+        }
+      }
+      pixelCopyIMG.updatePixels();
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }
+    // save selection as file
+    pixelCopyIMG.save(selection + ".png");
+    // restore cursor
+    noCursor();
+  }
+  loop();
 }
 
 //*********************************

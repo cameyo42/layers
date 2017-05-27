@@ -3,7 +3,7 @@
 void keyPressed()
 {
 
-  // reset parameters
+  // Panic button --> reset parameters
   // sometimes you don't know why the program don't work as expected...
   if (keyCode==123) // F12
   {
@@ -19,22 +19,26 @@ void keyPressed()
     keyPressed= false;
   }
 
-  // draw selection contour
-  if (keyCode==118) // F7
+  // OPEN HELP
+  if (keyCode==112) // F1
   {
-    selectionContour();
+    launch(dataPath("LAYERS.PDF"));
   }
 
-  // toggle erase outside selection
-  if (keyCode==119) // F8
+  if (keyCode==113) // F2
   {
-    cbSELOUT.s = !cbSELOUT.s;
+    if (onTop)
+    {
+      surface.setAlwaysOnTop(false);
+      onTop = false;
+    }
+    else
+    {
+     surface.setAlwaysOnTop(true);
+      onTop = true;
+    }
   }
-
-  if (keyCode==120) // F9
-  {
-
-  }
+  
   // Toggle selection
   if (keyCode==114) // F3
   {
@@ -52,16 +56,34 @@ void keyPressed()
     cbSTENCIL.s = stencil;
   }
 
-  // Copy pixels
+  // Copy selected pixels
   if (keyCode==116) // F5
   {
     copyPixels();
   }
 
-  // Paste pixels
+  // Paste copied pixels
   if (keyCode==117) // F6
   {
     pastePixels();
+  }
+  
+  // Draw selection contour
+  if (keyCode==118) // F7
+  {
+    selectionContour();
+  }
+
+  // Save selection as image
+  if (keyCode==119) // F8
+  {
+    selectionSaveDialog();
+  }
+  
+  // toggle erase outside selection
+  if (keyCode==120) // F9
+  {
+    cbSELOUT.s = !cbSELOUT.s;
   }
 
   // draw palette on active layer from brushCol to oldCol (the colors on rgbhsb tool)
@@ -88,19 +110,14 @@ void keyPressed()
     livelli[activeLyr].updateLayerSwatch();
   }
 
-  // MENU on/off
+  // HSB on/off
   if (key==' ')
   {
     toolHSB = !toolHSB;
   }
 
-  // Layer GUI on/off
-  if (key=='.')
-  {
-    showLayerGUI = !showLayerGUI;
-  }
 
-  // color palette
+  // MENU on/off
   if (keyCode==TAB)
   {
     menu = !menu;
@@ -114,26 +131,12 @@ void keyPressed()
     else { pointerCol = white; }
   }
 
-  // OPEN HELP
-  if (keyCode==112) // F1
+  // Layer GUI on/off
+  if (key=='.')
   {
-    launch(dataPath("LAYERS.PDF"));
+    showLayerGUI = !showLayerGUI;
   }
-
-  if (keyCode==113) // F2
-  {
-    if (onTop)
-    {
-      surface.setAlwaysOnTop(false);
-      onTop = false;
-    }
-    else
-    {
-     surface.setAlwaysOnTop(true);
-      onTop = true;
-    }
-  }
-
+  
   // SELECT TOOL
   // select Stamp tool
   if ((key=='t') || (key =='T'))  { selectTool("Stamp"); }
@@ -176,6 +179,7 @@ void keyPressed()
     grid = !grid;
     cbGRID.s = grid;
   }
+  
   // brushSize +/-
   if (key=='[')
   {
@@ -187,6 +191,7 @@ void keyPressed()
     brushSize = constrain(++brushSize, brushSizeMin, brushSizeMax);
     slSIZE.v = brushSize;
   }
+  
   // Zoom or Alpha +/-
   if (key=='+')
   {
@@ -225,6 +230,7 @@ void keyPressed()
   {
     redo();
   }
+  
   // undo
   if ((key=='u') || (key=='U'))
   {

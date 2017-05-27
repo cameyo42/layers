@@ -47,7 +47,7 @@ PImage undoON_IMG, undoOFF_IMG, redoON_IMG, redoOFF_IMG, lockON_IMG, lockOFF_IMG
 PImage verniceON_IMG, verniceOFF_IMG, inkON_IMG, inkOFF_IMG, stampON_IMG, stampOFF_IMG, dynaON_IMG, dynaOFF_IMG;
 PImage mixerON_IMG, mixerOFF_IMG, cloneON_IMG, cloneOFF_IMG, webON_IMG, webOFF_IMG, selectOFF_IMG, selectON_IMG;
 PImage stencilON_IMG, stencilOFF_IMG, confettiON_IMG, confettiOFF_IMG, shapeON_IMG, shapeOFF_IMG;
-PImage copyPixel_IMG, pastePixel_IMG, drawSelPixel_IMG, shapeSVG_IMG;
+PImage copyPixel_IMG, pastePixel_IMG, drawSelPixel_IMG, saveSel_IMG, shapeSVG_IMG;
 PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
@@ -179,7 +179,7 @@ ButtonIMG btnFILLER, btnVERNICE, btnINK, btnSTAMP, btnDYNA, btnMIXER, btnCLONE, 
 ButtonIMG btnUNDO, btnREDO;
 Button btGRID, btWEB, btOPENLYR, btOPEN, btSAVE;
 Button btSTENLOAD, btSTENCREA, btSTENCENTER, btSTENINVERT;
-Button btSELCOPY, btSELPASTE, btSELDRAW, btSHSVG;
+Button btSELCOPY, btSELPASTE, btSELDRAW, btSELSAVE, btSHSVG;
 ButtonColor btcBACKCOL;
 Slider slSIZE, slALFA, slSTAMP, slSTAMP2, slFILLER, slMIXERA, slMIXERD, slWEBA, slWEBD;
 Slider slSHitems, slSHalfaD, slSHsizeD, slSHposD;
@@ -451,6 +451,7 @@ void setup()
   copyPixel_IMG = gui_IMG.get(1308, 110, 20, 20);
   pastePixel_IMG = gui_IMG.get(1308, 130, 20, 20);
   drawSelPixel_IMG = gui_IMG.get(1308, 90, 20, 20);
+  saveSel_IMG = gui_IMG.get(1308, 70, 20, 20);
   creaStencil_IMG = gui_IMG.get(1308, 150, 20, 20);
   loadStencil_IMG = gui_IMG.get(1308, 170, 20, 20);
   centerStencil_IMG = gui_IMG.get(1308, 190, 20, 20);
@@ -514,10 +515,11 @@ void setup()
   btnERASER = new ButtonIMG(270, 108, eraserON_IMG, eraserOFF_IMG, false, "", textMenuCol, "btn_ERASER");
   btnSELECT = new ButtonIMG(5, 328, selectON_IMG, selectOFF_IMG, false, "", textMenuCol, "btn_SELECT");
   cbSELECT = new Checkbox(6, 380, 14, 14, "active (F3)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELECT");
-  btSELCOPY = new Button(105, 380, copyPixel_IMG, "copy (F5)", textMenuCol, "bt_SELCOPY");
-  btSELPASTE = new Button(165, 380, pastePixel_IMG, "paste (F6)", textMenuCol, "bt_SELPASTE");
-  btSELDRAW = new Button(225, 380, drawSelPixel_IMG, "draw (F7)", textMenuCol, "bt_SELDRAW");
-  cbSELOUT = new Checkbox(6, 425, 14, 14, "erase outside (F8)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELOUT");
+  cbSELOUT = new Checkbox(150, 380, 14, 14, "erase outside (F9)", false, black, darkGray, highLight, gray, textMenuCol, "cb_SELOUT");
+  btSELCOPY = new Button(20, 420, copyPixel_IMG, "copy (F5)", textMenuCol, "bt_SELCOPY");
+  btSELPASTE = new Button(90, 420, pastePixel_IMG, "paste (F6)", textMenuCol, "bt_SELPASTE");
+  btSELDRAW = new Button(160, 420, drawSelPixel_IMG, "draw (F7)", textMenuCol, "bt_SELDRAW");
+  btSELSAVE = new Button(230, 420, saveSel_IMG, "save (F8)", textMenuCol, "bt_SELSAVE");
   btnSTENCIL = new ButtonIMG(41, 328, stencilON_IMG, stencilOFF_IMG, false, "", textMenuCol, "btn_STENCIL");
   cbSTENCIL = new Checkbox(6, 380, 14, 14, "active (F4)", false, black, darkGray, highLight, gray, textMenuCol, "cb_STENCIL");
   btSTENLOAD = new Button(95, 380, loadStencil_IMG, "load", textMenuCol, "bt_STENLOAD");
@@ -713,6 +715,10 @@ void bt_SELPASTE()
 void bt_SELDRAW()
 {
   selectionContour();
+}
+void bt_SELSAVE()
+{
+  selectionSaveDialog();
 }
 // STENCIL options method
 void cb_STENCIL()
