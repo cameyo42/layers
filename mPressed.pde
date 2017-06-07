@@ -443,9 +443,10 @@ void mousePressed()
       if (grab) { grabLayer(); } // grab layer for Undo
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       // Clear string hashset (Set<String> pts = new HashSet<String>();)
-      pts.clear();
+      if (!cbALPHAT.s) { pts.clear(); }
       int numPtrs = pts.size();
       int ll = width*height;
+      int dAlpha = (int) slALPHAT.v;
       livelli[activeLyr].pg.loadPixels();
       int rr = brushSize/2;
       for (int x = x0 - rr; x < x0 + rr; x++)
@@ -460,14 +461,14 @@ void mousePressed()
           {
             if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
             {
-              if ((loc <= ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+              if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
               {
                 // add new point to hashset
                 pts.add(newPt);
                 // process point
                 color tc = livelli[activeLyr].pg.pixels[loc];
                 int ta = (tc >> 24) & 0xff;
-                ta = constrain(ta-10,1,255);
+                ta = constrain(ta + dAlpha,1,255);
                 tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
                 livelli[activeLyr].pg.pixels[loc] = tc;
               }
@@ -504,7 +505,7 @@ void mousePressed()
           else
           {
             //if ((loc <= ll) && (round(dist(x, y, x0, y0)) < round(brushSize/2.0)))
-            if ((loc <= ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+            if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
             {
               // add new point to hashset
               pts.add(newPt);
@@ -651,8 +652,15 @@ void mousePressed()
     btnALPHA.onClick();
     btnTool01.onClick();
 
+    // check Alpha options
+    if (tool == "Alpha")
+    {
+      slALPHAT.onClick();
+      cbALPHAT.onClick();
+    }
+
     // check Filler options
-    if (tool == "Filler")
+    else if (tool == "Filler")
     {
       slFILLER.onClick();
       cbFILLERASE.onClick();

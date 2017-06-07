@@ -194,6 +194,8 @@ Checkbox cbCONFSCALE, cbCONFRND;
 Slider slCONFVEL, slCONFDVEL;
 SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
 ButtonIMG btnALPHA;
+Slider slALPHAT;
+Checkbox cbALPHAT;
 ButtonIMG btnTool01;
 // mixer brush
 PImage mixer;  // mixer brush image
@@ -580,6 +582,8 @@ void setup()
   sbSHtype = new SpinBound(254, 445, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
   // new tools
   btnALPHA = new ButtonIMG(5, 482, alphaON_IMG, alphaOFF_IMG, false, "", textMenuCol, "btn_ALPHA");
+  slALPHAT = new Slider(10, 456, 290, 456, 4, "delta alpha", -255, 255, -25, black, highLight, black, textMenuCol, "sl_ALPHAT");
+  cbALPHAT = new Checkbox(6, 420, 14, 14, "lock pixels", false, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHAT");  
   btnTool01 = new ButtonIMG(41, 482, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -857,6 +861,10 @@ void btc_BACKCOL()
   backCol = color(red(brushCol),green(brushCol),blue(brushCol));
   btcBACKCOL.c1 = backCol;
 }
+
+// new tools method
+void sl_ALPHAT() { }
+void cb_ALPHAT() { }
 
 //*********************************
 //*********************************

@@ -332,7 +332,7 @@ void mouseDragged()
         calcSymXY(x1,y1,x2,y2);
         drawLine(s1x, s1y, s2x, s2y, brushSize, livelli[activeLyr].pg);
       }
-      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics    
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
     // SHAPE DRAGGED
@@ -576,7 +576,7 @@ void mouseDragged()
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
-    
+
     // ALPHA DRAGGED
     else if ((startAction) && (!keyPressed) && (tool=="Alpha") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -584,6 +584,7 @@ void mouseDragged()
       int y0 = mouseY;
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       int ll = width*height;
+      int dAlpha = (int) slALPHAT.v;
       livelli[activeLyr].pg.loadPixels();
       int rr = brushSize/2;
       for (int x = x0 - rr; x < x0 + rr; x++)
@@ -595,29 +596,28 @@ void mouseDragged()
           if (pts.contains(newPt))
           { } // do nothing (the point is already processed)
           else
-          { 
+          {
             if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
             {
-              if ((loc <= ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+              if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
               {
                 // add new point to hashset
                 pts.add(newPt);
                 // process point
                 color tc = livelli[activeLyr].pg.pixels[loc];
                 int ta = (tc >> 24) & 0xff;
-                ta = constrain(ta-10,1,255);
-                tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);            
+                ta = constrain(ta + dAlpha,1,255);
+                tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
                 livelli[activeLyr].pg.pixels[loc] = tc;
-                //livelli[activeLyr].pg.point(x,y);
               }
-            }  
+            }
           }
-        }  
+        }
       }
       livelli[activeLyr].pg.updatePixels();
-      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics    
-    }    
-    
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }
+
     // TOOL01 DRAGGED
     else if ((startAction) && (!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -636,9 +636,9 @@ void mouseDragged()
           if (pts.contains(newPt))
           { } // do nothing (the point is already processed)
           else
-          { 
+          {
             //if ((loc <= ll) && (round(dist(x, y, x0, y0)) < round(brushSize/2.0)))
-            if ((loc <= ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+            if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
             {
               // add new point to hashset
               pts.add(newPt);
@@ -646,16 +646,16 @@ void mouseDragged()
               color tc = livelli[activeLyr].pg.pixels[loc];
               int ta = (tc >> 24) & 0xff;
               ta = constrain(ta-10,1,255);
-              tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);            
+              tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
               livelli[activeLyr].pg.pixels[loc] = tc;
               //livelli[activeLyr].pg.point(x,y);
             }
           }
-        }  
+        }
       }
       livelli[activeLyr].pg.updatePixels();
-      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics    
-    }        
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }
 
   } // LEFT mouse if
 
@@ -671,8 +671,14 @@ void mouseDragged()
     slSIZE.onDrag();
     // check Alfa slider
     slALFA.onDrag();
+
+    // check delta alpha slider
+    if (tool == "Alpha")
+    {
+      slALPHAT.onDrag();
+    }
     // check Filler (threshold) slider
-    if (tool == "Filler")
+    else if (tool == "Filler")
     {
       slFILLER.onDrag();
     }

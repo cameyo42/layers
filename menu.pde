@@ -112,12 +112,19 @@ void showMenu()
   cbSNAP.show();
   // background colors
   btcBACKCOL.show();
-  
+
   // new tools
   btnALPHA.show();
   btnTool01.show();
 
-  if (tool == "Filler")   // show Filler Options
+  // show Alpha Options
+  if (tool == "Alpha")
+  {
+    slALPHAT.show();
+    cbALPHAT.show();
+  }
+  // show Filler Options
+  else if (tool == "Filler")
   {
     slFILLER.show();
     cbFILLERASE.show();

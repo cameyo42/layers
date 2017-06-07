@@ -58,11 +58,13 @@ void mouseReleased()
   dslMASS.locked = false;
   dslMINB.locked = false;
   dslMAXB.locked = false;
-  // unlock SHape slider
+  // unlock Shape slider
   slSHitems.locked = false;
   slSHsizeD.locked = false;
   slSHalfaD.locked = false;
   slSHposD.locked = false;
+  // unlock new tools slider
+  slALPHAT.locked = false;
 
   // check if drawing with Liner
   if ((lineDown) && (tool=="Liner"))
