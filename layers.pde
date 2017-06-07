@@ -51,6 +51,7 @@ PImage copyPixel_IMG, pastePixel_IMG, drawSelPixel_IMG, saveSel_IMG, shapeSVG_IM
 PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
+PImage tool01OFF_IMG, tool01ON_IMG;
 PImage stampBRUSHES_IMG;
 PGraphics stampPG;
 PImage lyrCTRL_IMG;
@@ -191,7 +192,7 @@ Checkbox cbSELOUT;
 Checkbox cbCONFSCALE, cbCONFRND;
 Slider slCONFVEL, slCONFDVEL;
 SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
-
+ButtonIMG btnTool01;
 // mixer brush
 PImage mixer;  // mixer brush image
 int mixer_alpha;   // mixer brush alpha (start alpha: 0 -> 255)
@@ -256,12 +257,10 @@ boolean loadingShape;
 //*********************************
 void setup()
 {
-  //size(1800, 1000);
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
-  size(1300,750);
   //size(1900,900);
-  //size(1280,800);
+  size(1280,800);
   smooth();
   noCursor();
   frameRate(100);
@@ -463,6 +462,8 @@ void setup()
   shapeOFF_IMG = gui_IMG.get(1274, 238, 34, 34);
   shapeON_IMG = gui_IMG.get(1240, 238, 34, 34);
   shapeSVG_IMG = gui_IMG.get(1308, 230, 20, 20);
+  tool01ON_IMG = gui_IMG.get(968, 213, 34, 34);
+  tool01OFF_IMG = gui_IMG.get(1002, 213, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -531,8 +532,8 @@ void setup()
   cbCONFRND = new Checkbox(76, 380, 14, 14, "random color", randomConfettiColor, black, darkGray, highLight, gray, textMenuCol, "cb_CONFRND");
   slCONFVEL = new Slider(10, 416, 210, 416, 5, "base speed", 1, 50, 4, black, highLight, black, textMenuCol, "sl_CONFVEL");
   slCONFDVEL = new Slider(10, 450, 210, 450, 5, "delta speed", 1, 99, 88, black, highLight, black, textMenuCol, "sl_CONFDVEL");
-  btnUNDO = new ButtonIMG(236, 698, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
-  btnREDO = new ButtonIMG(271, 698, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
+  btnUNDO = new ButtonIMG(236, 748, undoON_IMG, undoOFF_IMG, false, "Undo", textMenuCol, "btn_UNDO");
+  btnREDO = new ButtonIMG(271, 748, redoON_IMG, redoOFF_IMG, false, "Redo", textMenuCol, "btn_REDO");
   cbSYMX = new Checkbox(6, 92, 14, 14, "X mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMX");
   cbSYMY = new Checkbox(6, 110, 14, 14, "Y mirror", false, black, darkGray, highLight, gray, textMenuCol, "cb_SYMY");
   cbGLITCH = new Checkbox(6, 136, 14, 14, "Antialias", false, black, darkGray, highLight, gray, textMenuCol, "cb_GLITCH");
@@ -543,9 +544,9 @@ void setup()
   sbGRIDY = new SpinBound(128, 126, 50, 14, "", 25, 1, 2, 500, black, gray, textMenuCol, "sb_GRIDY");
   slALFA = new Slider(6, 156, 261, 156, 5, "alpha", 1, 255, 255, black, highLight, black, textMenuCol, "sl_ALFA");
   slSIZE = new Slider(10, 236, 138, 236, 5, "size", 1, 64, 10, black, highLight, black, textMenuCol, "sl_SIZE");
-  btOPENLYR = new Button(268, 478, openLyr_IMG, "Import", textMenuCol, "bt_OPENLYR");
-  btOPEN = new Button(268, 536, open_IMG, "Open", textMenuCol, "bt_OPEN");
-  btSAVE = new Button(268, 594, save_IMG, "Save", textMenuCol, "bt_SAVE");
+  btOPENLYR = new Button(268, 528, openLyr_IMG, "Import", textMenuCol, "bt_OPENLYR");
+  btOPEN = new Button(268, 586, open_IMG, "Open", textMenuCol, "bt_OPEN");
+  btSAVE = new Button(268, 644, save_IMG, "Save", textMenuCol, "bt_SAVE");
   btcBACKCOL = new ButtonColor(150, 355, 154, 12, black, backCol, "", textMenuCol, "btc_BACKCOL");
   // Dyna Sliders
   dslHOOKE = new DynaSlider(10, 394, 130, 394, 4, "k", 0.01, 1.00, myDD.k, 2, black, highLight, black, textMenuCol, "dsl_HOOKE");
@@ -573,7 +574,8 @@ void setup()
   btSHSVG = new Button(170, 376, shapeSVG_IMG, "load SVG", textMenuCol, "bt_SHSVG");
   cbSHstyle = new Checkbox(230, 380, 14, 14, "style SVG", true, black, darkGray, highLight, gray, textMenuCol, "cb_SHstyle");
   sbSHtype = new SpinBound(254, 445, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
-
+  // new tools
+  btnTool01 = new ButtonIMG(5, 482, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
   myHSB = new HSBcontrol(width-230, 50, brushCol, "HSB_M");
@@ -598,7 +600,8 @@ void setup()
 
   // LAYERS controls
   int baseX = 5;
-  int baseY = 478;
+  //int baseY = 478;
+  int baseY = 478+50;
   int step = 40;
   int lwidth = 150;
   int lheight = lwidth/6;
@@ -630,7 +633,7 @@ void setup()
 //                         baseX, baseY+step*8, lwidth, lheight, textMenuCol, black, darkGray,
 //                         "liv9", 8, 8);
   // layerControl
-  controlloLivelli = new LayerControl(5, 718, lyrCTRL_IMG);
+  controlloLivelli = new LayerControl(5, 768, lyrCTRL_IMG);
   // show Layer GUI
   showLayerGUI = true;
 
@@ -689,6 +692,7 @@ void btn_SELECT()   { selectTool("Select"); }
 void btn_STENCIL()  { selectTool("Stencil"); }
 void btn_CONFETTI() { selectTool("Confetti"); }
 void btn_SHAPE()    { selectTool("Shape"); }
+void btn_Tool01()   { selectTool("Pencil"); }
 void btn_UNDO()     { undo(); }
 void btn_REDO()     { redo(); }
 // SELECT checkbox

@@ -112,6 +112,9 @@ void showMenu()
   cbSNAP.show();
   // background colors
   btcBACKCOL.show();
+  
+  // new tools
+  btnTool01.show();
 
   if (tool == "Filler")   // show Filler Options
   {
