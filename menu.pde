@@ -12,7 +12,7 @@ void showMenu()
   rect(4, 14, brushSizeMax+10, brushSizeMax+10);
   if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" ||
       tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" || tool == "Clone" ||
-      tool == "Confetti" || tool == "Shape")
+      tool == "Confetti" || tool == "Shape" || tool == "Alpha" || tool == "Tool01")
   {
     noStroke();
     fill(brushCol);
@@ -114,6 +114,7 @@ void showMenu()
   btcBACKCOL.show();
   
   // new tools
+  btnALPHA.show();
   btnTool01.show();
 
   if (tool == "Filler")   // show Filler Options
