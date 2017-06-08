@@ -51,7 +51,7 @@ PImage copyPixel_IMG, pastePixel_IMG, drawSelPixel_IMG, saveSel_IMG, shapeSVG_IM
 PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, loadStencil_IMG, centerStencil_IMG, invertStencil_IMG;
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
-PImage alphaOFF_IMG, alphaON_IMG;
+PImage alphaOFF_IMG, alphaON_IMG, rgbOFF_IMG, rgbON_IMG, hsbON_IMG, hsbOFF_IMG;
 PImage tool01OFF_IMG, tool01ON_IMG;
 PImage stampBRUSHES_IMG;
 PGraphics stampPG;
@@ -193,9 +193,10 @@ Checkbox cbSELOUT;
 Checkbox cbCONFSCALE, cbCONFRND;
 Slider slCONFVEL, slCONFDVEL;
 SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
-ButtonIMG btnALPHA;
-Slider slALPHAT;
-Checkbox cbALPHAT;
+ButtonIMG btnALPHA, btnRGB, btnHSB;
+Slider slALPHAT, slRGBT, slHSBT;
+Checkbox cbALPHAT, cbALPHATT, cbRGBT, cbRGBTT, cbHSBT, cbHSBTT;
+Checkbox cbRGBr, cbRGBg, cbRGBb, cbHSBh, cbHSBs, cbHSBb;
 ButtonIMG btnTool01;
 // mixer brush
 PImage mixer;  // mixer brush image
@@ -468,8 +469,12 @@ void setup()
   shapeSVG_IMG = gui_IMG.get(1308, 230, 20, 20);
   alphaON_IMG = gui_IMG.get(968, 213, 34, 34);
   alphaOFF_IMG = gui_IMG.get(1002, 213, 34, 34);
-  tool01ON_IMG = gui_IMG.get(1036, 213, 34, 34);
-  tool01OFF_IMG = gui_IMG.get(1070, 213, 34, 34);
+  rgbON_IMG = gui_IMG.get(1036, 213, 34, 34);
+  rgbOFF_IMG = gui_IMG.get(1070, 213, 34, 34);
+  hsbON_IMG = gui_IMG.get(1104, 213, 34, 34);
+  hsbOFF_IMG = gui_IMG.get(1138, 213, 34, 34);    
+  tool01ON_IMG = gui_IMG.get(1172, 213, 34, 34);
+  tool01OFF_IMG = gui_IMG.get(1206, 213, 34, 34);  
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -583,8 +588,21 @@ void setup()
   // new tools
   btnALPHA = new ButtonIMG(5, 482, alphaON_IMG, alphaOFF_IMG, false, "", textMenuCol, "btn_ALPHA");
   slALPHAT = new Slider(10, 456, 290, 456, 4, "delta alpha", -255, 255, -25, black, highLight, black, textMenuCol, "sl_ALPHAT");
-  cbALPHAT = new Checkbox(6, 420, 14, 14, "lock pixels", false, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHAT");  
-  btnTool01 = new ButtonIMG(41, 482, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
+  cbALPHAT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHAT");  
+  cbALPHATT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHATT");  
+  
+  btnRGB = new ButtonIMG(41, 482, rgbON_IMG, rgbOFF_IMG, false, "", textMenuCol, "btn_RGB");
+  cbRGBr = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
+  slRGBT = new Slider(10, 456, 290, 456, 4, "delta value", -255, 255, -25, black, highLight, black, textMenuCol, "sl_RGBT");
+  cbRGBT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBT");  
+  cbRGBTT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
+  
+  btnHSB = new ButtonIMG(77, 482, hsbON_IMG, hsbOFF_IMG, false, "", textMenuCol, "btn_HSB");
+  slHSBT = new Slider(10, 456, 290, 456, 4, "delta value", -255, 255, -25, black, highLight, black, textMenuCol, "sl_HSBT");
+  cbHSBT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBT");  
+  cbHSBTT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBTT");    
+  
+  btnTool01 = new ButtonIMG(113, 482, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
   myHSB = new HSBcontrol(width-230, 50, brushCol, "HSB_M");
@@ -702,6 +720,8 @@ void btn_STENCIL()  { selectTool("Stencil"); }
 void btn_CONFETTI() { selectTool("Confetti"); }
 void btn_SHAPE()    { selectTool("Shape"); }
 void btn_ALPHA()    { selectTool("Alpha"); }
+void btn_RGB()      { selectTool("RGB"); }
+void btn_HSB()      { selectTool("HSB"); }
 void btn_Tool01()   { selectTool("Tool01"); }
 void btn_UNDO()     { undo(); }
 void btn_REDO()     { redo(); }
@@ -864,7 +884,16 @@ void btc_BACKCOL()
 
 // new tools method
 void sl_ALPHAT() { }
-void cb_ALPHAT() { }
+void cb_ALPHAT() { pts.clear(); }
+void cb_ALPHATT() { }
+
+void sl_RGBT() { }
+void cb_RGBT() { pts.clear(); }
+void cb_RGBTT() { }
+
+void sl_HSBT() { }
+void cb_HSBT() { pts.clear(); }
+void cb_HSBTT() { }
 
 //*********************************
 //*********************************
@@ -997,6 +1026,8 @@ void selectTool(String t)
   btnCONFETTI.s = false;
   btnSHAPE.s = false;
   btnALPHA.s = false;
+  btnRGB.s = false;
+  btnHSB.s = false;
   btnTool01.s= false;
   //aSelection = false;
   if (t == "Pencil")        { btnPENCIL.s = true; }
@@ -1017,6 +1048,8 @@ void selectTool(String t)
   else if (t == "Confetti") { btnCONFETTI.s = true;}
   else if (t == "Shape")    { btnSHAPE.s = true;}
   else if (t == "Alpha")    { btnALPHA.s = true;}
+  else if (t == "RGB")      { btnRGB.s = true;}
+  else if (t == "HSB")      { btnHSB.s = true;}
   else if (t == "Tool01")   { btnTool01.s = true;}
   else if (t == "TEST")     { }
 }

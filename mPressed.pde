@@ -468,9 +468,12 @@ void mousePressed()
                 // process point
                 color tc = livelli[activeLyr].pg.pixels[loc];
                 int ta = (tc >> 24) & 0xff;
-                ta = constrain(ta + dAlpha,1,255);
-                tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
-                livelli[activeLyr].pg.pixels[loc] = tc;
+                if ( ((cbALPHATT.s) && (ta != 0)) || (!cbALPHATT.s) )
+                {
+                  ta = constrain(ta + dAlpha,1,255);
+                  tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
+                  livelli[activeLyr].pg.pixels[loc] = tc;
+                }  
               }
             }
           }
@@ -650,6 +653,8 @@ void mousePressed()
 
     // new tools
     btnALPHA.onClick();
+    btnRGB.onClick();
+    btnHSB.onClick();
     btnTool01.onClick();
 
     // check Alpha options
@@ -657,8 +662,22 @@ void mousePressed()
     {
       slALPHAT.onClick();
       cbALPHAT.onClick();
+      cbALPHATT.onClick();
     }
-
+    // check RGB options
+    if (tool == "RGB")
+    {
+      slRGBT.onClick();
+      cbRGBT.onClick();
+      cbRGBTT.onClick();
+    }
+    // check HSB options
+    if (tool == "HSB")
+    {
+      slHSBT.onClick();
+      cbHSBT.onClick();
+      cbHSBTT.onClick();
+    }    
     // check Filler options
     else if (tool == "Filler")
     {

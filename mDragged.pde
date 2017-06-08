@@ -606,9 +606,12 @@ void mouseDragged()
                 // process point
                 color tc = livelli[activeLyr].pg.pixels[loc];
                 int ta = (tc >> 24) & 0xff;
-                ta = constrain(ta + dAlpha,1,255);
-                tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
-                livelli[activeLyr].pg.pixels[loc] = tc;
+                if ( ((cbALPHATT.s) && (ta != 0)) || (!cbALPHATT.s) )
+                {
+                  ta = constrain(ta + dAlpha,1,255);
+                  tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
+                  livelli[activeLyr].pg.pixels[loc] = tc;
+                }
               }
             }
           }
@@ -676,6 +679,16 @@ void mouseDragged()
     if (tool == "Alpha")
     {
       slALPHAT.onDrag();
+    }
+    // check delta value slider
+    else if (tool == "RGB")
+    {
+      slRGBT.onDrag();
+    }
+    // check delta value slider
+    else if (tool == "HSB")
+    {
+      slHSBT.onDrag();
     }
     // check Filler (threshold) slider
     else if (tool == "Filler")
