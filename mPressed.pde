@@ -667,14 +667,14 @@ void mousePressed()
     // check RGB options
     if (tool == "RGB")
     {
-      slRGBT.onClick();
+      slRGBr.onClick();
       cbRGBT.onClick();
       cbRGBTT.onClick();
     }
     // check HSB options
     if (tool == "HSB")
     {
-      slHSBT.onClick();
+      slHSBh.onClick();
       cbHSBT.onClick();
       cbHSBTT.onClick();
     }    

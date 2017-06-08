@@ -683,12 +683,12 @@ void mouseDragged()
     // check delta value slider
     else if (tool == "RGB")
     {
-      slRGBT.onDrag();
+      slRGBr.onDrag();
     }
     // check delta value slider
     else if (tool == "HSB")
     {
-      slHSBT.onDrag();
+      slHSBh.onDrag();
     }
     // check Filler (threshold) slider
     else if (tool == "Filler")

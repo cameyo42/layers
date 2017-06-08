@@ -129,14 +129,14 @@ void showMenu()
   // show RGB Options
   if (tool == "RGB")
   {
-    slRGBT.show();
+    slRGBr.show();
     cbRGBT.show();
     cbRGBTT.show();
   }
   // show HSB Options
   if (tool == "HSB")
   {
-    slHSBT.show();
+    slHSBh.show();
     cbHSBT.show();
     cbHSBTT.show();
   }

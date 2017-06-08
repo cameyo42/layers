@@ -65,8 +65,8 @@ void mouseReleased()
   slSHposD.locked = false;
   // unlock new tools slider
   slALPHAT.locked = false;
-  slRGBT.locked = false;
-  slHSBT.locked = false;
+  slRGBr.locked = false;
+  slHSBh.locked = false;
 
   // check if drawing with Liner
   if ((lineDown) && (tool=="Liner"))

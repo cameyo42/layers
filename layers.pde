@@ -194,9 +194,8 @@ Checkbox cbCONFSCALE, cbCONFRND;
 Slider slCONFVEL, slCONFDVEL;
 SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
 ButtonIMG btnALPHA, btnRGB, btnHSB;
-Slider slALPHAT, slRGBT, slHSBT;
+Slider slALPHAT, slRGBr, slRGBg, slRGBb, slHSBh, slHSBs, slHSBb;
 Checkbox cbALPHAT, cbALPHATT, cbRGBT, cbRGBTT, cbHSBT, cbHSBTT;
-Checkbox cbRGBr, cbRGBg, cbRGBb, cbHSBh, cbHSBs, cbHSBb;
 ButtonIMG btnTool01;
 // mixer brush
 PImage mixer;  // mixer brush image
@@ -592,13 +591,12 @@ void setup()
   cbALPHATT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHATT");  
   
   btnRGB = new ButtonIMG(41, 482, rgbON_IMG, rgbOFF_IMG, false, "", textMenuCol, "btn_RGB");
-  cbRGBr = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
-  slRGBT = new Slider(10, 456, 290, 456, 4, "delta value", -255, 255, -25, black, highLight, black, textMenuCol, "sl_RGBT");
-  cbRGBT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBT");  
-  cbRGBTT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
+  slRGBr = new Slider(10, 460, 290, 460, 4, "delta red", -255, 255, -25, black, highLight, black, textMenuCol, "sl_RGBr");
+  cbRGBT = new Checkbox(6, 368, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBT");  
+  cbRGBTT = new Checkbox(100, 368, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
   
   btnHSB = new ButtonIMG(77, 482, hsbON_IMG, hsbOFF_IMG, false, "", textMenuCol, "btn_HSB");
-  slHSBT = new Slider(10, 456, 290, 456, 4, "delta value", -255, 255, -25, black, highLight, black, textMenuCol, "sl_HSBT");
+  slHSBh = new Slider(10, 456, 290, 456, 4, "delta hue", -255, 255, -25, black, highLight, black, textMenuCol, "sl_HSBh");
   cbHSBT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBT");  
   cbHSBTT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBTT");    
   
@@ -887,11 +885,11 @@ void sl_ALPHAT() { }
 void cb_ALPHAT() { pts.clear(); }
 void cb_ALPHATT() { }
 
-void sl_RGBT() { }
+void sl_RGBr() { }
 void cb_RGBT() { pts.clear(); }
 void cb_RGBTT() { }
 
-void sl_HSBT() { }
+void sl_HSBh() { }
 void cb_HSBT() { pts.clear(); }
 void cb_HSBTT() { }
 
