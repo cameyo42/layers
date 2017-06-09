@@ -437,9 +437,22 @@ void keyPressed()
     cbSNAP.s = !cbSNAP.s;
   }
 
-  // test key
+  // Reset tool parameters to default
   if (key=='=')
-  {}
+  {
+    if (tool == "RGB")
+    {
+      slRGBr.v = 0;
+      slRGBg.v = 0;
+      slRGBb.v = 0;
+    }
+    else if (tool == "HSB")
+    {
+      slHSBh.v = 0;
+      slHSBs.v = 0;
+      slHSBb.v = 0;
+    }    
+  }
 
 }
 

@@ -139,7 +139,8 @@ void showMenu()
   if (tool == "HSB")
   {
     slHSBh.show();
-    //slHSBs.show();
+    slHSBs.show();
+    slHSBb.show();
     cbHSBT.show();
     cbHSBTT.show();
   }

@@ -540,6 +540,68 @@ void mousePressed()
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }    
 
+    // HSB PRESSED
+    else if ((!keyPressed) && (tool=="HSB") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    {
+      startAction = true;
+      int x0 = mouseX;
+      int y0 = mouseY;
+      if (grab) { grabLayer(); } // grab layer for Undo
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      // Clear string hashset (Set<String> pts = new HashSet<String>();)
+      if (!cbHSBT.s) { pts.clear(); }
+      int numPtrs = pts.size();
+      int ll = width*height;
+      int dH = (int) slHSBh.v;
+      int dS = (int) slHSBs.v;
+      int dB = (int) slHSBb.v;
+      livelli[activeLyr].pg.loadPixels();
+      int rr = brushSize/2;
+      for (int x = x0 - rr; x < x0 + rr; x++)
+      {
+        for (int y = y0 - rr; y < y0 + rr; y++)
+        {
+          int loc = x+y*width;
+          String newPt = String.valueOf(loc);
+          if (pts.contains(newPt))
+          { } // do nothing (the point is already processed)
+          else
+          {
+            if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
+            {
+              if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+              {
+                // add new point to hashset
+                pts.add(newPt);
+                // process point
+                color tc = livelli[activeLyr].pg.pixels[loc];
+                int ta = (tc >> 24) & 0xff;
+                //int tr = (tc >> 16) & 0xff;
+                //int tg = (tc >> 8) & 0xff;
+                //int tb = tc & 0xff;
+                if ( ((cbHSBTT.s) && (ta != 0)) || (!cbHSBTT.s) ) // transparent is locked ?
+                {
+                  //ta = constrain(ta + dAlpha, 0, 255);
+                  colorMode(HSB,360.0,100.0,100.0);
+                  float hh = hue(tc); 
+                  float ss = saturation(tc); 
+                  float bb = brightness(tc);
+                  hh = constrain(hh + dH, 0, 360);
+                  ss = constrain(ss + dS, 0, 100);
+                  bb = constrain(bb + dB, 0, 100);
+                  tc = color(hh,ss,bb);
+                  colorMode(RGB,255.0,255.0,255.0);
+                  livelli[activeLyr].pg.pixels[loc] = tc;
+                }  
+              }
+            }
+          }
+        }
+      }
+      livelli[activeLyr].pg.updatePixels();
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }        
+    
     // TOOL01 PRESSED
     else if ((!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
