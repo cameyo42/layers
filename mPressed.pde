@@ -576,12 +576,8 @@ void mousePressed()
                 // process point
                 color tc = livelli[activeLyr].pg.pixels[loc];
                 int ta = (tc >> 24) & 0xff;
-                //int tr = (tc >> 16) & 0xff;
-                //int tg = (tc >> 8) & 0xff;
-                //int tb = tc & 0xff;
                 if ( ((cbHSBTT.s) && (ta != 0)) || (!cbHSBTT.s) ) // transparent is locked ?
                 {
-                  //ta = constrain(ta + dAlpha, 0, 255);
                   colorMode(HSB,360.0,100.0,100.0);
                   float hh = hue(tc); 
                   float ss = saturation(tc); 
