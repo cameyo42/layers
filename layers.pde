@@ -591,12 +591,16 @@ void setup()
   cbALPHATT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHATT");  
   
   btnRGB = new ButtonIMG(41, 482, rgbON_IMG, rgbOFF_IMG, false, "", textMenuCol, "btn_RGB");
-  slRGBr = new Slider(10, 460, 290, 460, 4, "delta red", -255, 255, -25, black, highLight, black, textMenuCol, "sl_RGBr");
-  cbRGBT = new Checkbox(6, 368, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBT");  
-  cbRGBTT = new Checkbox(100, 368, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
+  slRGBr = new Slider(10, 462, 290, 462, 4, "delta red", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBr");
+  slRGBg = new Slider(10, 428, 290, 428, 4, "delta green", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBg");
+  slRGBb = new Slider(10, 394, 290, 394, 4, "delta blu", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBb");
+  cbRGBT = new Checkbox(6, 370, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBT");  
+  cbRGBTT = new Checkbox(100, 370, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
   
   btnHSB = new ButtonIMG(77, 482, hsbON_IMG, hsbOFF_IMG, false, "", textMenuCol, "btn_HSB");
-  slHSBh = new Slider(10, 456, 290, 456, 4, "delta hue", -255, 255, -25, black, highLight, black, textMenuCol, "sl_HSBh");
+  slHSBh = new Slider(10, 462, 290, 462, 4, "delta hue", -360, 360, 0, black, highLight, black, textMenuCol, "sl_HSBh");
+  slHSBs = new Slider(10, 428, 290, 428, 4, "delta saturation", -100, 100, 0, black, highLight, black, textMenuCol, "sl_HSBs");
+  slHSBb = new Slider(10, 394, 290, 394, 4, "delta brightness", -100, 100, 0, black, highLight, black, textMenuCol, "sl_HSBb");  
   cbHSBT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBT");  
   cbHSBTT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBTT");    
   
@@ -886,6 +890,8 @@ void cb_ALPHAT() { pts.clear(); }
 void cb_ALPHATT() { }
 
 void sl_RGBr() { }
+void sl_RGBg() { }
+void sl_RGBb() { }
 void cb_RGBT() { pts.clear(); }
 void cb_RGBTT() { }
 

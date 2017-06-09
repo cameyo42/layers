@@ -130,6 +130,8 @@ void showMenu()
   if (tool == "RGB")
   {
     slRGBr.show();
+    slRGBg.show();
+    slRGBb.show();
     cbRGBT.show();
     cbRGBTT.show();
   }
@@ -137,6 +139,7 @@ void showMenu()
   if (tool == "HSB")
   {
     slHSBh.show();
+    //slHSBs.show();
     cbHSBT.show();
     cbHSBTT.show();
   }
