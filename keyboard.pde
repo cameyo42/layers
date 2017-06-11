@@ -214,8 +214,8 @@ void keyPressed()
     {
       alfa = constrain(--alfa,1,255);
       slALFA.v = alfa; // update ALFA slider
-      brushCol = color(red(brushCol),green(brushCol),blue(brushCol),alfa);
-      //brushCol = color((brushCol >> 16) & 0xFF, (brushCol >> 8)  & 0xFF, brushCol & 0xFF, alfa);
+      //brushCol = color(red(brushCol),green(brushCol),blue(brushCol),alfa);
+      brushCol = color((brushCol >> 16) & 0xFF, (brushCol >> 8)  & 0xFF, brushCol & 0xFF, alfa);
     }
   }
 
