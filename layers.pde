@@ -378,6 +378,8 @@ void setup()
   shAlfaD = 50;
   aShape.enableStyle();
   loadingShape = false;
+  // ALPHA, RGB and HSB tools
+  pts.clear();
   // undo/redo variables
   grab = true;
   numUndo = 10;
