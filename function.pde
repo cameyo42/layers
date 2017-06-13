@@ -674,6 +674,7 @@ void pastePixels()
   else { println("ERROR: no selection"); }
 }
 
+//*********************************
 // draw selection contour
 void selectionContour()
 {
@@ -689,6 +690,7 @@ void selectionContour()
   }
 }
 
+//*********************************
 // random color
 color randomColor()
 {

@@ -443,8 +443,8 @@ void mousePressed()
       if (grab) { grabLayer(); } // grab layer for Undo
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       // Clear string hashset (Set<String> pts = new HashSet<String>();)
-      if (!cbALPHAT.s) { pts.clear(); }
-      int numPtrs = pts.size();
+      if (!cbALPHAT.s) { ptsAlpha.clear(); }
+      //int numPtrs = ptsAlpha.size();
       int ll = width*height;
       int dAlpha = (int) slALPHAT.v;
       livelli[activeLyr].pg.loadPixels();
@@ -455,7 +455,7 @@ void mousePressed()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsAlpha.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -463,15 +463,13 @@ void mousePressed()
             {
               if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
               {
-                // add new point to hashset
-                //pts.add(newPt);
                 // process point
                 color tc = livelli[activeLyr].pg.pixels[loc];
                 int ta = (tc >> 24) & 0xff;
                 if ( ((cbALPHATT.s) && (ta != 0)) || (!cbALPHATT.s) )
                 {
                   // add new point to hashset
-                  pts.add(newPt);                
+                  ptsAlpha.add(newPt);                
                   ta = constrain(ta + dAlpha,0,255);
                   tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
                   livelli[activeLyr].pg.pixels[loc] = tc;
@@ -494,8 +492,8 @@ void mousePressed()
       if (grab) { grabLayer(); } // grab layer for Undo
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       // Clear string hashset (Set<String> pts = new HashSet<String>();)
-      if (!cbRGBT.s) { pts.clear(); }
-      int numPtrs = pts.size();
+      if (!cbRGBT.s) { ptsRGB.clear(); }
+      //int numPtrs = ptsRGB.size();
       int ll = width*height;
       int dR = (int) slRGBr.v;
       int dG = (int) slRGBg.v;
@@ -508,7 +506,7 @@ void mousePressed()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsRGB.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -527,7 +525,7 @@ void mousePressed()
                 {
                   //ta = constrain(ta + dAlpha, 0, 255);
                   // add new point to hashset
-                  pts.add(newPt);                  
+                  ptsRGB.add(newPt);                  
                   tr = constrain(tr + dR, 0, 255);
                   tg = constrain(tg + dG, 0, 255);
                   tb = constrain(tb + dB, 0, 255);
@@ -552,8 +550,8 @@ void mousePressed()
       if (grab) { grabLayer(); } // grab layer for Undo
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       // Clear string hashset (Set<String> pts = new HashSet<String>();)
-      if (!cbHSBT.s) { pts.clear(); }
-      int numPtrs = pts.size();
+      if (!cbHSBT.s) { ptsHSB.clear(); }
+      //int numPtrs = ptsHSB.size();
       int ll = width*height;
       int dH = (int) slHSBh.v;
       int dS = (int) slHSBs.v;
@@ -566,7 +564,7 @@ void mousePressed()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsHSB.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -580,7 +578,7 @@ void mousePressed()
                 if ( ((cbHSBTT.s) && (ta != 0)) || (!cbHSBTT.s) ) // transparent is locked ?
                 {
                   // add new point to hashset
-                  pts.add(newPt);
+                  ptsHSB.add(newPt);
                   colorMode(HSB,360.0,100.0,100.0);
                   float hh = hue(tc); 
                   float ss = saturation(tc); 
@@ -610,8 +608,8 @@ void mousePressed()
       if (grab) { grabLayer(); } // grab layer for Undo
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
       // Clear string hashset (Set<String> pts = new HashSet<String>();)
-      pts.clear();
-      int numPtrs = pts.size();
+      ptsAlpha.clear();
+      //int numPtrs = ptsAlpha.size();
       int ll = width*height;
       livelli[activeLyr].pg.loadPixels();
       int rr = brushSize/2;
@@ -621,7 +619,7 @@ void mousePressed()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsAlpha.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -629,7 +627,7 @@ void mousePressed()
             if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
             {
               // add new point to hashset
-              pts.add(newPt);
+              ptsAlpha.add(newPt);
               // process point
               color tc = livelli[activeLyr].pg.pixels[loc];
               int ta = (tc >> 24) & 0xff;

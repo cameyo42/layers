@@ -593,7 +593,7 @@ void mouseDragged()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsAlpha.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -601,15 +601,13 @@ void mouseDragged()
             {
               if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
               {
-                // add new point to hashset
-                //pts.add(newPt);
                 // process point
                 color tc = livelli[activeLyr].pg.pixels[loc];
                 int ta = (tc >> 24) & 0xff;
                 if ( ((cbALPHATT.s) && (ta != 0)) || (!cbALPHATT.s) )
                 {
                   // add new point to hashset
-                  pts.add(newPt);                
+                  ptsAlpha.add(newPt);                
                   ta = constrain(ta + dAlpha,0,255);
                   tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
                   livelli[activeLyr].pg.pixels[loc] = tc;
@@ -641,7 +639,7 @@ void mouseDragged()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsRGB.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -659,7 +657,7 @@ void mouseDragged()
                 {
                   //ta = constrain(ta + dAlpha, 0, 255);
                   // add new point to hashset
-                  pts.add(newPt);                  
+                  ptsRGB.add(newPt);                  
                   tr = constrain(tr + dR, 0, 255);
                   tg = constrain(tg + dG, 0, 255);
                   tb = constrain(tb + dB, 0, 255);
@@ -693,7 +691,7 @@ void mouseDragged()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsHSB.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -708,7 +706,7 @@ void mouseDragged()
                 {
                   //ta = constrain(ta + dAlpha, 0, 255);
                   // add new point to hashset
-                  pts.add(newPt);                  
+                  ptsHSB.add(newPt);                  
                   colorMode(HSB,360.0,100.0,100.0);
                   float hh = hue(tc); 
                   float ss = saturation(tc); 
@@ -744,7 +742,7 @@ void mouseDragged()
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (pts.contains(newPt))
+          if (ptsAlpha.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
@@ -752,7 +750,7 @@ void mouseDragged()
             if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
             {
               // add new point to hashset
-              pts.add(newPt);
+              ptsAlpha.add(newPt);
               // process point
               color tc = livelli[activeLyr].pg.pixels[loc];
               int ta = (tc >> 24) & 0xff;

@@ -34,10 +34,14 @@ DynaButton btnPRE01, btnPRE02, btnPRE03, btnPRE04, btnPRE05, btnPRE06, btnPRE07,
 // Stamp Brush
 StampBrushes mySB;
 
-// Test Brush
 import java.util.HashSet;
 import java.util.Set;
+// HashSet  of  String (Points)
+// Stencil
 Set<String> pts = new HashSet<String>();
+Set<String> ptsAlpha = new HashSet<String>();
+Set<String> ptsRGB = new HashSet<String>();
+Set<String> ptsHSB = new HashSet<String>();
 
 // tools icon images
 PImage gui_IMG;
@@ -379,7 +383,9 @@ void setup()
   aShape.enableStyle();
   loadingShape = false;
   // ALPHA, RGB and HSB tools
-  pts.clear();
+  ptsAlpha.clear();
+  ptsRGB.clear();
+  ptsHSB.clear();
   // undo/redo variables
   grab = true;
   numUndo = 10;
@@ -888,19 +894,19 @@ void btc_BACKCOL()
 
 // new tools method
 void sl_ALPHAT() { }
-void cb_ALPHAT() { pts.clear(); }
+void cb_ALPHAT() { ptsAlpha.clear(); }
 void cb_ALPHATT() { }
 
 void sl_RGBr() { }
 void sl_RGBg() { }
 void sl_RGBb() { }
-void cb_RGBT() { pts.clear(); }
+void cb_RGBT() { ptsRGB.clear(); }
 void cb_RGBTT() { }
 
 void sl_HSBh() { }
 void sl_HSBs() { }
 void sl_HSBb() { }
-void cb_HSBT() { pts.clear(); }
+void cb_HSBT() { ptsHSB.clear(); }
 void cb_HSBTT() { }
 
 //*********************************
