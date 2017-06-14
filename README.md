@@ -24,7 +24,7 @@ RGB Paint
 HSB Paint  
 Eraser  
 
-**Features**
+**Features**  
 Open and Save drawing  
 Import/Export images  
 Layers with transparency, reorder, save, merge, delete, show/hide  
