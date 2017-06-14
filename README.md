@@ -2,7 +2,7 @@
 A sketch for painting written in processing 3.x  
 (External libraries used: none)  
 
-**Tools**
+**Tools**  
 Pencil  
 Line  
 Rectangle/Square  
@@ -14,7 +14,7 @@ Mixer (Smudge)
 DynaDraw  
 Filler  
 Clone  
-Web Pen..
+Web Pen  
 Selection  
 Stencil  
 Confetti  
