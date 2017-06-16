@@ -144,6 +144,14 @@ void showMenu()
     cbHSBT.show();
     cbHSBTT.show();
   }
+  // show Tool01 Options
+  if (tool == "Tool01")
+  {
+    slRNDr.show();
+    slRNDg.show();
+    slRNDb.show();
+    slRNDa.show();
+  }
   // show Filler Options
   else if (tool == "Filler")
   {

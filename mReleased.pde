@@ -71,6 +71,10 @@ void mouseReleased()
   slHSBh.locked = false;
   slHSBs.locked = false;
   slHSBb.locked = false;
+  slRNDa.locked = false;
+  slRNDr.locked = false;
+  slRNDg.locked = false;
+  slRNDb.locked = false;
 
   // check if drawing with Liner
   if ((lineDown) && (tool=="Liner"))

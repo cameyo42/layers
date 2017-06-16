@@ -1,4 +1,4 @@
-void mouseWheel(MouseEvent event) 
+void mouseWheel(MouseEvent event)
 {
   float e = event.getCount();
   println(e); // -1.0 or 1.0
@@ -20,6 +20,6 @@ void mouseWheel(MouseEvent event)
     {
       brushSize = constrain(++brushSize, brushSizeMin, brushSizeMax);
       slSIZE.v = brushSize;
-    }  
+    }
   }
 }

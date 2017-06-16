@@ -39,7 +39,7 @@ void keyPressed()
       onTop = true;
     }
   }
-  
+
   // Toggle selection
   if (keyCode==114) // F3
   {
@@ -68,7 +68,7 @@ void keyPressed()
   {
     pastePixels();
   }
-  
+
   // Draw selection contour
   if (keyCode==118) // F7
   {
@@ -80,7 +80,7 @@ void keyPressed()
   {
     selectionSaveDialog();
   }
-  
+
   // toggle erase outside selection
   if (keyCode==120) // F9
   {
@@ -137,7 +137,7 @@ void keyPressed()
   {
     showLayerGUI = !showLayerGUI;
   }
-  
+
   // SELECT TOOL
   // select Stamp tool
   if ((key=='t') || (key =='T'))  { selectTool("Stamp"); }
@@ -180,7 +180,7 @@ void keyPressed()
     grid = !grid;
     cbGRID.s = grid;
   }
-  
+
   // brushSize +/-
   if (key=='[')
   {
@@ -192,7 +192,7 @@ void keyPressed()
     brushSize = constrain(++brushSize, brushSizeMin, brushSizeMax);
     slSIZE.v = brushSize;
   }
-  
+
   // Zoom or Alpha +/-
   if (key=='+')
   {
@@ -231,7 +231,7 @@ void keyPressed()
   {
     redo();
   }
-  
+
   // undo
   if ((key=='u') || (key=='U'))
   {
@@ -451,7 +451,14 @@ void keyPressed()
       slHSBh.v = 0;
       slHSBs.v = 0;
       slHSBb.v = 0;
-    }    
+    }
+    else if (tool == "Tool01")
+    {
+      slRNDa.v = 0;
+      slRNDr.v = 0;
+      slRNDg.v = 0;
+      slRNDb.v = 0;
+    }
   }
 
 }

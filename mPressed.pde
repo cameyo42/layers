@@ -469,11 +469,11 @@ void mousePressed()
                 if ( ((cbALPHATT.s) && (ta != 0)) || (!cbALPHATT.s) )
                 {
                   // add new point to hashset
-                  ptsAlpha.add(newPt);                
+                  ptsAlpha.add(newPt);
                   ta = constrain(ta + dAlpha,0,255);
                   tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
                   livelli[activeLyr].pg.pixels[loc] = tc;
-                }  
+                }
               }
             }
           }
@@ -482,7 +482,7 @@ void mousePressed()
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
-    
+
     // RGB PRESSED
     else if ((!keyPressed) && (tool=="RGB") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -525,13 +525,13 @@ void mousePressed()
                 {
                   //ta = constrain(ta + dAlpha, 0, 255);
                   // add new point to hashset
-                  ptsRGB.add(newPt);                  
+                  ptsRGB.add(newPt);
                   tr = constrain(tr + dR, 0, 255);
                   tg = constrain(tg + dG, 0, 255);
                   tb = constrain(tb + dB, 0, 255);
                   tc = color(tr, tg, tb, ta);
                   livelli[activeLyr].pg.pixels[loc] = tc;
-                }  
+                }
               }
             }
           }
@@ -539,7 +539,7 @@ void mousePressed()
       }
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
-    }    
+    }
 
     // HSB PRESSED
     else if ((!keyPressed) && (tool=="HSB") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
@@ -580,8 +580,8 @@ void mousePressed()
                   // add new point to hashset
                   ptsHSB.add(newPt);
                   colorMode(HSB,360.0,100.0,100.0);
-                  float hh = hue(tc); 
-                  float ss = saturation(tc); 
+                  float hh = hue(tc);
+                  float ss = saturation(tc);
                   float bb = brightness(tc);
                   hh = constrain(hh + dH, 0, 360);
                   ss = constrain(ss + dS, 0, 100);
@@ -589,7 +589,7 @@ void mousePressed()
                   tc = color(hh,ss,bb);
                   colorMode(RGB,255.0,255.0,255.0);
                   livelli[activeLyr].pg.pixels[loc] = tc;
-                }  
+                }
               }
             }
           }
@@ -597,8 +597,8 @@ void mousePressed()
       }
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
-    }        
-    
+    }
+
     // TOOL01 PRESSED
     else if ((!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -607,33 +607,48 @@ void mousePressed()
       int y0 = mouseY;
       if (grab) { grabLayer(); } // grab layer for Undo
       livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
-      // Clear string hashset (Set<String> pts = new HashSet<String>();)
-      ptsAlpha.clear();
-      //int numPtrs = ptsAlpha.size();
+      // if (noGlitch) { prepareGlitch(); } // No antialias with this tool :-)
       int ll = width*height;
       livelli[activeLyr].pg.loadPixels();
       int rr = brushSize/2;
+      // clear hash points
+      ptsRGB.clear();
+      // get color
+      color tc = brushCol;
+      int ta = (tc >> 24) & 0xff;
+      int tr = (tc >> 16) & 0xff;
+      int tg = (tc >> 8) & 0xff;
+      int tb = tc & 0xff;
+      // get delta value
+      int dA = (int) slRNDa.v;
+      int dR = (int) slRNDr.v;
+      int dG = (int) slRNDg.v;
+      int dB = (int) slRNDb.v;
       for (int x = x0 - rr; x < x0 + rr; x++)
       {
         for (int y = y0 - rr; y < y0 + rr; y++)
         {
           int loc = x+y*width;
           String newPt = String.valueOf(loc);
-          if (ptsAlpha.contains(newPt))
+          if (ptsRGB.contains(newPt))
           { } // do nothing (the point is already processed)
           else
           {
-            //if ((loc <= ll) && (round(dist(x, y, x0, y0)) < round(brushSize/2.0)))
-            if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+            if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
             {
-              // add new point to hashset
-              ptsAlpha.add(newPt);
-              // process point
-              color tc = livelli[activeLyr].pg.pixels[loc];
-              int ta = (tc >> 24) & 0xff;
-              ta = constrain(ta-10,1,255);
-              tc = color((tc >> 16) & 0xFF, (tc >> 8)  & 0xFF, tc & 0xFF, ta);
-              livelli[activeLyr].pg.pixels[loc] = tc;
+              if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+              {
+                // add new point to hashset
+                ptsRGB.add(newPt);
+                //println("1)",ta,tr,tg,tb);
+                int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                tc = color(newtr, newtg, newtb, newta);
+                //println("2)",newta,newtr,newtg,newtb);
+                livelli[activeLyr].pg.pixels[loc] = tc;
+              }
             }
           }
         }
@@ -793,9 +808,19 @@ void mousePressed()
     if (tool == "HSB")
     {
       slHSBh.onClick();
+      slHSBs.onClick();
+      slHSBb.onClick();
       cbHSBT.onClick();
       cbHSBTT.onClick();
-    }    
+    }
+    // check RND options
+    if (tool == "Tool01")
+    {
+      slRNDr.onClick();
+      slRNDg.onClick();
+      slRNDb.onClick();
+      slRNDa.onClick();
+    }
     // check Filler options
     else if (tool == "Filler")
     {

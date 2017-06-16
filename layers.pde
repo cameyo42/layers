@@ -200,6 +200,7 @@ SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
 ButtonIMG btnALPHA, btnRGB, btnHSB;
 Slider slALPHAT, slRGBr, slRGBg, slRGBb, slHSBh, slHSBs, slHSBb;
 Checkbox cbALPHAT, cbALPHATT, cbRGBT, cbRGBTT, cbHSBT, cbHSBTT;
+Slider slRNDa, slRNDr, slRNDg, slRNDb;
 ButtonIMG btnTool01;
 // mixer brush
 PImage mixer;  // mixer brush image
@@ -479,9 +480,9 @@ void setup()
   rgbON_IMG = gui_IMG.get(1036, 213, 34, 34);
   rgbOFF_IMG = gui_IMG.get(1070, 213, 34, 34);
   hsbON_IMG = gui_IMG.get(1104, 213, 34, 34);
-  hsbOFF_IMG = gui_IMG.get(1138, 213, 34, 34);    
+  hsbOFF_IMG = gui_IMG.get(1138, 213, 34, 34);
   tool01ON_IMG = gui_IMG.get(1172, 213, 34, 34);
-  tool01OFF_IMG = gui_IMG.get(1206, 213, 34, 34);  
+  tool01OFF_IMG = gui_IMG.get(1206, 213, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -593,26 +594,31 @@ void setup()
   cbSHstyle = new Checkbox(230, 380, 14, 14, "style SVG", true, black, darkGray, highLight, gray, textMenuCol, "cb_SHstyle");
   sbSHtype = new SpinBound(254, 445, 50, 14, "type", 1, 1, 1, 5, black, gray, textMenuCol, "sb_SHtype");
   // new tools
-  btnALPHA = new ButtonIMG(5, 482, alphaON_IMG, alphaOFF_IMG, false, "", textMenuCol, "btn_ALPHA");
-  slALPHAT = new Slider(10, 456, 290, 456, 4, "delta alpha", -255, 255, -25, black, highLight, black, textMenuCol, "sl_ALPHAT");
-  cbALPHAT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHAT");  
-  cbALPHATT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHATT");  
-  
-  btnRGB = new ButtonIMG(41, 482, rgbON_IMG, rgbOFF_IMG, false, "", textMenuCol, "btn_RGB");
-  slRGBr = new Slider(10, 462, 296, 462, 4, "delta red", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBr");
-  slRGBg = new Slider(10, 428, 296, 428, 4, "delta green", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBg");
-  slRGBb = new Slider(10, 394, 296, 394, 4, "delta blu", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBb");
-  cbRGBT = new Checkbox(6, 370, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBT");  
-  cbRGBTT = new Checkbox(100, 370, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");  
-  
-  btnHSB = new ButtonIMG(77, 482, hsbON_IMG, hsbOFF_IMG, false, "", textMenuCol, "btn_HSB");
-  slHSBh = new Slider(10, 462, 296, 462, 4, "delta hue", -360, 360, 0, black, highLight, black, textMenuCol, "sl_HSBh");
-  slHSBs = new Slider(10, 428, 296, 428, 4, "delta saturation", -100, 100, 0, black, highLight, black, textMenuCol, "sl_HSBs");
-  slHSBb = new Slider(10, 394, 296, 394, 4, "delta brightness", -100, 100, 0, black, highLight, black, textMenuCol, "sl_HSBb");  
-  cbHSBT = new Checkbox(6, 370, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBT");  
-  cbHSBTT = new Checkbox(100, 370, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBTT");    
-  
-  btnTool01 = new ButtonIMG(113, 482, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
+  btnALPHA = new ButtonIMG(5, 490, alphaON_IMG, alphaOFF_IMG, false, "", textMenuCol, "btn_ALPHA");
+  slALPHAT = new Slider(10, 462, 290, 462, 4, "delta alpha", -255, 255, -25, black, highLight, black, textMenuCol, "sl_ALPHAT");
+  cbALPHAT = new Checkbox(6, 420, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHAT");
+  cbALPHATT = new Checkbox(100, 420, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_ALPHATT");
+
+  btnRGB = new ButtonIMG(41, 490, rgbON_IMG, rgbOFF_IMG, false, "", textMenuCol, "btn_RGB");
+  slRGBr = new Slider(10, 402, 296, 402, 4, "delta red", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBr");
+  slRGBg = new Slider(10, 436, 296, 436, 4, "delta green", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBg");
+  slRGBb = new Slider(10, 470, 296, 470, 4, "delta blu", -255, 255, 0, black, highLight, black, textMenuCol, "sl_RGBb");
+  cbRGBT = new Checkbox(6, 375, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBT");
+  cbRGBTT = new Checkbox(100, 375, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_RGBTT");
+
+  btnHSB = new ButtonIMG(77, 490, hsbON_IMG, hsbOFF_IMG, false, "", textMenuCol, "btn_HSB");
+  slHSBh = new Slider(10, 402, 296, 402, 4, "delta hue", -360, 360, 0, black, highLight, black, textMenuCol, "sl_HSBh");
+  slHSBs = new Slider(10, 436, 296, 436, 4, "delta saturation", -100, 100, 0, black, highLight, black, textMenuCol, "sl_HSBs");
+  slHSBb = new Slider(10, 470, 296, 470, 4, "delta brightness", -100, 100, 0, black, highLight, black, textMenuCol, "sl_HSBb");
+  cbHSBT = new Checkbox(6, 375, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBT");
+  cbHSBTT = new Checkbox(100, 375, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBTT");
+
+  btnTool01 = new ButtonIMG(113, 490, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
+  slRNDr = new Slider(10, 384, 296, 384, 4, "rnd red", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDr");
+  slRNDg = new Slider(10, 414, 296, 414, 4, "rnd green", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDg");
+  slRNDb = new Slider(10, 444, 296, 444, 4, "rnd blu", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDb");
+  slRNDa = new Slider(10, 474, 296, 474, 4, "rnd alpha", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDa");
+
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
   myHSB = new HSBcontrol(width-230, 50, brushCol, "HSB_M");
@@ -893,21 +899,27 @@ void btc_BACKCOL()
 }
 
 // new tools method
+// Alpha tool
 void sl_ALPHAT() { }
 void cb_ALPHAT() { ptsAlpha.clear(); }
 void cb_ALPHATT() { }
-
+// RGB tool
 void sl_RGBr() { }
 void sl_RGBg() { }
 void sl_RGBb() { }
 void cb_RGBT() { ptsRGB.clear(); }
 void cb_RGBTT() { }
-
+// HSB tool
 void sl_HSBh() { }
 void sl_HSBs() { }
 void sl_HSBb() { }
 void cb_HSBT() { ptsHSB.clear(); }
 void cb_HSBTT() { }
+// RND tool
+void sl_RNDr() { }
+void sl_RNDg() { }
+void sl_RNDb() { }
+void sl_RNDa() { }
 
 //*********************************
 //*********************************
