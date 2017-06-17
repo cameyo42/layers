@@ -727,8 +727,8 @@ void mouseDragged()
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
-    // TOOL01 DRAGGED
-    else if ((startAction) && (!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    // RND DRAGGED
+    else if ((startAction) && (!keyPressed) && (tool=="RND") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       int x0 = mouseX;
       int y0 = mouseY;
@@ -779,6 +779,58 @@ void mouseDragged()
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
+    // TOOL01 DRAGGED
+    else if ((startAction) && (!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    {
+      int x0 = mouseX;
+      int y0 = mouseY;
+      livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+      int ll = width*height;
+      livelli[activeLyr].pg.loadPixels();
+      int rr = brushSize/2;
+      // get color
+      color tc = brushCol;
+      int ta = (tc >> 24) & 0xff;
+      int tr = (tc >> 16) & 0xff;
+      int tg = (tc >> 8) & 0xff;
+      int tb = tc & 0xff;
+      // get delta value
+      int dA = (int) slRNDa.v;
+      int dR = (int) slRNDr.v;
+      int dG = (int) slRNDg.v;
+      int dB = (int) slRNDb.v;
+      int delta = 50;
+      for (int x = x0 - rr; x < x0 + rr; x++)
+      {
+        for (int y = y0 - rr; y < y0 + rr; y++)
+        {
+          int loc = x+y*width;
+          String newPt = String.valueOf(loc);
+          if (ptsRGB.contains(newPt))
+          { } // do nothing (the point is already processed)
+          else
+          {
+            if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
+            {
+              if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+              {
+                // add new point to hashset
+                ptsRGB.add(newPt);
+                int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                tc = color(newtr, newtg, newtb, newta);
+                livelli[activeLyr].pg.pixels[loc] = tc;
+              }
+            }
+          }
+        }
+      }
+      livelli[activeLyr].pg.updatePixels();
+      livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    }    
+    
   } // LEFT mouse if
 
   // MENU DRAGGED
@@ -813,6 +865,14 @@ void mouseDragged()
       slHSBs.onDrag();
       slHSBb.onDrag();
     }
+    // check delta value slider
+    else if (tool == "RND")
+    {
+      slRNDr.onDrag();
+      slRNDg.onDrag();
+      slRNDb.onDrag();
+      slRNDa.onDrag();
+    }    
     // check delta value slider
     else if (tool == "Tool01")
     {

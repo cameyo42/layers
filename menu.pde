@@ -12,7 +12,7 @@ void showMenu()
   rect(4, 14, brushSizeMax+10, brushSizeMax+10);
   if (tool == "Pencil" || tool == "Liner" || tool == "Quad" || tool == "Circle" || tool == "Ink" ||
       tool == "Vernice" || tool == "Mixer" || tool == "Web" || tool == "Stencil" || tool == "Clone" ||
-      tool == "Confetti" || tool == "Shape" || tool == "Alpha" || tool == "RGB" || tool == "HSB" || tool == "Tool01")
+      tool == "Confetti" || tool == "Shape" || tool == "Alpha" || tool == "RGB" || tool == "HSB" || tool == "RND" || tool == "Tool01")
   {
     noStroke();
     fill(brushCol);
@@ -117,6 +117,7 @@ void showMenu()
   btnALPHA.show();
   btnRGB.show();
   btnHSB.show();
+  btnRND.show();
   btnTool01.show();
 
   // show Alpha Options
@@ -144,6 +145,14 @@ void showMenu()
     cbHSBT.show();
     cbHSBTT.show();
   }
+  // show RND Options
+  if (tool == "RND")
+  {
+    slRNDr.show();
+    slRNDg.show();
+    slRNDb.show();
+    slRNDa.show();
+  }  
   // show Tool01 Options
   if (tool == "Tool01")
   {

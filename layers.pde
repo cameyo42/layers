@@ -56,7 +56,7 @@ PImage grid_IMG, freeze_IMG, open_IMG, save_IMG, openLyr_IMG, creaStencil_IMG, l
 PImage pre01ON_IMG, pre02ON_IMG, pre03ON_IMG, pre04ON_IMG, pre05ON_IMG, pre06ON_IMG, pre07ON_IMG, pre08ON_IMG;
 PImage pre01OFF_IMG, pre02OFF_IMG, pre03OFF_IMG, pre04OFF_IMG, pre05OFF_IMG, pre06OFF_IMG, pre07OFF_IMG, pre08OFF_IMG;
 PImage alphaOFF_IMG, alphaON_IMG, rgbOFF_IMG, rgbON_IMG, hsbON_IMG, hsbOFF_IMG;
-PImage tool01OFF_IMG, tool01ON_IMG;
+PImage rndOFF_IMG, rndON_IMG, tool01OFF_IMG, tool01ON_IMG;
 PImage stampBRUSHES_IMG;
 PGraphics stampPG;
 PImage lyrCTRL_IMG;
@@ -200,6 +200,7 @@ SpinBound sbGRIDX, sbGRIDY, sbWEBT, sbWEBJ;
 ButtonIMG btnALPHA, btnRGB, btnHSB;
 Slider slALPHAT, slRGBr, slRGBg, slRGBb, slHSBh, slHSBs, slHSBb;
 Checkbox cbALPHAT, cbALPHATT, cbRGBT, cbRGBTT, cbHSBT, cbHSBTT;
+ButtonIMG btnRND;
 Slider slRNDa, slRNDr, slRNDg, slRNDb;
 ButtonIMG btnTool01;
 // mixer brush
@@ -481,8 +482,10 @@ void setup()
   rgbOFF_IMG = gui_IMG.get(1070, 213, 34, 34);
   hsbON_IMG = gui_IMG.get(1104, 213, 34, 34);
   hsbOFF_IMG = gui_IMG.get(1138, 213, 34, 34);
-  tool01ON_IMG = gui_IMG.get(1172, 213, 34, 34);
-  tool01OFF_IMG = gui_IMG.get(1206, 213, 34, 34);
+  rndON_IMG = gui_IMG.get(1172, 213, 34, 34);
+  rndOFF_IMG = gui_IMG.get(1206, 213, 34, 34);
+  tool01ON_IMG = gui_IMG.get(968, 247, 34, 34);
+  tool01OFF_IMG = gui_IMG.get(1002, 247, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -613,11 +616,13 @@ void setup()
   cbHSBT = new Checkbox(6, 375, 14, 14, "lock pixels", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBT");
   cbHSBTT = new Checkbox(100, 375, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBTT");
 
-  btnTool01 = new ButtonIMG(113, 490, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
+  btnRND = new ButtonIMG(113, 490, rndON_IMG, rndOFF_IMG, false, "", textMenuCol, "btn_RND");
   slRNDr = new Slider(10, 384, 296, 384, 4, "rnd red", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDr");
   slRNDg = new Slider(10, 414, 296, 414, 4, "rnd green", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDg");
   slRNDb = new Slider(10, 444, 296, 444, 4, "rnd blu", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDb");
   slRNDa = new Slider(10, 474, 296, 474, 4, "rnd alpha", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDa");
+
+  btnTool01 = new ButtonIMG(149, 490, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -738,6 +743,7 @@ void btn_SHAPE()    { selectTool("Shape"); }
 void btn_ALPHA()    { selectTool("Alpha"); }
 void btn_RGB()      { selectTool("RGB"); }
 void btn_HSB()      { selectTool("HSB"); }
+void btn_RND()      { selectTool("RND"); }
 void btn_Tool01()   { selectTool("Tool01"); }
 void btn_UNDO()     { undo(); }
 void btn_REDO()     { redo(); }
@@ -1054,6 +1060,7 @@ void selectTool(String t)
   btnALPHA.s = false;
   btnRGB.s = false;
   btnHSB.s = false;
+  btnRND.s = false;
   btnTool01.s= false;
   //aSelection = false;
   if (t == "Pencil")        { btnPENCIL.s = true; }
@@ -1076,6 +1083,7 @@ void selectTool(String t)
   else if (t == "Alpha")    { btnALPHA.s = true;}
   else if (t == "RGB")      { btnRGB.s = true;}
   else if (t == "HSB")      { btnHSB.s = true;}
+  else if (t == "RND")      { btnRND.s = true;}
   else if (t == "Tool01")   { btnTool01.s = true;}
   else if (t == "TEST")     { }
 }
