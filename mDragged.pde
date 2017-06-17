@@ -747,7 +747,6 @@ void mouseDragged()
       int dR = (int) slRNDr.v;
       int dG = (int) slRNDg.v;
       int dB = (int) slRNDb.v;
-      int delta = 50;
       for (int x = x0 - rr; x < x0 + rr; x++)
       {
         for (int y = y0 - rr; y < y0 + rr; y++)
@@ -799,7 +798,6 @@ void mouseDragged()
       int dR = (int) slRNDr.v;
       int dG = (int) slRNDg.v;
       int dB = (int) slRNDb.v;
-      int delta = 50;
       for (int x = x0 - rr; x < x0 + rr; x++)
       {
         for (int y = y0 - rr; y < y0 + rr; y++)
@@ -816,11 +814,16 @@ void mouseDragged()
               {
                 // add new point to hashset
                 ptsRGB.add(newPt);
-                int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
-                int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
-                int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
-                tc = color(newtr, newtg, newtb, newta);
+                //int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                //int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                //int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                //int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                //tc = color(newtr, newtg, newtb, newta);
+                ta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                tr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                tg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                tb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                tc = color(tr, tg, tb, ta);
                 livelli[activeLyr].pg.pixels[loc] = tc;
               }
             }
@@ -829,8 +832,8 @@ void mouseDragged()
       }
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
-    }    
-    
+    }
+
   } // LEFT mouse if
 
   // MENU DRAGGED
@@ -872,7 +875,7 @@ void mouseDragged()
       slRNDg.onDrag();
       slRNDb.onDrag();
       slRNDa.onDrag();
-    }    
+    }
     // check delta value slider
     else if (tool == "Tool01")
     {

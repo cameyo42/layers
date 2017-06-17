@@ -656,7 +656,7 @@ void mousePressed()
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
-    
+
     // TOOL01 PRESSED
     else if ((!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
@@ -699,11 +699,16 @@ void mousePressed()
                 // add new point to hashset
                 ptsRGB.add(newPt);
                 //println("1)",ta,tr,tg,tb);
-                int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
-                int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
-                int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
-                tc = color(newtr, newtg, newtb, newta);
+                //int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                //int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                //int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                //int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                //tc = color(newtr, newtg, newtb, newta);
+                ta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                tr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                tg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                tb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                tc = color(tr, tg, tb, ta);
                 //println("2)",newta,newtr,newtg,newtb);
                 livelli[activeLyr].pg.pixels[loc] = tc;
               }
@@ -879,7 +884,7 @@ void mousePressed()
       slRNDg.onClick();
       slRNDb.onClick();
       slRNDa.onClick();
-    }    
+    }
     if (tool == "Tool01")
     {
       slRNDr.onClick();
