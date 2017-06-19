@@ -879,10 +879,10 @@ void mouseDragged()
     // check delta value slider
     else if (tool == "Tool01")
     {
-      slRNDr.onDrag();
-      slRNDg.onDrag();
-      slRNDb.onDrag();
-      slRNDa.onDrag();
+      //slRNDr.onDrag();
+      //slRNDg.onDrag();
+      //slRNDb.onDrag();
+      //slRNDa.onDrag();
     }
 
     // check Filler (threshold) slider

@@ -203,6 +203,7 @@ Checkbox cbALPHAT, cbALPHATT, cbRGBT, cbRGBTT, cbHSBT, cbHSBTT;
 ButtonIMG btnRND;
 Slider slRNDa, slRNDr, slRNDg, slRNDb;
 ButtonIMG btnTool01;
+SpinBound sbRNDa, sbRNDr, sbRNDg, sbRNDb;
 // mixer brush
 PImage mixer;  // mixer brush image
 int mixer_alpha;   // mixer brush alpha (start alpha: 0 -> 255)
@@ -617,12 +618,16 @@ void setup()
   cbHSBTT = new Checkbox(100, 375, 14, 14, "lock transparent", true, black, darkGray, highLight, gray, textMenuCol, "cb_HSBTT");
 
   btnRND = new ButtonIMG(113, 490, rndON_IMG, rndOFF_IMG, false, "", textMenuCol, "btn_RND");
-  slRNDr = new Slider(10, 384, 296, 384, 4, "rnd red", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDr");
-  slRNDg = new Slider(10, 414, 296, 414, 4, "rnd green", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDg");
-  slRNDb = new Slider(10, 444, 296, 444, 4, "rnd blu", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDb");
-  slRNDa = new Slider(10, 474, 296, 474, 4, "rnd alpha", 0, 255, 0, black, highLight, black, textMenuCol, "sl_RNDa");
+  slRNDr = new Slider(10, 384, 296, 384, 4, "rnd red", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDr");
+  slRNDg = new Slider(10, 414, 296, 414, 4, "rnd green", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDg");
+  slRNDb = new Slider(10, 444, 296, 444, 4, "rnd blu", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDb");
+  slRNDa = new Slider(10, 474, 296, 474, 4, "rnd alpha", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDa");
 
   btnTool01 = new ButtonIMG(149, 490, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
+  sbRNDr = new SpinBound(30, 390, 64, 18, "dR", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBr");
+  sbRNDg = new SpinBound(30, 410, 64, 18, "dG", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBg");
+  sbRNDb = new SpinBound(30, 430, 64, 18, "dB", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBb");
+  sbRNDa = new SpinBound(30, 450, 64, 18, "dA", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBa");
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -926,6 +931,11 @@ void sl_RNDr() { }
 void sl_RNDg() { }
 void sl_RNDb() { }
 void sl_RNDa() { }
+// Tool01 tool
+void sb_RNDr() { }
+void sb_RNDg() { }
+void sb_RNDb() { }
+void sb_RNDa() { }
 
 //*********************************
 //*********************************

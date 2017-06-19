@@ -657,7 +657,7 @@ void mousePressed()
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
-    // TOOL01 PRESSED
+    // TOOL01 PRESSED // Background creator
     else if ((!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       startAction = true;
@@ -668,9 +668,11 @@ void mousePressed()
       // if (noGlitch) { prepareGlitch(); } // No antialias with this tool :-)
       int ll = width*height;
       livelli[activeLyr].pg.loadPixels();
-      int rr = brushSize/2;
+      //int rr = brushSize/2;
+      //int rr=height;
+      //int rr = brushSize*2;
       // clear hash points
-      ptsRGB.clear();
+      //ptsRGB.clear();
       // get color
       color tc = brushCol;
       int ta = (tc >> 24) & 0xff;
@@ -678,26 +680,27 @@ void mousePressed()
       int tg = (tc >> 8) & 0xff;
       int tb = tc & 0xff;
       // get delta value
-      int dA = (int) slRNDa.v;
-      int dR = (int) slRNDr.v;
-      int dG = (int) slRNDg.v;
-      int dB = (int) slRNDb.v;
-      for (int x = x0 - rr; x < x0 + rr; x++)
+      int dA = (int) sbRNDa.v;
+      int dR = (int) sbRNDr.v;
+      int dG = (int) sbRNDg.v;
+      int dB = (int) sbRNDb.v;
+      // vertical fill
+      for (int x = 0; x < width; x++)
       {
-        for (int y = y0 - rr; y < y0 + rr; y++)
+        for (int y = 0; y < height; y++)
         {
           int loc = x+y*width;
-          String newPt = String.valueOf(loc);
-          if (ptsRGB.contains(newPt))
-          { } // do nothing (the point is already processed)
-          else
+          //String newPt = String.valueOf(loc);
+          //if (ptsRGB.contains(newPt))
+          //{ } // do nothing (the point is already processed)
+          //else
           {
             if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
             {
-              if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+              if ((loc >= 0) && (loc < ll))
               {
                 // add new point to hashset
-                ptsRGB.add(newPt);
+                //ptsRGB.add(newPt);
                 //println("1)",ta,tr,tg,tb);
                 //int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
                 //int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
@@ -716,10 +719,110 @@ void mousePressed()
           }
         }
       }
+      // horizontal fill
+      for (int y = 0; y < height; y++)
+      {
+        for (int x = 0; x < width; x++)
+        {
+          int loc = x+y*width;
+          //String newPt = String.valueOf(loc);
+          //if (ptsRGB.contains(newPt))
+          //{ } // do nothing (the point is already processed)
+          //else
+          {
+            if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
+            {
+              if ((loc >= 0) && (loc < ll))
+              {
+                // add new point to hashset
+                //ptsRGB.add(newPt);
+                //println("1)",ta,tr,tg,tb);
+                //int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                //int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                //int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                //int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                //tc = color(newtr, newtg, newtb, newta);
+                ta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                tr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                tg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                tb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                tc = color(tr, tg, tb, ta);
+                //println("2)",newta,newtr,newtg,newtb);
+                livelli[activeLyr].pg.pixels[loc] = tc;
+              }
+            }
+          }
+        }
+      }      
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
 
+    // TOOL01 PRESSED
+    //else if ((!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    //{
+    //  startAction = true;
+    //  int x0 = mouseX;
+    //  int y0 = mouseY;
+    //  if (grab) { grabLayer(); } // grab layer for Undo
+    //  livelli[activeLyr].pg.beginDraw(); // open active layer PGraphics
+    //  // if (noGlitch) { prepareGlitch(); } // No antialias with this tool :-)
+    //  int ll = width*height;
+    //  livelli[activeLyr].pg.loadPixels();
+    //  //int rr = brushSize/2;
+    //  int rr=height;
+    //  //int rr = brushSize*2;
+    //  // clear hash points
+    //  ptsRGB.clear();
+    //  // get color
+    //  color tc = brushCol;
+    //  int ta = (tc >> 24) & 0xff;
+    //  int tr = (tc >> 16) & 0xff;
+    //  int tg = (tc >> 8) & 0xff;
+    //  int tb = tc & 0xff;
+    //  // get delta value
+    //  int dA = (int) slRNDa.v;
+    //  int dR = (int) slRNDr.v;
+    //  int dG = (int) slRNDg.v;
+    //  int dB = (int) slRNDb.v;
+    //  for (int x = x0 - rr; x < x0 + rr; x++)
+    //  {
+    //    for (int y = y0 - rr; y < y0 + rr; y++)
+    //    {
+    //      int loc = x+y*width;
+    //      String newPt = String.valueOf(loc);
+    //      if (ptsRGB.contains(newPt))
+    //      { } // do nothing (the point is already processed)
+    //      else
+    //      {
+    //        if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
+    //        {
+    //          if ((loc >= 0) && (loc < ll) && ((x - x0)*(x - x0) + (y - y0)*(y - y0) < rr*rr))
+    //          {
+    //            // add new point to hashset
+    //            ptsRGB.add(newPt);
+    //            //println("1)",ta,tr,tg,tb);
+    //            //int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+    //            //int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+    //            //int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+    //            //int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+    //            //tc = color(newtr, newtg, newtb, newta);
+    //            ta = constrain(ta + (int) random(-dA,dA), 0, 255);
+    //            tr = constrain(tr + (int) random(-dR,dR), 0, 255);
+    //            tg = constrain(tg + (int) random(-dG,dG), 0, 255);
+    //            tb = constrain(tb + (int) random(-dB,dB), 0, 255);
+    //            tc = color(tr, tg, tb, ta);
+    //            //println("2)",newta,newtr,newtg,newtb);
+    //            livelli[activeLyr].pg.pixels[loc] = tc;
+    //          }
+    //        }
+    //      }
+    //    }
+    //  }
+    //  livelli[activeLyr].pg.updatePixels();
+    //  livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
+    //}    
+    
   } // LEFT mouse if
 
   else if (mouseButton == RIGHT)
@@ -887,10 +990,10 @@ void mousePressed()
     }
     if (tool == "Tool01")
     {
-      slRNDr.onClick();
-      slRNDg.onClick();
-      slRNDb.onClick();
-      slRNDa.onClick();
+      sbRNDr.onClick();
+      sbRNDg.onClick();
+      sbRNDb.onClick();
+      sbRNDa.onClick();
     }
     // check Filler options
     else if (tool == "Filler")

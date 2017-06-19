@@ -156,10 +156,10 @@ void showMenu()
   // show Tool01 Options
   if (tool == "Tool01")
   {
-    slRNDr.show();
-    slRNDg.show();
-    slRNDb.show();
-    slRNDa.show();
+    sbRNDr.show();
+    sbRNDg.show();
+    sbRNDb.show();
+    sbRNDa.show();
   }
   // show Filler Options
   else if (tool == "Filler")
