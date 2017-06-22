@@ -766,7 +766,6 @@ void mousePressed()
                   colorMode(HSB,255.0,255.0,255.0);
                   tc = color(hh, ss, bb, ta);                  
                   colorMode(RGB,255.0,255.0,255.0);                  
-
                 }
                 else
                 {                
