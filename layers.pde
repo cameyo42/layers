@@ -203,7 +203,9 @@ Checkbox cbALPHAT, cbALPHATT, cbRGBT, cbRGBTT, cbHSBT, cbHSBTT;
 ButtonIMG btnRND;
 Slider slRNDa, slRNDr, slRNDg, slRNDb;
 ButtonIMG btnTool01;
-SpinBound sbRNDa, sbRNDr, sbRNDg, sbRNDb;
+SpinBound sbBACKa, sbBACKr, sbBACKg, sbBACKb;
+Checkbox cbBACKadd, cbBACKh, cbBACKv;
+
 // mixer brush
 PImage mixer;  // mixer brush image
 int mixer_alpha;   // mixer brush alpha (start alpha: 0 -> 255)
@@ -624,10 +626,11 @@ void setup()
   slRNDa = new Slider(10, 474, 296, 474, 4, "rnd alpha", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDa");
 
   btnTool01 = new ButtonIMG(149, 490, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
-  sbRNDr = new SpinBound(30, 390, 64, 18, "dR", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBr");
-  sbRNDg = new SpinBound(30, 410, 64, 18, "dG", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBg");
-  sbRNDb = new SpinBound(30, 430, 64, 18, "dB", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBb");
-  sbRNDa = new SpinBound(30, 450, 64, 18, "dA", 0, 1, 0, 50, black, gray, textMenuCol, "sb_RGBa");
+  sbBACKr = new SpinBound(30, 400, 64, 18, "dR", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACKr");
+  sbBACKg = new SpinBound(30, 420, 64, 18, "dG", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACKg");
+  sbBACKb = new SpinBound(30, 440, 64, 18, "dB", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACKb");
+  sbBACKa = new SpinBound(30, 460, 64, 18, "dA", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACKa");
+  cbBACKadd = new Checkbox(6, 376, 14, 14, "cumulative", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKadd");
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -932,10 +935,10 @@ void sl_RNDg() { }
 void sl_RNDb() { }
 void sl_RNDa() { }
 // Tool01 tool
-void sb_RNDr() { }
-void sb_RNDg() { }
-void sb_RNDb() { }
-void sb_RNDa() { }
+void sb_BACKr() { }
+void sb_BACKg() { }
+void sb_BACKb() { }
+void sb_BACKa() { }
 
 //*********************************
 //*********************************

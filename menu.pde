@@ -156,10 +156,11 @@ void showMenu()
   // show Tool01 Options
   if (tool == "Tool01")
   {
-    sbRNDr.show();
-    sbRNDg.show();
-    sbRNDb.show();
-    sbRNDa.show();
+    sbBACKr.show();
+    sbBACKg.show();
+    sbBACKb.show();
+    sbBACKa.show();
+    cbBACKadd.show();
   }
   // show Filler Options
   else if (tool == "Filler")

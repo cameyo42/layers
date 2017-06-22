@@ -679,46 +679,58 @@ void mousePressed()
       int tr = (tc >> 16) & 0xff;
       int tg = (tc >> 8) & 0xff;
       int tb = tc & 0xff;
+      colorMode(HSB,255.0,255.0,255.0);
+      float hh = hue(tc);
+      float ss = saturation(tc);
+      float bb = brightness(tc);      
+      colorMode(RGB,255.0,255.0,255.0);
       // get delta value
-      int dA = (int) sbRNDa.v;
-      int dR = (int) sbRNDr.v;
-      int dG = (int) sbRNDg.v;
-      int dB = (int) sbRNDb.v;
+      int dA = (int) sbBACKa.v;
+      int dR = (int) sbBACKr.v;
+      int dG = (int) sbBACKg.v;
+      int dB = (int) sbBACKb.v;
+      println("Start color:",ta,tr,tg,tb);
       // vertical fill
-      for (int x = 0; x < width; x++)
-      {
-        for (int y = 0; y < height; y++)
-        {
-          int loc = x+y*width;
-          //String newPt = String.valueOf(loc);
-          //if (ptsRGB.contains(newPt))
-          //{ } // do nothing (the point is already processed)
-          //else
-          {
-            if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
-            {
-              if ((loc >= 0) && (loc < ll))
-              {
-                // add new point to hashset
-                //ptsRGB.add(newPt);
-                //println("1)",ta,tr,tg,tb);
-                //int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                //int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
-                //int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
-                //int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
-                //tc = color(newtr, newtg, newtb, newta);
-                ta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                tr = constrain(tr + (int) random(-dR,dR), 0, 255);
-                tg = constrain(tg + (int) random(-dG,dG), 0, 255);
-                tb = constrain(tb + (int) random(-dB,dB), 0, 255);
-                tc = color(tr, tg, tb, ta);
-                //println("2)",newta,newtr,newtg,newtb);
-                livelli[activeLyr].pg.pixels[loc] = tc;
-              }
-            }
-          }
-        }
-      }
+      //for (int x = 0; x < width; x++)
+      //{
+      //  for (int y = 0; y < height; y++)
+      //  {
+      //    int loc = x+y*width;
+      //    //String newPt = String.valueOf(loc);
+      //    //if (ptsRGB.contains(newPt))
+      //    //{ } // do nothing (the point is already processed)
+      //    //else
+      //    {
+      //      if ((!aSelection) || (aSelection && x>x1sel && x<x2sel && y>y1sel && y<y2sel)) // check active selection
+      //      {
+      //        if ((loc >= 0) && (loc < ll))
+      //        {
+      //          // add new point to hashset
+      //          //ptsRGB.add(newPt);
+      //          //println("1)",ta,tr,tg,tb);
+      //          if (cbBACKadd.s) // cumulative delta
+      //          {
+      //            ta = constrain(ta + (int) random(-dA,dA), 0, 255);
+      //            tr = constrain(tr + (int) random(-dR,dR), 0, 255);
+      //            tg = constrain(tg + (int) random(-dG,dG), 0, 255);
+      //            tb = constrain(tb + (int) random(-dB,dB), 0, 255);
+      //            tc = color(tr, tg, tb, ta);
+      //          }
+      //          else
+      //          {                
+      //            int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+      //            int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+      //            int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+      //            int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+      //            tc = color(newtr, newtg, newtb, newta);
+      //          }  
+      //          //println("2)",newta,newtr,newtg,newtb);
+      //          livelli[activeLyr].pg.pixels[loc] = tc;
+      //        }
+      //      }
+      //    }
+      //  }
+      //}
       // horizontal fill
       for (int y = 0; y < height; y++)
       {
@@ -737,16 +749,39 @@ void mousePressed()
                 // add new point to hashset
                 //ptsRGB.add(newPt);
                 //println("1)",ta,tr,tg,tb);
-                //int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                //int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
-                //int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
-                //int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
-                //tc = color(newtr, newtg, newtb, newta);
-                ta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                tr = constrain(tr + (int) random(-dR,dR), 0, 255);
-                tg = constrain(tg + (int) random(-dG,dG), 0, 255);
-                tb = constrain(tb + (int) random(-dB,dB), 0, 255);
-                tc = color(tr, tg, tb, ta);
+                 //hh = constrain(hh + (int) random(-dR,dR), 0, 255);
+                 //ss = constrain(ss + (int) random(-dG,dG), 0, 255);
+                 //bb = constrain(bb + (int) random(-dB,dB), 0, 255);
+                if (cbBACKadd.s) // cumulative delta
+                {
+                  ta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                  tr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                  tg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                  tb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                  //tc = color(tr, tg, tb, ta);
+                  //if (x % 200 == 0) { println(x,ta,tr,tg,tb); }
+                  hh = constrain(hh + (int) random(-dR,dR), 0, 255);
+                  ss = constrain(ss + (int) random(-dG,dG), 0, 255);
+                  bb = constrain(bb + (int) random(-dB,dB), 0, 255);       
+                  colorMode(HSB,255.0,255.0,255.0);
+                  tc = color(hh, ss, bb, ta);                  
+                  colorMode(RGB,255.0,255.0,255.0);                  
+
+                }
+                else
+                {                
+                  int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
+                  int newtr = constrain(tr + (int) random(-dR,dR), 0, 255);
+                  int newtg = constrain(tg + (int) random(-dG,dG), 0, 255);
+                  int newtb = constrain(tb + (int) random(-dB,dB), 0, 255);
+                  tc = color(newtr, newtg, newtb, newta);
+                  float newhh = constrain(hh + (int) random(-dR,dR), 0, 255);
+                  float newss = constrain(ss + (int) random(-dG,dG), 0, 255);
+                  float newbb = constrain(bb + (int) random(-dB,dB), 0, 255);       
+                  colorMode(HSB,255.0,255.0,255.0);
+                  tc = color(newhh, newss, newbb, newta);                  
+                  colorMode(RGB,255.0,255.0,255.0);                                   
+                }  
                 //println("2)",newta,newtr,newtg,newtb);
                 livelli[activeLyr].pg.pixels[loc] = tc;
               }
@@ -990,10 +1025,11 @@ void mousePressed()
     }
     if (tool == "Tool01")
     {
-      sbRNDr.onClick();
-      sbRNDg.onClick();
-      sbRNDb.onClick();
-      sbRNDa.onClick();
+      sbBACKr.onClick();
+      sbBACKg.onClick();
+      sbBACKb.onClick();
+      sbBACKa.onClick();
+      cbBACKadd.onClick();
     }
     // check Filler options
     else if (tool == "Filler")
