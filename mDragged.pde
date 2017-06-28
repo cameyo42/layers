@@ -704,7 +704,6 @@ void mouseDragged()
                 int ta = (tc >> 24) & 0xff;
                 if ( ((cbHSBTT.s) && (ta != 0)) || (!cbHSBTT.s) ) // transparent is locked ?
                 {
-                  //ta = constrain(ta + dAlpha, 0, 255);
                   // add new point to hashset
                   ptsHSB.add(newPt);
                   colorMode(HSB,360.0,100.0,100.0);
@@ -714,7 +713,7 @@ void mouseDragged()
                   hh = constrain(hh + dH, 0, 360);
                   ss = constrain(ss + dS, 0, 100);
                   bb = constrain(bb + dB, 0, 100);
-                  tc = color(hh,ss,bb);
+                  tc = color(hh,ss,bb,ta);
                   colorMode(RGB,255.0,255.0,255.0);
                   livelli[activeLyr].pg.pixels[loc] = tc;
                 }

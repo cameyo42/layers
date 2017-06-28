@@ -586,7 +586,7 @@ void mousePressed()
                   hh = constrain(hh + dH, 0, 360);
                   ss = constrain(ss + dS, 0, 100);
                   bb = constrain(bb + dB, 0, 100);
-                  tc = color(hh,ss,bb);
+                  tc = color(hh,ss,bb,ta);
                   colorMode(RGB,255.0,255.0,255.0);
                   livelli[activeLyr].pg.pixels[loc] = tc;
                 }
