@@ -204,7 +204,8 @@ ButtonIMG btnRND;
 Slider slRNDa, slRNDr, slRNDg, slRNDb;
 ButtonIMG btnBACK;
 SpinBound sbBACKa, sbBACK1, sbBACK2, sbBACK3;
-SpinBound sbBACKhh, sbBACKss, sbBACKbb;
+SpinBound sbBACKaMax, sbBACK1Max, sbBACK2Max, sbBACK3Max;
+//SpinBound sbBACKhh, sbBACKss, sbBACKbb;
 Checkbox cbBACKadd, cbBACKh, cbBACKv;
 Checkbox cbBACKrgb, cbBACKhsb;
 ButtonIMG btnTool01;
@@ -276,8 +277,8 @@ void setup()
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
   //size(1900,900);
-  //size(1280,800);
-  fullScreen();
+  size(1280,800);
+  //fullScreen();
   smooth();
   noCursor();
   frameRate(100);
@@ -492,7 +493,7 @@ void setup()
   rndON_IMG = gui_IMG.get(1172, 213, 34, 34);
   rndOFF_IMG = gui_IMG.get(1206, 213, 34, 34);
   backON_IMG = gui_IMG.get(968, 247, 34, 34);
-  backOFF_IMG = gui_IMG.get(1002, 247, 34, 34);  
+  backOFF_IMG = gui_IMG.get(1002, 247, 34, 34);
   tool01ON_IMG = gui_IMG.get(1036, 247, 34, 34);
   tool01OFF_IMG = gui_IMG.get(1070, 247, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
@@ -632,15 +633,19 @@ void setup()
   slRNDa = new Slider(10, 474, 296, 474, 4, "rnd alpha", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDa");
 
   btnBACK = new ButtonIMG(149, 490, backON_IMG, backOFF_IMG, false, "", textMenuCol, "btn_BACK");
-  sbBACK1 = new SpinBound(44, 400, 64, 18, "dR|dH", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK1");
-  sbBACK2 = new SpinBound(44, 420, 64, 18, "dG|dS", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK2");
-  sbBACK3 = new SpinBound(44, 440, 64, 18, "dB|dB", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK3");
-  sbBACKa = new SpinBound(44, 460, 64, 18, "dA", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACKa");
-  cbBACKadd = new Checkbox(210, 376, 14, 14, "cumulative", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKadd");
-  cbBACKv = new Checkbox(210, 395, 14, 14, "vertical", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKv");
-  cbBACKh = new Checkbox(210, 409, 14, 14, "horizontal", false, black, darkGray, highLight, gray, textMenuCol, "cb_BACKh");
-  cbBACKrgb = new Checkbox(10, 376, 14, 14, "rgb", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKrgb");
-  cbBACKhsb = new Checkbox(55, 376, 14, 14, "hsb", false, black, darkGray, highLight, gray, textMenuCol, "cb_BACKhsb");
+  cbBACKrgb = new Checkbox(6, 376, 14, 14, "rgb", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKrgb");
+  cbBACKhsb = new Checkbox(50, 376, 14, 14, "hsb", false, black, darkGray, highLight, gray, textMenuCol, "cb_BACKhsb");
+  cbBACKadd = new Checkbox(102, 376, 14, 14, "cumulative", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKadd");
+  cbBACKv = new Checkbox(210, 372, 14, 14, "vertical", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKv");
+  cbBACKh = new Checkbox(210, 386, 14, 14, "horizontal", false, black, darkGray, highLight, gray, textMenuCol, "cb_BACKh");
+  sbBACK1 = new SpinBound(44, 405, 64, 18, "dR|dH  ", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK1");
+  sbBACK2 = new SpinBound(44, 425, 64, 18, "dG|dS  ", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK2");
+  sbBACK3 = new SpinBound(44, 445, 64, 18, "dB|dB  ", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK3");
+  sbBACKa = new SpinBound(44, 465, 64, 18, "dA", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACKa");
+  sbBACK1Max = new SpinBound(180, 405, 64, 18, "dR|dH Max           ", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK1Max");
+  sbBACK2Max = new SpinBound(180, 425, 64, 18, "dG|dS Max           ", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK2Max");
+  sbBACK3Max = new SpinBound(180, 445, 64, 18, "dB|dB Max           ", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK3Max");
+  sbBACKaMax = new SpinBound(180, 465, 64, 18, "dA Max    ", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACKaMax");
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -950,6 +955,10 @@ void sb_BACK1() { }
 void sb_BACK2() { }
 void sb_BACK3() { }
 void sb_BACKa() { }
+void sb_BACK1Max() { }
+void sb_BACK2Max() { }
+void sb_BACK3Max() { }
+void sb_BACKaMax() { }
 void cb_BACKadd() { }
 void cb_BACKv() { cbBACKh.s = !cbBACKv.s; }
 void cb_BACKh() { cbBACKv.s = !cbBACKh.s; }

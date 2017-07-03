@@ -37,7 +37,7 @@ void showCursor(int x, int y, boolean zoom, float zoomFactor)
     line(mouseX-8,mouseY,mouseX-16,mouseY);
   }
   else if (tool == "Pencil" || tool == "Ink" || tool == "Mixer" || tool == "Confetti" ||
-           tool == "Alpha" || tool == "RGB" || tool == "HSB" || tool == "RND" || tool == "BACK") // PENCIL, INK, MIXER cursor
+           tool == "Alpha" || tool == "RGB" || tool == "HSB" || tool == "RND") // PENCIL, INK, MIXER cursor
   {
     if (zoom)
     {
@@ -146,7 +146,7 @@ void showCursor(int x, int y, boolean zoom, float zoomFactor)
       line(mouseX-brushSize/2-4,mouseY,mouseX-brushSize,mouseY);
     }
   }
-  else if (tool == "Liner" || tool == "Select" || tool == "Shape") // LINER, SELECT cursor
+  else if (tool == "Liner" || tool == "Select" || tool == "Shape" || tool == "BACK") // LINER, SELECT cursor
   {
     stroke(pointerCol);
     if (zoom)

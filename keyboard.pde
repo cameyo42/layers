@@ -458,7 +458,7 @@ void keyPressed()
       slRNDr.v = 0;
       slRNDg.v = 0;
       slRNDb.v = 0;
-    }    
+    }
     else if (tool == "Tool01")
     {
       slRNDa.v = 0;

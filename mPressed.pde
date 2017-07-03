@@ -670,21 +670,31 @@ void mousePressed()
       livelli[activeLyr].pg.loadPixels();
       // get color components (Alpha, RGB, HSB)
       color tc = brushCol;
-      int ta = (tc >> 24) & 0xff;
-      int tr = (tc >> 16) & 0xff;
-      int tg = (tc >> 8) & 0xff;
-      int tb = tc & 0xff;
+      float ta = (tc >> 24) & 0xff;
+      float tr = (tc >> 16) & 0xff;
+      float tg = (tc >> 8) & 0xff;
+      float tb = tc & 0xff;
+      // backup color components
+      float az = ta;
+      float rz = tr;
+      float gz = tg;
+      float bz = tb;
       colorMode(HSB,255.0,255.0,255.0);
       float hh = hue(tc);
       float ss = saturation(tc);
       float bb = brightness(tc);
+      float hhz = hh;
+      float ssz = ss;
+      float bbz = bb;
       colorMode(RGB,255.0,255.0,255.0);
       // get delta value
-      int dA = (int) sbBACKa.v;
-      int d1 = (int) sbBACK1.v;
-      int d2 = (int) sbBACK2.v;
-      int d3 = (int) sbBACK3.v;
-      //println("Start color:",ta,tr,tg,tb);
+      float dA = (sbBACKa.v);
+      float d1 = (sbBACK1.v);
+      float d2 = (sbBACK2.v);
+      float d3 = (sbBACK3.v);
+      println("Start color (RGB):",ta,tr,tg,tb);
+      println("Start color (HSB):",ta,hh,ss,bb);
+      println("Start color (HSBn):",ta,360.0*hh/255,ss/2.55,bb/2.55);
       if (cbBACKv.s) // vertical fill
       {
         for (int x = 0; x < width; x++)
@@ -699,21 +709,21 @@ void mousePressed()
                 {
                   //println("1)",ta,tr,tg,tb);
                   if (cbBACKadd.s) // cumulative delta
-                  { 
+                  {
                     if (cbBACKrgb.s) // rgb
                     {
-                      ta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                      tr = constrain(tr + (int) random(-d1,d1), 0, 255);
-                      tg = constrain(tg + (int) random(-d2,d2), 0, 255);
-                      tb = constrain(tb + (int) random(-d3,d3), 0, 255);
+                      ta = constrain(ta + (random(-dA,dA)), az-sbBACKaMax.v, az+sbBACKaMax.v);
+                      tr = constrain(tr + (random(-d1,d1)), rz-sbBACK1Max.v, rz+sbBACK1Max.v);
+                      tg = constrain(tg + (random(-d2,d2)), gz-sbBACK2Max.v, gz+sbBACK2Max.v);
+                      tb = constrain(tb + (random(-d3,d3)), bz-sbBACK3Max.v, bz+sbBACK3Max.v);
                       tc = color(tr, tg, tb, ta);
-                    } 
+                    }
                     else // hsb
                     {
-                      ta = constrain(ta + (int) random(-dA,dA), 0, 255);                    
-                      hh = constrain(hh + (int) random(-d1,d1), 0, 255);
-                      ss = constrain(ss + (int) random(-d2,d2), 0, 255);
-                      bb = constrain(bb + (int) random(-d3,d3), 0, 255);
+                      ta = constrain(ta + (random(-dA,dA)), az-sbBACKaMax.v, az+sbBACKaMax.v);
+                      hh = constrain(hh + (random(-d1,d1)), hhz-sbBACK1Max.v, hhz+sbBACK1Max.v);
+                      ss = constrain(ss + (random(-d2,d2)), ssz-sbBACK2Max.v, ssz+sbBACK2Max.v);
+                      bb = constrain(bb + (random(-d3,d3)), bbz-sbBACK3Max.v, bbz+sbBACK3Max.v);
                       colorMode(HSB,255.0,255.0,255.0);
                       tc = color(hh, ss, bb, ta);
                       colorMode(RGB,255.0,255.0,255.0);
@@ -723,21 +733,21 @@ void mousePressed()
                   {
                     if (cbBACKrgb.s) // rgb
                     {
-                      int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                      int newtr = constrain(tr + (int) random(-d1,d1), 0, 255);
-                      int newtg = constrain(tg + (int) random(-d2,d2), 0, 255);
-                      int newtb = constrain(tb + (int) random(-d3,d3), 0, 255);
+                      float newta = constrain(ta + (random(-dA,dA)), 0, 255);
+                      float newtr = constrain(tr + (random(-d1,d1)), 0, 255);
+                      float newtg = constrain(tg + (random(-d2,d2)), 0, 255);
+                      float newtb = constrain(tb + (random(-d3,d3)), 0, 255);
                       tc = color(newtr, newtg, newtb, newta);
                     }
                     else // hsb
                     {
-                      int newta = constrain(ta + (int) random(-dA,dA), 0, 255);                    
-                      float newhh = constrain(hh + (int) random(-d1,d1), 0, 255);
-                      float newss = constrain(ss + (int) random(-d2,d2), 0, 255);
-                      float newbb = constrain(bb + (int) random(-d3,d3), 0, 255);
+                      float newta = constrain(ta + (random(-dA,dA)), 0, 255);
+                      float newhh = constrain(hh + (random(-d1,d1)), 0, 255);
+                      float newss = constrain(ss + (random(-d2,d2)), 0, 255);
+                      float newbb = constrain(bb + (random(-d3,d3)), 0, 255);
                       colorMode(HSB,255.0,255.0,255.0);
                       tc = color(newhh, newss, newbb, ta);
-                      colorMode(RGB,255.0,255.0,255.0);                    
+                      colorMode(RGB,255.0,255.0,255.0);
                     }
                   }
                   //println("2)",newta,newtr,newtg,newtb);
@@ -746,6 +756,13 @@ void mousePressed()
               }
             }
           }
+          //ta = az;
+          //tr = rz;
+          //tg = gz;
+          //tb = bz;
+          //hh = hhz;
+          //ss = ssz;
+          //bb = bbz;
         }
       }
       else // horizontal fill
@@ -761,23 +778,22 @@ void mousePressed()
                 if ((loc >= 0) && (loc < ll))
                 {
                   //println("1)",ta,tr,tg,tb);
-                  //println("1)",ta,tr,tg,tb);
                   if (cbBACKadd.s) // cumulative delta
-                  { 
+                  {
                     if (cbBACKrgb.s) // rgb
                     {
-                      ta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                      tr = constrain(tr + (int) random(-d1,d1), 0, 255);
-                      tg = constrain(tg + (int) random(-d2,d2), 0, 255);
-                      tb = constrain(tb + (int) random(-d3,d3), 0, 255);
+                      ta = constrain(ta + (random(-dA,dA)), az-sbBACKaMax.v, az+sbBACKaMax.v);
+                      tr = constrain(tr + (random(-d1,d1)), rz-sbBACK1Max.v, gz+sbBACK1Max.v);
+                      tg = constrain(tg + (random(-d2,d2)), gz-sbBACK2Max.v, rz+sbBACK2Max.v);
+                      tb = constrain(tb + (random(-d3,d3)), bz-sbBACK3Max.v, bz+sbBACK3Max.v);
                       tc = color(tr, tg, tb, ta);
-                    } 
+                    }
                     else // hsb
                     {
-                      ta = constrain(ta + (int) random(-dA,dA), 0, 255);                    
-                      hh = constrain(hh + (int) random(-d1,d1), 0, 255);
-                      ss = constrain(ss + (int) random(-d2,d2), 0, 255);
-                      bb = constrain(bb + (int) random(-d3,d3), 0, 255);
+                      ta = constrain(ta + (random(-dA,dA)), az-sbBACKaMax.v, az+sbBACKaMax.v);
+                      hh = constrain(hh + (random(-d1,d1)), hhz-sbBACK1Max.v, hhz+sbBACK1Max.v);
+                      ss = constrain(ss + (random(-d2,d2)), ssz-sbBACK2Max.v, ssz+sbBACK2Max.v);
+                      bb = constrain(bb + (random(-d3,d3)), bbz-sbBACK3Max.v, bbz+sbBACK3Max.v);
                       colorMode(HSB,255.0,255.0,255.0);
                       tc = color(hh, ss, bb, ta);
                       colorMode(RGB,255.0,255.0,255.0);
@@ -787,21 +803,21 @@ void mousePressed()
                   {
                     if (cbBACKrgb.s) // rgb
                     {
-                      int newta = constrain(ta + (int) random(-dA,dA), 0, 255);
-                      int newtr = constrain(tr + (int) random(-d1,d1), 0, 255);
-                      int newtg = constrain(tg + (int) random(-d2,d2), 0, 255);
-                      int newtb = constrain(tb + (int) random(-d3,d3), 0, 255);
+                      float newta = constrain(ta + (random(-dA,dA)), 0, 255);
+                      float newtr = constrain(tr + (random(-d1,d1)), 0, 255);
+                      float newtg = constrain(tg + (random(-d2,d2)), 0, 255);
+                      float newtb = constrain(tb + (random(-d3,d3)), 0, 255);
                       tc = color(newtr, newtg, newtb, newta);
                     }
                     else // hsb
                     {
-                      int newta = constrain(ta + (int) random(-dA,dA), 0, 255);                    
-                      float newhh = constrain(hh + (int) random(-d1,d1), 0, 255);
-                      float newss = constrain(ss + (int) random(-d2,d2), 0, 255);
-                      float newbb = constrain(bb + (int) random(-d3,d3), 0, 255);
+                      float newta = constrain(ta + (random(-dA,dA)), 0, 255);
+                      float newhh = constrain(hh + (random(-d1,d1)), 0, 255);
+                      float newss = constrain(ss + (random(-d2,d2)), 0, 255);
+                      float newbb = constrain(bb + (random(-d3,d3)), 0, 255);
                       colorMode(HSB,255.0,255.0,255.0);
                       tc = color(newhh, newss, newbb, ta);
-                      colorMode(RGB,255.0,255.0,255.0);                    
+                      colorMode(RGB,255.0,255.0,255.0);
                     }
                   }
                   //println("2)",newta,newtr,newtg,newtb);
@@ -811,7 +827,10 @@ void mousePressed()
             }
           }
         }
-      }  
+      }
+      println("End color (RGB):",ta,tr,tg,tb);
+      println("End color (HSB):",ta,hh,ss,bb);
+      println("End color (HSBn):",ta,360.0*hh/255,ss/2.55,bb/2.55);
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }
@@ -1012,7 +1031,7 @@ void mousePressed()
     btnHSB.onClick();
     btnRND.onClick();
     btnBACK.onClick();
-    
+
     //btnTool01.onClick();
 
     // check Alpha options
@@ -1054,6 +1073,10 @@ void mousePressed()
       sbBACK2.onClick();
       sbBACK3.onClick();
       sbBACKa.onClick();
+      sbBACK1Max.onClick();
+      sbBACK2Max.onClick();
+      sbBACK3Max.onClick();
+      sbBACKaMax.onClick();
       cbBACKadd.onClick();
       cbBACKv.onClick();
       cbBACKh.onClick();

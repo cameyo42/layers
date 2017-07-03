@@ -152,7 +152,7 @@ void showMenu()
     slRNDg.show();
     slRNDb.show();
     slRNDa.show();
-  }  
+  }
   // show BACK Options
   if (tool == "BACK")
   {
@@ -160,6 +160,10 @@ void showMenu()
     sbBACK2.show();
     sbBACK3.show();
     sbBACKa.show();
+    sbBACK1Max.show();
+    sbBACK2Max.show();
+    sbBACK3Max.show();
+    sbBACKaMax.show();
     cbBACKadd.show();
     cbBACKv.show();
     cbBACKh.show();
