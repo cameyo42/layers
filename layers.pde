@@ -276,7 +276,8 @@ void setup()
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
   //size(1900,900);
-  size(1280,800);
+  //size(1280,800);
+  fullScreen();
   smooth();
   noCursor();
   frameRate(100);
