@@ -118,7 +118,7 @@ void showMenu()
   btnRGB.show();
   btnHSB.show();
   btnRND.show();
-  btnTool01.show();
+  btnBACK.show();
 
   // show Alpha Options
   if (tool == "Alpha")
@@ -153,8 +153,8 @@ void showMenu()
     slRNDb.show();
     slRNDa.show();
   }  
-  // show Tool01 Options
-  if (tool == "Tool01")
+  // show BACK Options
+  if (tool == "BACK")
   {
     sbBACK1.show();
     sbBACK2.show();

@@ -37,7 +37,7 @@ void showCursor(int x, int y, boolean zoom, float zoomFactor)
     line(mouseX-8,mouseY,mouseX-16,mouseY);
   }
   else if (tool == "Pencil" || tool == "Ink" || tool == "Mixer" || tool == "Confetti" ||
-           tool == "Alpha" || tool == "RGB" || tool == "HSB" || tool == "RND" || tool == "Tool01") // PENCIL, INK, MIXER cursor
+           tool == "Alpha" || tool == "RGB" || tool == "HSB" || tool == "RND" || tool == "BACK") // PENCIL, INK, MIXER cursor
   {
     if (zoom)
     {

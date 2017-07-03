@@ -202,11 +202,12 @@ Slider slALPHAT, slRGBr, slRGBg, slRGBb, slHSBh, slHSBs, slHSBb;
 Checkbox cbALPHAT, cbALPHATT, cbRGBT, cbRGBTT, cbHSBT, cbHSBTT;
 ButtonIMG btnRND;
 Slider slRNDa, slRNDr, slRNDg, slRNDb;
-ButtonIMG btnTool01;
+ButtonIMG btnBACK;
 SpinBound sbBACKa, sbBACK1, sbBACK2, sbBACK3;
 SpinBound sbBACKhh, sbBACKss, sbBACKbb;
 Checkbox cbBACKadd, cbBACKh, cbBACKv;
 Checkbox cbBACKrgb, cbBACKhsb;
+ButtonIMG btnTool01;
 
 // mixer brush
 PImage mixer;  // mixer brush image
@@ -489,8 +490,10 @@ void setup()
   hsbOFF_IMG = gui_IMG.get(1138, 213, 34, 34);
   rndON_IMG = gui_IMG.get(1172, 213, 34, 34);
   rndOFF_IMG = gui_IMG.get(1206, 213, 34, 34);
-  tool01ON_IMG = gui_IMG.get(968, 247, 34, 34);
-  tool01OFF_IMG = gui_IMG.get(1002, 247, 34, 34);
+  backON_IMG = gui_IMG.get(968, 247, 34, 34);
+  backOFF_IMG = gui_IMG.get(1002, 247, 34, 34);  
+  tool01ON_IMG = gui_IMG.get(1036, 247, 34, 34);
+  tool01OFF_IMG = gui_IMG.get(1070, 247, 34, 34);
   lyrCTRL_IMG = gui_IMG.get(1113, 0, 151, 26);
 
   // grab PGraphic for undo
@@ -627,7 +630,7 @@ void setup()
   slRNDb = new Slider(10, 444, 296, 444, 4, "rnd blu", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDb");
   slRNDa = new Slider(10, 474, 296, 474, 4, "rnd alpha", 0, 128, 0, black, highLight, black, textMenuCol, "sl_RNDa");
 
-  btnTool01 = new ButtonIMG(149, 490, tool01ON_IMG, tool01OFF_IMG, false, "", textMenuCol, "btn_Tool01");
+  btnBACK = new ButtonIMG(149, 490, backON_IMG, backOFF_IMG, false, "", textMenuCol, "btn_BACK");
   sbBACK1 = new SpinBound(44, 400, 64, 18, "dR|dH", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK1");
   sbBACK2 = new SpinBound(44, 420, 64, 18, "dG|dS", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK2");
   sbBACK3 = new SpinBound(44, 440, 64, 18, "dB|dB", 0, 1, 0, 255, black, gray, textMenuCol, "sb_BACK3");
@@ -637,7 +640,6 @@ void setup()
   cbBACKh = new Checkbox(210, 409, 14, 14, "horizontal", false, black, darkGray, highLight, gray, textMenuCol, "cb_BACKh");
   cbBACKrgb = new Checkbox(10, 376, 14, 14, "rgb", true, black, darkGray, highLight, gray, textMenuCol, "cb_BACKrgb");
   cbBACKhsb = new Checkbox(55, 376, 14, 14, "hsb", false, black, darkGray, highLight, gray, textMenuCol, "cb_BACKhsb");
-  
 
   // RGB and HSB control
   rgbhsb = new RGB_HSB(82, 15, 12*18, 4*18, brushCol, black, gray, textMenuCol, "rgbhsb_M");
@@ -759,7 +761,8 @@ void btn_ALPHA()    { selectTool("Alpha"); }
 void btn_RGB()      { selectTool("RGB"); }
 void btn_HSB()      { selectTool("HSB"); }
 void btn_RND()      { selectTool("RND"); }
-void btn_Tool01()   { selectTool("Tool01"); }
+void btn_BACK()     { selectTool("BACK"); }
+//void btn_Tool01()   { selectTool("Tool01"); }
 void btn_UNDO()     { undo(); }
 void btn_REDO()     { redo(); }
 // SELECT checkbox
@@ -941,14 +944,14 @@ void sl_RNDr() { }
 void sl_RNDg() { }
 void sl_RNDb() { }
 void sl_RNDa() { }
-// Tool01 tool
+// BACK tool
 void sb_BACK1() { }
 void sb_BACK2() { }
 void sb_BACK3() { }
 void sb_BACKa() { }
 void cb_BACKadd() { }
-void cb_BACKv() { cbBACKh.s = !cbBACKv.s; } 
-void cb_BACKh() { cbBACKv.s = !cbBACKh.s; } 
+void cb_BACKv() { cbBACKh.s = !cbBACKv.s; }
+void cb_BACKh() { cbBACKv.s = !cbBACKh.s; }
 void cb_BACKrgb() { cbBACKhsb.s = !cbBACKrgb.s; }
 void cb_BACKhsb() { cbBACKrgb.s = !cbBACKhsb.s; }
 
@@ -1086,7 +1089,8 @@ void selectTool(String t)
   btnRGB.s = false;
   btnHSB.s = false;
   btnRND.s = false;
-  btnTool01.s= false;
+  btnBACK.s = false;
+  //btnTool01.s= false;
   //aSelection = false;
   if (t == "Pencil")        { btnPENCIL.s = true; }
   else if (t == "Liner")    { btnLINER.s = true; }
@@ -1109,7 +1113,8 @@ void selectTool(String t)
   else if (t == "RGB")      { btnRGB.s = true;}
   else if (t == "HSB")      { btnHSB.s = true;}
   else if (t == "RND")      { btnRND.s = true;}
-  else if (t == "Tool01")   { btnTool01.s = true;}
+  else if (t == "BACK")     { btnBACK.s = true;}
+  //else if (t == "Tool01")   { btnTool01.s = true;}
   else if (t == "TEST")     { }
 }
 //*********************************

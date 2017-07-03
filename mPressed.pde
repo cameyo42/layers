@@ -658,7 +658,7 @@ void mousePressed()
     }
 
     // BACK PRESSED // Background creator
-    else if ((!keyPressed) && (tool=="Tool01") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
+    else if ((!keyPressed) && (tool=="BACK") && (!livelli[activeLyr].ll) && ((!menu) || (x1 > menuX)))
     {
       startAction = true;
       int x0 = mouseX;
@@ -684,7 +684,7 @@ void mousePressed()
       int d1 = (int) sbBACK1.v;
       int d2 = (int) sbBACK2.v;
       int d3 = (int) sbBACK3.v;
-      println("Start color:",ta,tr,tg,tb);
+      //println("Start color:",ta,tr,tg,tb);
       if (cbBACKv.s) // vertical fill
       {
         for (int x = 0; x < width; x++)
@@ -1011,7 +1011,9 @@ void mousePressed()
     btnRGB.onClick();
     btnHSB.onClick();
     btnRND.onClick();
-    btnTool01.onClick();
+    btnBACK.onClick();
+    
+    //btnTool01.onClick();
 
     // check Alpha options
     if (tool == "Alpha")
@@ -1046,7 +1048,7 @@ void mousePressed()
       slRNDb.onClick();
       slRNDa.onClick();
     }
-    if (tool == "Tool01")
+    if (tool == "BACK")
     {
       sbBACK1.onClick();
       sbBACK2.onClick();
