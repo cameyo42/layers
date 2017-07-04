@@ -22,6 +22,8 @@ Shape
 Alpha Paint  
 RGB Paint  
 HSB Paint  
+ARGB  
+BACKground  
 Eraser  
 
 **Features**  
