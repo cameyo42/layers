@@ -262,4 +262,6 @@ void showMenu()
     sbSHtype.show();
     btSHSVG.show();
   }
+  // show logo
+  image(logo, 184, 490);
 }

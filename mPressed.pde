@@ -692,9 +692,9 @@ void mousePressed()
       float d1 = (sbBACK1.v);
       float d2 = (sbBACK2.v);
       float d3 = (sbBACK3.v);
-      println("Start color (RGB):",ta,tr,tg,tb);
-      println("Start color (HSB):",ta,hh,ss,bb);
-      println("Start color (HSBn):",ta,360.0*hh/255,ss/2.55,bb/2.55);
+      //println("Start color (RGB):",ta,tr,tg,tb);
+      //println("Start color (HSB):",ta,hh,ss,bb);
+      //println("Start color (HSBn):",ta,360.0*hh/255,ss/2.55,bb/2.55);
       if (cbBACKv.s) // vertical fill
       {
         for (int x = 0; x < width; x++)
@@ -828,9 +828,9 @@ void mousePressed()
           }
         }
       }
-      println("End color (RGB):",ta,tr,tg,tb);
-      println("End color (HSB):",ta,hh,ss,bb);
-      println("End color (HSBn):",ta,360.0*hh/255,ss/2.55,bb/2.55);
+      //println("End color (RGB):",ta,tr,tg,tb);
+      //println("End color (HSB):",ta,hh,ss,bb);
+      //println("End color (HSBn):",ta,360.0*hh/255,ss/2.55,bb/2.55);
       livelli[activeLyr].pg.updatePixels();
       livelli[activeLyr].pg.endDraw(); // close active layer PGraphics
     }

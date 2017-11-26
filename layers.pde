@@ -269,6 +269,7 @@ int shItems, shPosD;
 int shSizeD, shAlfaD;
 PShape aShape;
 boolean loadingShape;
+PImage logo;
 
 //*********************************
 //*********************************
@@ -276,8 +277,8 @@ void setup()
 {
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
-  size(1900,900);
-  //size(1280,800);
+  //size(1900,900);
+  size(1280,800);
   //fullScreen();
   smooth();
   noCursor();
@@ -294,7 +295,7 @@ void setup()
   // set monitor (high dpi)
   println(displayDensity());
   //pixelDensity(displayDensity()); // wrong with iMac
-
+  logo = loadImage("logo.png");
   onTop = false;
   startAction = false;
   noGlitch = false;
