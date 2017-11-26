@@ -4,7 +4,7 @@
 // by cameyo 2017
 // WTFPL license (see the WTFPL.txt file)
 // Thanks to:
-// Anonymous, Bird, Bollinger Chrisir, GoToLoop,
+// Anonymous, Bird, Bollinger, Chrisir, GoToLoop,
 // jas0501, jeremydouglass, kfrajer, koogs, Lord_of_the_Galaxy,
 // neilcsmith_net, PhilLo, prince_polka,
 // quark, Shiffman, TfGuy44, ...
@@ -276,8 +276,8 @@ void setup()
 {
   // macBook Pro 13" 1280x800
   // macBook Air 12" 1300x750
-  //size(1900,900);
-  size(1280,800);
+  size(1900,900);
+  //size(1280,800);
   //fullScreen();
   smooth();
   noCursor();
